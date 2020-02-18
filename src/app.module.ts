@@ -4,6 +4,7 @@ import { AuthModule } from './modules/auth/auth.module'
 import { LoggerModule } from './modules/logger/logger.module'
 import { GraphqlOptions } from './graphql.options'
 import { CommonModule } from './modules/common/common.module'
+import { WordsModule } from './modules/words/words.module'
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { CommonModule } from './modules/common/common.module'
     GraphQLModule.forRootAsync({
       useClass: GraphqlOptions
     }),
-    AuthModule
+    AuthModule,
+    WordsModule
   ]
 })
 export class AppModule {}

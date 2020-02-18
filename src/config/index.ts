@@ -15,5 +15,5 @@ export const config = {
     clientSecret: env.GOOGLE_CLIENT_SECRET || 'secregoogle'
   },
   mongoDBUrl: env.MONGO_DB_URL || 'mongodb://localhost/severly',
-  port: parseInt(env.PORT, 10) || 8080
+  port: parseInt(env.PORT, 10) || 8087
 }

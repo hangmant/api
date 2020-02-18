@@ -1,0 +1,7 @@
+type Query {
+  words: [Word!]!
+}
+
+type Word {
+  name: String
+}

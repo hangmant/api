@@ -1,22 +1,22 @@
 import { DynamicModule, Global, Module } from '@nestjs/common'
-import { MongooseModule as NestMongooseModule } from '@nestjs/mongoose'
-import { MongoItemConfig } from './interfaces/mongoItemConfig'
+import { TypegooseModule } from 'nestjs-typegoose'
+import {} from '@typegoose/typegoose'
 import { MongoConfigService } from './mongoConfig.service'
 
 @Global()
 @Module({
   imports: [
-    NestMongooseModule.forRootAsync({
+    TypegooseModule.forRootAsync({
       useClass: MongoConfigService
     })
   ]
 })
 export class MongoModule {
-  static forRoot(items: Array<MongoItemConfig>): DynamicModule {
+  static forFeature(items: any[]): DynamicModule {
     return {
       module: MongoModule,
-      imports: [NestMongooseModule.forFeature(items)],
-      exports: [NestMongooseModule.forFeature(items)]
+      imports: [TypegooseModule.forFeature(items)],
+      exports: [TypegooseModule.forFeature(items)]
     }
   }
 }

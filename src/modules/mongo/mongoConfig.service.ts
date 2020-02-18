@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common'
-import { MongooseOptionsFactory, MongooseModuleOptions } from '@nestjs/mongoose'
+import { TypegooseOptionsFactory, TypegooseModuleOptions } from 'nestjs-typegoose'
 import { config } from '../../config'
 import { LoggerService } from '../logger/logger.service'
 
 @Injectable()
-export class MongoConfigService implements MongooseOptionsFactory {
+export class MongoConfigService implements TypegooseOptionsFactory {
   constructor(private readonly logger: LoggerService) {}
 
-  createMongooseOptions(): MongooseModuleOptions {
+  createTypegooseOptions(): TypegooseModuleOptions {
     this.logger.info(`Connecting to ${config.mongoDBUrl}`)
     return {
       uri: config.mongoDBUrl,
