@@ -5,6 +5,7 @@ import { LoggerModule } from './modules/logger/logger.module'
 import { GraphqlOptions } from './graphql.options'
 import { CommonModule } from './modules/common/common.module'
 import { WordsModule } from './modules/words/words.module'
+import { CategoriesModule } from './modules/categories/categories.module'
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { WordsModule } from './modules/words/words.module'
       useClass: GraphqlOptions
     }),
     AuthModule,
-    WordsModule
+    WordsModule,
+    CategoriesModule
   ]
 })
 export class AppModule {}

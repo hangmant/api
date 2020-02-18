@@ -1,6 +1,2 @@
 scalar Date
 scalar JSON
-
-type Query {
-  info: String
-}

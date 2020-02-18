@@ -5,8 +5,13 @@
  */
 
 /* tslint:disable */
+export class Category {
+    name: string;
+    description?: string;
+}
+
 export abstract class IQuery {
-    abstract info(): string | Promise<string>;
+    abstract categories(): Category[] | Promise<Category[]>;
 
     abstract words(): Word[] | Promise<Word[]>;
 }
