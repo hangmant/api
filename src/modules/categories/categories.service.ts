@@ -16,4 +16,8 @@ export class CategoriesService {
       })
     )
   }
+
+  findById(categoryId: string) {
+    return from(this.categoryModel.findById(categoryId).exec())
+  }
 }

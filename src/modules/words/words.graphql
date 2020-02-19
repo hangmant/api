@@ -1,7 +1,16 @@
+type Word {
+  name: String
+}
+
 type Query {
   words: [Word!]!
 }
 
-type Word {
-  name: String
+type Mutation {
+  createWord(data: WordInput!): Word!
+}
+
+input WordInput {
+  name: String!
+  categoryId: ID!
 }

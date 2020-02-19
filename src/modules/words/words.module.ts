@@ -3,9 +3,10 @@ import { MongoModule } from '../mongo/mongo.module'
 import { Word } from './words.model'
 import { WordsService } from './words.service'
 import { WordsResolver } from './words.resolver'
+import { CategoriesModule } from '../categories/categories.module'
 
 @Module({
-  imports: [MongoModule.forFeature([Word])],
+  imports: [MongoModule.forFeature([Word]), CategoriesModule],
   providers: [WordsResolver, WordsService],
   exports: [WordsService]
 })
