@@ -1,12 +1,13 @@
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common'
 import { InjectModel } from 'nestjs-typegoose'
 import { ReturnModelType } from '@typegoose/typegoose'
-import { from, of, throwError, Observable } from 'rxjs'
+import { from, of, throwError, Observable, concat } from 'rxjs'
 import { concatMap, catchError } from 'rxjs/operators'
 import { Word } from './words.model'
 import { CategoriesService } from '../categories/categories.service'
 import { CreateWord } from './interface/createWord.interface'
 import { UpdateWord } from './interface/updateWord.interface'
+import { deepClone } from '../../utils'
 
 @Injectable()
 export class WordsService {
@@ -40,11 +41,18 @@ export class WordsService {
         }
         return of(category)
       }),
-      concatMap(() => {
+      concatMap((category: any) => {
         return from(
           this.wordModel.create({
             name: word.name,
             category: word.categoryId
+          })
+        ).pipe(
+          concatMap((createdWord: any) => {
+            return of({
+              ...deepClone(createdWord),
+              category
+            })
           })
         )
       }),
