@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common'
 import { InjectModel } from 'nestjs-typegoose'
 import { ReturnModelType } from '@typegoose/typegoose'
-import { from, of, throwError } from 'rxjs'
-import { concatMap } from 'rxjs/operators'
+import { from, of, throwError, Observable } from 'rxjs'
+import { concatMap, catchError } from 'rxjs/operators'
 import { Word } from './words.model'
 import { CategoriesService } from '../categories/categories.service'
+import { CreateWord } from './interface/createWord.interface'
 
 @Injectable()
 export class WordsService {
@@ -13,21 +14,37 @@ export class WordsService {
     private readonly categoriesService: CategoriesService
   ) {}
 
-  findAll() {
-    return from(this.wordModel.find({}).exec()).pipe(
+  findAll(): Observable<Word[]> {
+    return from(
+      this.wordModel
+        .find({})
+        .populate('category')
+        .exec()
+    ).pipe(
       concatMap(items => {
         return of(items)
       })
     )
   }
 
-  create(word) {
+  create(word: CreateWord): Observable<Word> {
     return this.categoriesService.findById(word.categoryId).pipe(
       concatMap((category: any) => {
         if (!category) {
-          throwError(new NotFoundException(`Category doesn't exists`))
+          return throwError(new NotFoundException(`Category doesn't exists`))
         }
-        return category
+        return of(category)
+      }),
+      concatMap(() => {
+        return from(
+          this.wordModel.create({
+            name: word.name,
+            category: word.categoryId
+          })
+        )
+      }),
+      catchError(error => {
+        return throwError(new ConflictException(error))
       })
     )
   }

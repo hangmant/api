@@ -1,5 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { WordsService } from './words.service'
+import { CreateWord } from './interface/createWord.interface'
 
 @Resolver('Word')
 export class WordsResolver {
@@ -11,7 +12,7 @@ export class WordsResolver {
   }
 
   @Mutation()
-  createWord(@Args('data') word) {
+  createWord(@Args('data') word: CreateWord) {
     return this.wordsService.create(word)
   }
 }

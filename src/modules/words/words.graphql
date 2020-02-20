@@ -1,5 +1,7 @@
 type Word {
-  name: String
+  _id: ID!
+  name: String!
+  category: Category!
 }
 
 type Query {
@@ -7,10 +9,10 @@ type Query {
 }
 
 type Mutation {
-  createWord(data: WordInput!): Word!
+  createWord(data: WordCreateInput!): Word!
 }
 
-input WordInput {
+input WordCreateInput {
   name: String!
   categoryId: ID!
 }

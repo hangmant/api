@@ -20,18 +20,18 @@ export class CategoriesService {
   }
 
   findById(categoryId: string): Observable<Category> {
-    return from(this.categoryModel.findById(categoryId).exec())
+    return from(this.categoryModel.findById(categoryId).lean())
   }
 
   create(category: CreateCategory): Observable<Category> {
     return from(this.categoryModel.create(category))
   }
 
-  updateById(_id: string, data: UpdateCategory): Observable<Category | null> {
+  updateById(categoryId: string, data: UpdateCategory): Observable<Category | null> {
     return from(
       this.categoryModel
         .findByIdAndUpdate(
-          _id,
+          categoryId,
           {
             $set: data
           },
