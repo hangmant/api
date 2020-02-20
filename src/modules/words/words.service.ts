@@ -6,6 +6,7 @@ import { concatMap, catchError } from 'rxjs/operators'
 import { Word } from './words.model'
 import { CategoriesService } from '../categories/categories.service'
 import { CreateWord } from './interface/createWord.interface'
+import { UpdateWord } from './interface/updateWord.interface'
 
 @Injectable()
 export class WordsService {
@@ -27,6 +28,10 @@ export class WordsService {
     )
   }
 
+  findById(wordId: string): Observable<Word | null> {
+    return from(this.wordModel.findById(wordId).lean())
+  }
+
   create(word: CreateWord): Observable<Word> {
     return this.categoriesService.findById(word.categoryId).pipe(
       concatMap((category: any) => {
@@ -46,6 +51,20 @@ export class WordsService {
       catchError(error => {
         return throwError(new ConflictException(error))
       })
+    )
+  }
+
+  updateById(wordId: string, wordData: UpdateWord): Observable<Word | null> {
+    return from(
+      this.wordModel
+        .findByIdAndUpdate(
+          wordId,
+          {
+            $set: wordData
+          },
+          { new: true }
+        )
+        .lean()
     )
   }
 }

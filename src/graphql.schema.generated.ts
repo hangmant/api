@@ -20,6 +20,10 @@ export class WordCreateInput {
     categoryId: GraphQLObjectId;
 }
 
+export class WordUpdateInput {
+    name?: string;
+}
+
 export class Category {
     _id: GraphQLObjectId;
     name: string;
@@ -32,6 +36,8 @@ export abstract class IMutation {
     abstract updateCategory(_id: GraphQLObjectId, data: CategoryUpdateInput): Category | Promise<Category>;
 
     abstract createWord(data: WordCreateInput): Word | Promise<Word>;
+
+    abstract updateWord(_id: GraphQLObjectId, data: WordUpdateInput): Word | Promise<Word>;
 }
 
 export abstract class IQuery {
@@ -40,6 +46,8 @@ export abstract class IQuery {
     abstract findCategory(id: GraphQLObjectId): Category | Promise<Category>;
 
     abstract words(): Word[] | Promise<Word[]>;
+
+    abstract word(_id: GraphQLObjectId): Word | Promise<Word>;
 }
 
 export class Word {

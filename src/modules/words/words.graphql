@@ -6,13 +6,19 @@ type Word {
 
 type Query {
   words: [Word!]!
+  word(_id: ID!): Word
 }
 
 type Mutation {
   createWord(data: WordCreateInput!): Word!
+  updateWord(_id: ID!, data: WordUpdateInput!): Word
 }
 
 input WordCreateInput {
   name: String!
   categoryId: ID!
+}
+
+input WordUpdateInput {
+  name: String
 }
