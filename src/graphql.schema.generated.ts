@@ -10,18 +10,26 @@ export class CategoryCreateInput {
     description?: string;
 }
 
+export class CategoryUpdateInput {
+    name?: string;
+    description?: string;
+}
+
 export class WordInput {
     name: string;
     categoryId: GraphQLObjectId;
 }
 
 export class Category {
+    _id: GraphQLObjectId;
     name: string;
     description?: string;
 }
 
 export abstract class IMutation {
     abstract createCategory(data: CategoryCreateInput): Category | Promise<Category>;
+
+    abstract updateCategory(_id: GraphQLObjectId, data: CategoryUpdateInput): Category | Promise<Category>;
 
     abstract createWord(data: WordInput): Word | Promise<Word>;
 }

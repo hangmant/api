@@ -1,4 +1,5 @@
 type Category {
+  _id: ID!
   name: String!
   description: String
 }
@@ -10,9 +11,15 @@ type Query {
 
 type Mutation {
   createCategory(data: CategoryCreateInput!): Category!
+  updateCategory(_id: ID!, data: CategoryUpdateInput!): Category
 }
 
 input CategoryCreateInput {
   name: String!
+  description: String
+}
+
+input CategoryUpdateInput {
+  name: String
   description: String
 }

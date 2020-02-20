@@ -5,6 +5,7 @@ import { from, of, Observable } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
 import { Category } from './categories.model'
 import { CreateCategory } from './interfaces/createCategory.interface'
+import { UpdateCategory } from './interfaces/updateCategory.interface'
 
 @Injectable()
 export class CategoriesService {
@@ -24,5 +25,21 @@ export class CategoriesService {
 
   create(category: CreateCategory): Observable<Category> {
     return from(this.categoryModel.create(category))
+  }
+
+  updateById(_id: string, data: UpdateCategory): Observable<Category | null> {
+    return from(
+      this.categoryModel
+        .findByIdAndUpdate(
+          _id,
+          {
+            $set: data
+          },
+          {
+            new: true
+          }
+        )
+        .lean()
+    )
   }
 }
