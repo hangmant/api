@@ -1,5 +1,6 @@
-import { Query, Resolver } from '@nestjs/graphql'
+import { Query, Resolver, Mutation, Args } from '@nestjs/graphql'
 import { CategoriesService } from './categories.service'
+import { CreateCategory } from './interfaces/createCategory.interface'
 
 @Resolver('Category')
 export class CategoriesResolver {
@@ -8,5 +9,10 @@ export class CategoriesResolver {
   @Query()
   words() {
     return this.categoriesService.findAll()
+  }
+
+  @Mutation()
+  createWord(@Args('data') category: CreateCategory) {
+    return this.categoriesService.create(category)
   }
 }

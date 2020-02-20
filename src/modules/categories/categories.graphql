@@ -1,8 +1,17 @@
+type Category {
+  name: String!
+  description: String
+}
+
 type Query {
   categories: [Category!]!
 }
 
-type Category {
+type Mutation {
+  createCategory(data: CategoryCreateInput!): Category!
+}
+
+input CategoryCreateInput {
   name: String!
   description: String
 }

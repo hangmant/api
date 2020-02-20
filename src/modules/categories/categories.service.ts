@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from 'nestjs-typegoose'
 import { ReturnModelType } from '@typegoose/typegoose'
-import { from, of } from 'rxjs'
+import { from, of, Observable } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
 import { Category } from './categories.model'
+import { CreateCategory } from './interfaces/createCategory.interface'
 
 @Injectable()
 export class CategoriesService {
@@ -17,7 +18,11 @@ export class CategoriesService {
     )
   }
 
-  findById(categoryId: string) {
+  findById(categoryId: string): Observable<Category> {
     return from(this.categoryModel.findById(categoryId).exec())
+  }
+
+  create(category: CreateCategory): Observable<Category> {
+    return from(this.categoryModel.create(category))
   }
 }

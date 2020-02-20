@@ -7,6 +7,8 @@ export class Category {
   name: string
 
   @IsString()
-  @prop()
+  @prop({
+    default: ''
+  })
   description: string
 }

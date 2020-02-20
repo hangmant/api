@@ -5,6 +5,11 @@
  */
 
 /* tslint:disable */
+export class CategoryCreateInput {
+    name: string;
+    description?: string;
+}
+
 export class WordInput {
     name: string;
     categoryId: string;
@@ -16,6 +21,8 @@ export class Category {
 }
 
 export abstract class IMutation {
+    abstract createCategory(data: CategoryCreateInput): Category | Promise<Category>;
+
     abstract createWord(data: WordInput): Word | Promise<Word>;
 }
 
