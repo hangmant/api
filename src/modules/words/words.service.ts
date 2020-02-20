@@ -75,4 +75,8 @@ export class WordsService {
         .lean()
     )
   }
+
+  deleteById(wordId: string): Observable<Word | null> {
+    return from(this.wordModel.findOneAndDelete(wordId).lean())
+  }
 }

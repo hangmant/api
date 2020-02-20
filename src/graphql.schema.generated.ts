@@ -38,6 +38,8 @@ export abstract class IMutation {
     abstract createWord(data: WordCreateInput): Word | Promise<Word>;
 
     abstract updateWord(_id: GraphQLObjectId, data: WordUpdateInput): Word | Promise<Word>;
+
+    abstract deleteWord(_id: GraphQLObjectId): Word | Promise<Word>;
 }
 
 export abstract class IQuery {

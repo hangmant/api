@@ -12,6 +12,7 @@ type Query {
 type Mutation {
   createWord(data: WordCreateInput!): Word!
   updateWord(_id: ID!, data: WordUpdateInput!): Word
+  deleteWord(_id: ID!): Word
 }
 
 input WordCreateInput {

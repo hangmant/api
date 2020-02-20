@@ -26,4 +26,9 @@ export class WordsResolver {
   updateWord(@Args('_id') _id: string, @Args('data') wordData: UpdateWord) {
     return this.wordsService.updateById(_id, wordData)
   }
+
+  @Mutation()
+  deleteWord(@Args('_id') _id: string) {
+    return this.wordsService.deleteById(_id)
+  }
 }
