@@ -2,6 +2,7 @@ import { GqlModuleOptions, GqlOptionsFactory } from '@nestjs/graphql'
 import { Injectable } from '@nestjs/common'
 import { join } from 'path'
 import * as GraphQLJSON from 'graphql-type-json'
+import { GraphQLObjectId } from 'graphql-objectid-scalar'
 
 @Injectable()
 export class GraphqlOptions implements GqlOptionsFactory {
@@ -13,7 +14,8 @@ export class GraphqlOptions implements GqlOptionsFactory {
       debug: true,
       playground: true,
       resolvers: {
-        JSON: GraphQLJSON
+        JSON: GraphQLJSON,
+        ID: GraphQLObjectId
       },
       resolverValidationOptions: {
         requireResolversForResolveType: false

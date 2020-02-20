@@ -12,7 +12,7 @@ export class CategoryCreateInput {
 
 export class WordInput {
     name: string;
-    categoryId: string;
+    categoryId: GraphQLObjectId;
 }
 
 export class Category {
@@ -28,6 +28,8 @@ export abstract class IMutation {
 
 export abstract class IQuery {
     abstract categories(): Category[] | Promise<Category[]>;
+
+    abstract findCategory(id: GraphQLObjectId): Category | Promise<Category>;
 
     abstract words(): Word[] | Promise<Word[]>;
 }
