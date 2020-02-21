@@ -7,6 +7,7 @@ type Word {
 type Query {
   words: [Word!]!
   word(_id: ID!): Word
+  randomWords(categoryId: ID, limit: Int): [Word!]!
 }
 
 type Mutation {

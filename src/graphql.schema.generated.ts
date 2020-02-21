@@ -50,6 +50,8 @@ export abstract class IQuery {
     abstract words(): Word[] | Promise<Word[]>;
 
     abstract word(_id: GraphQLObjectId): Word | Promise<Word>;
+
+    abstract randomWords(categoryId?: GraphQLObjectId, limit?: number): Word[] | Promise<Word[]>;
 }
 
 export class Word {

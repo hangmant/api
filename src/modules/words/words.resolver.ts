@@ -13,6 +13,11 @@ export class WordsResolver {
   }
 
   @Query()
+  randomWords(@Args('categoryId') categoryId: string, @Args('limit') limit: number) {
+    return this.wordsService.getRandomWords(categoryId, limit)
+  }
+
+  @Query()
   word(@Args('_id') _id) {
     return this.wordsService.findById(_id)
   }

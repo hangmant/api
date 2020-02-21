@@ -21,11 +21,29 @@ export class WordsService {
       this.wordModel
         .find({})
         .populate('category')
-        .exec()
+        .lean()
     ).pipe(
       concatMap(items => {
         return of(items)
       })
+    )
+  }
+
+  getRandomWords(categoryId: string, limit: number = 10): Observable<Word[]> {
+    return from(
+      this.wordModel
+        .aggregate()
+        .match({ ...(categoryId ? { category: categoryId } : {}) })
+        .sample(limit)
+        .lookup({
+          from: 'categories',
+          localField: 'category',
+          foreignField: '_id',
+          as: 'category'
+        })
+        .addFields({
+          category: { $arrayElemAt: ['$category', 0] }
+        })
     )
   }
 
