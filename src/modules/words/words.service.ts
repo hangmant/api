@@ -30,7 +30,12 @@ export class WordsService {
   }
 
   findById(wordId: string): Observable<Word | null> {
-    return from(this.wordModel.findById(wordId).lean())
+    return from(
+      this.wordModel
+        .findById(wordId)
+        .populate('category')
+        .lean()
+    )
   }
 
   create(word: CreateWord): Observable<Word> {
@@ -72,6 +77,7 @@ export class WordsService {
           },
           { new: true }
         )
+        .populate('category')
         .lean()
     )
   }
