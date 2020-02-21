@@ -77,6 +77,11 @@ export class WordsService {
   }
 
   deleteById(wordId: string): Observable<Word | null> {
-    return from(this.wordModel.findOneAndDelete(wordId).lean())
+    return from(
+      this.wordModel
+        .findOneAndDelete(wordId)
+        .populate('category')
+        .lean()
+    )
   }
 }
