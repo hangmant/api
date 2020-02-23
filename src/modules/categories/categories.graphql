@@ -1,6 +1,7 @@
 type Category {
   _id: ID!
   name: String!
+  color: String
   description: String
 }
 
@@ -16,10 +17,12 @@ type Mutation {
 
 input CategoryCreateInput {
   name: String!
+  color: String
   description: String
 }
 
 input CategoryUpdateInput {
   name: String
+  color: String
   description: String
 }

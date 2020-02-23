@@ -4,8 +4,8 @@ import { ReturnModelType } from '@typegoose/typegoose'
 import { from, of, Observable } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
 import { Category } from './categories.model'
-import { CreateCategory } from './interfaces/createCategory.interface'
-import { UpdateCategory } from './interfaces/updateCategory.interface'
+import { CreateCategoryDto } from './dto/createCategory.dto'
+import { UpdateCategoryDto } from './dto/updateCategory.dto'
 
 @Injectable()
 export class CategoriesService {
@@ -23,11 +23,11 @@ export class CategoriesService {
     return from(this.categoryModel.findById(categoryId).lean())
   }
 
-  create(category: CreateCategory): Observable<Category> {
+  create(category: CreateCategoryDto): Observable<Category> {
     return from(this.categoryModel.create(category))
   }
 
-  updateById(categoryId: string, categoryDate: UpdateCategory): Observable<Category | null> {
+  updateById(categoryId: string, categoryDate: UpdateCategoryDto): Observable<Category | null> {
     return from(
       this.categoryModel
         .findByIdAndUpdate(

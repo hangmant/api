@@ -7,11 +7,13 @@
 /* tslint:disable */
 export class CategoryCreateInput {
     name: string;
+    color?: string;
     description?: string;
 }
 
 export class CategoryUpdateInput {
     name?: string;
+    color?: string;
     description?: string;
 }
 
@@ -27,6 +29,7 @@ export class WordUpdateInput {
 export class Category {
     _id: GraphQLObjectId;
     name: string;
+    color?: string;
     description?: string;
 }
 

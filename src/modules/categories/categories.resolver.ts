@@ -1,7 +1,7 @@
 import { Query, Resolver, Mutation, Args } from '@nestjs/graphql'
 import { CategoriesService } from './categories.service'
-import { CreateCategory } from './interfaces/createCategory.interface'
-import { UpdateCategory } from './interfaces/updateCategory.interface'
+import { UpdateCategoryDto } from './dto/updateCategory.dto'
+import { CreateCategoryDto } from './dto/createCategory.dto'
 
 @Resolver('Category')
 export class CategoriesResolver {
@@ -13,12 +13,12 @@ export class CategoriesResolver {
   }
 
   @Mutation()
-  createCategory(@Args('data') category: CreateCategory) {
+  createCategory(@Args('data') category: CreateCategoryDto) {
     return this.categoriesService.create(category)
   }
 
   @Mutation()
-  updateCategory(@Args('_id') _id: string, @Args('data') data: UpdateCategory) {
+  updateCategory(@Args('_id') _id: string, @Args('data') data: UpdateCategoryDto) {
     return this.categoriesService.updateById(_id, data)
   }
 }
