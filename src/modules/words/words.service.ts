@@ -20,6 +20,9 @@ export class WordsService {
     return from(
       this.wordModel
         .find({})
+        .sort({
+          createdAt: -1
+        })
         .populate('category')
         .lean()
     ).pipe(
@@ -103,7 +106,7 @@ export class WordsService {
   deleteById(wordId: string): Observable<Word | null> {
     return from(
       this.wordModel
-        .findOneAndDelete(wordId)
+        .findByIdAndDelete(wordId)
         .populate('category')
         .lean()
     )
