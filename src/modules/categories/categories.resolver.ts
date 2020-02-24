@@ -12,6 +12,11 @@ export class CategoriesResolver {
     return this.categoriesService.findAll()
   }
 
+  @Query()
+  category(@Args('_id') _id) {
+    return this.categoriesService.findById(_id)
+  }
+
   @Mutation()
   createCategory(@Args('data') category: CreateCategoryDto) {
     return this.categoriesService.create(category)

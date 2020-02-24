@@ -7,7 +7,7 @@ type Category {
 
 type Query {
   categories: [Category!]!
-  findCategory(id: ID!): Category!
+  category(_id: ID!): Category!
 }
 
 type Mutation {

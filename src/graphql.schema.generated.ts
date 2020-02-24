@@ -50,7 +50,7 @@ export abstract class IMutation {
 export abstract class IQuery {
     abstract categories(): Category[] | Promise<Category[]>;
 
-    abstract findCategory(id: GraphQLObjectId): Category | Promise<Category>;
+    abstract category(_id: GraphQLObjectId): Category | Promise<Category>;
 
     abstract words(): Word[] | Promise<Word[]>;
 
