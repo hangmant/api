@@ -42,4 +42,8 @@ export class CategoriesService {
         .lean()
     )
   }
+
+  deleteById(categoryId: string): Observable<Category | null> {
+    return from(this.categoryModel.findByIdAndDelete(categoryId).lean())
+  }
 }

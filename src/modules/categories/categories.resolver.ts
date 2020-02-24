@@ -21,4 +21,9 @@ export class CategoriesResolver {
   updateCategory(@Args('_id') _id: string, @Args('data') data: UpdateCategoryDto) {
     return this.categoriesService.updateById(_id, data)
   }
+
+  @Mutation()
+  deleteCategory(@Args('_id') _id: string) {
+    return this.categoriesService.deleteById(_id)
+  }
 }
