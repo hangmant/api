@@ -12,10 +12,11 @@ export class CategoriesService {
   constructor(@InjectModel(Category) private readonly categoryModel: ReturnModelType<typeof Category>) {}
 
   findAll() {
-    return from(this.categoryModel.find({}).exec()).pipe(
-      concatMap(items => {
-        return of(items)
-      })
+    return from(
+      this.categoryModel
+        .find({})
+        .sort({ createdAt: -1 })
+        .lean()
     )
   }
 
