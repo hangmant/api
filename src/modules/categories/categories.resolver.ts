@@ -2,7 +2,11 @@ import { Query, Resolver, Mutation, Args } from '@nestjs/graphql'
 import { CategoriesService } from './categories.service'
 import { UpdateCategoryDto } from './dto/updateCategory.dto'
 import { CreateCategoryDto } from './dto/createCategory.dto'
-
+import { CategoriesLoader } from './categories.loader'
+import * as DataLoader from 'dataloader'
+import { Loader } from 'nestjs-dataloader'
+import { Category } from './categories.model'
+import { from } from 'rxjs'
 @Resolver('Category')
 export class CategoriesResolver {
   constructor(private readonly categoriesService: CategoriesService) {}
@@ -13,8 +17,8 @@ export class CategoriesResolver {
   }
 
   @Query()
-  category(@Args('_id') _id) {
-    return this.categoriesService.findById(_id)
+  category(@Args('_id') _id, @Loader(CategoriesLoader.name) categoriesLoader: DataLoader<string, Category>) {
+    return from(categoriesLoader.load(_id))
   }
 
   @Mutation()

@@ -1,7 +1,13 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Args, Mutation, Query, Resolver, ResolveProperty, Parent } from '@nestjs/graphql'
 import { WordsService } from './words.service'
 import { CreateWord } from './interface/createWord.interface'
 import { UpdateWord } from './interface/updateWord.interface'
+import * as DataLoader from 'dataloader'
+import { Category } from '../categories/categories.model'
+import { Word } from './words.model'
+import { Loader } from 'nestjs-dataloader'
+import { CategoriesLoader } from '../categories/categories.loader'
+import { from, Observable } from 'rxjs'
 
 @Resolver('Word')
 export class WordsResolver {
@@ -35,5 +41,13 @@ export class WordsResolver {
   @Mutation()
   deleteWord(@Args('_id') _id: string) {
     return this.wordsService.deleteById(_id)
+  }
+
+  @ResolveProperty('category', () => Category)
+  resolveCategory(
+    @Parent() word: Word,
+    @Loader(CategoriesLoader.name) categoriesLoader: DataLoader<string, Category>
+  ): Observable<Category | null> {
+    return from(categoriesLoader.load(word.category.toString()))
   }
 }

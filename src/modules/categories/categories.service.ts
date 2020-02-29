@@ -24,6 +24,10 @@ export class CategoriesService {
     return from(this.categoryModel.findById(categoryId).lean())
   }
 
+  findByIds(categoryIds: readonly string[]): Observable<Category[]> {
+    return from(this.categoryModel.find({ _id: { $in: categoryIds } }).lean())
+  }
+
   create(category: CreateCategoryDto): Observable<Category> {
     return from(this.categoryModel.create(category))
   }

@@ -7,7 +7,6 @@ import { Word } from './words.model'
 import { CategoriesService } from '../categories/categories.service'
 import { CreateWord } from './interface/createWord.interface'
 import { UpdateWord } from './interface/updateWord.interface'
-import { deepClone } from '../../utils'
 
 @Injectable()
 export class WordsService {
@@ -23,7 +22,6 @@ export class WordsService {
         .sort({
           createdAt: -1
         })
-        .populate('category')
         .lean()
     ).pipe(
       concatMap(items => {
@@ -38,25 +36,11 @@ export class WordsService {
         .aggregate()
         .match({ ...(categoryId ? { category: categoryId } : {}) })
         .sample(limit)
-        .lookup({
-          from: 'categories',
-          localField: 'category',
-          foreignField: '_id',
-          as: 'category'
-        })
-        .addFields({
-          category: { $arrayElemAt: ['$category', 0] }
-        })
     )
   }
 
   findById(wordId: string): Observable<Word | null> {
-    return from(
-      this.wordModel
-        .findById(wordId)
-        .populate('category')
-        .lean()
-    )
+    return from(this.wordModel.findById(wordId).lean())
   }
 
   create(word: CreateWord): Observable<Word> {
@@ -65,20 +49,10 @@ export class WordsService {
         if (!category) {
           return throwError(new NotFoundException(`Category doesn't exists`))
         }
-        return of(category)
-      }),
-      concatMap((category: any) => {
         return from(
           this.wordModel.create({
             name: word.name,
             category: word.categoryId
-          })
-        ).pipe(
-          concatMap((createdWord: any) => {
-            return of({
-              ...deepClone(createdWord),
-              category
-            })
           })
         )
       }),
@@ -98,17 +72,11 @@ export class WordsService {
           },
           { new: true }
         )
-        .populate('category')
         .lean()
     )
   }
 
   deleteById(wordId: string): Observable<Word | null> {
-    return from(
-      this.wordModel
-        .findByIdAndDelete(wordId)
-        .populate('category')
-        .lean()
-    )
+    return from(this.wordModel.findByIdAndDelete(wordId).lean())
   }
 }
