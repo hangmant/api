@@ -7,11 +7,12 @@ import * as DataLoader from 'dataloader'
 import { Loader } from 'nestjs-dataloader'
 import { Category } from './categories.model'
 import { from } from 'rxjs'
-@Resolver('Category')
+import { CategoryGraphQLModel } from './category.graphql-model'
+@Resolver(of => CategoryGraphQLModel)
 export class CategoriesResolver {
   constructor(private readonly categoriesService: CategoriesService) {}
 
-  @Query()
+  @Query(returns => [CategoryGraphQLModel])
   categories() {
     return this.categoriesService.findAll()
   }

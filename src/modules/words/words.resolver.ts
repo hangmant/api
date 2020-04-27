@@ -8,8 +8,9 @@ import { Word } from './words.model'
 import { Loader } from 'nestjs-dataloader'
 import { CategoriesLoader } from '../categories/categories.loader'
 import { from, Observable } from 'rxjs'
+import { WordsGraphQLModel } from './words.graphql-model'
 
-@Resolver('Word')
+@Resolver(of => WordsGraphQLModel)
 export class WordsResolver {
   constructor(private readonly wordsService: WordsService) {}
 
