@@ -7,36 +7,36 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @HttpCode(HttpStatus.CREATED)
-  @UseGuards(AuthGuard('local'))
   @Post('login/local')
-  login(@Request() req) {
-    return this.authService.login(req.user)
+  login(/* @Request() req */) {
+    return null
+    // return this.authService.login(req.user)
   }
 
-  @UseGuards(AuthGuard())
-  @Get('profile')
-  profile() {
-    return 'You are in your profile'
-  }
+  // @UseGuards(AuthGuard())
+  // @Get('profile')
+  // profile() {
+  //   return 'You are in your profile'
+  // }
 
-  @UseGuards(AuthGuard('google'))
-  @Get('login/google')
-  loginGoogle() {
-    return 'Login with google'
-  }
+  // @UseGuards(AuthGuard('google'))
+  // @Get('login/google')
+  // loginGoogle() {
+  //   return 'Login with google'
+  // }
 
-  @Get('callback/google')
-  googleCallback() {
-    return 'Callback Google'
-  }
+  // @Get('callback/google')
+  // googleCallback() {
+  //   return 'Callback Google'
+  // }
 
-  @Get('login/facebook')
-  loginFacebook() {
-    return 'Login with Facebook'
-  }
+  // @Get('login/facebook')
+  // loginFacebook() {
+  //   return 'Login with Facebook'
+  // }
 
-  @Get('login/github')
-  loginGithub() {
-    return 'Login with Github'
-  }
+  // @Get('login/github')
+  // loginGithub() {
+  //   return 'Login with Github'
+  // }
 }

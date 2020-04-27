@@ -5,6 +5,7 @@
  */
 
 /* tslint:disable */
+/* eslint-disable */
 export class CategoryCreateInput {
     name: string;
     color?: string;

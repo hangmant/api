@@ -14,7 +14,7 @@ export const config = {
     clientID: env.GOOGLE_CLIENT_ID || 'clientId',
     clientSecret: env.GOOGLE_CLIENT_SECRET || 'secregoogle'
   },
-  mongoDBUrl: env.MONGO_DB_URL || 'mongodb://localhost/severly',
+  mongoDBUrl: env.MONGO_DB_URL || 'mongodb://localhost/hangman-api',
   port: parseInt(env.PORT, 10) || 8087,
   host: env.HOST
 }
