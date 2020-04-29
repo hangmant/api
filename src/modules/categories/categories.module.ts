@@ -12,11 +12,11 @@ import { CategoriesService } from './categories.service'
   providers: [
     CategoriesResolver,
     CategoriesService,
+    CategoriesLoader,
     {
       provide: APP_INTERCEPTOR,
       useClass: DataLoaderInterceptor
-    },
-    CategoriesLoader
+    }
   ],
   exports: [CategoriesLoader, CategoriesService]
 })

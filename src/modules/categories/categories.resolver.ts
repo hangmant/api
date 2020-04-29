@@ -17,7 +17,7 @@ export class CategoriesResolver {
     return this.categoriesService.findAll()
   }
 
-  @Query()
+  @Query(() => [Category])
   category(@Args('_id') _id, @Loader(CategoriesLoader.name) categoriesLoader: DataLoader<string, Category>) {
     return from(categoriesLoader.load(_id))
   }

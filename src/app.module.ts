@@ -15,7 +15,7 @@ import { CategoriesModule } from './modules/categories/categories.module'
       useClass: GraphqlOptions
     }),
     AuthModule,
-    WordsModule,
+    // WordsModule,
     CategoriesModule
   ]
 })
