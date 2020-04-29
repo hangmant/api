@@ -5131,10 +5131,10 @@ negotiator@0.6.2:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.2.tgz#feacf7ccf525a77ae9634436a64883ffeca346fb"
   integrity sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw==
 
-nestjs-dataloader@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/nestjs-dataloader/-/nestjs-dataloader-7.0.0.tgz#b90d576e075eaa2b7ba0e00590aa20fa80b057ae"
-  integrity sha512-mUQFkGDH5c542NGc54o/ZYf9gobOUIYuPr9iU8kgq9TAeqaRIppV6FpsLMJxLvSxNva0WtWlNNd1mNXzYiQkbA==
+nestjs-dataloader-dan@2.0.52-dan:
+  version "2.0.52-dan"
+  resolved "https://registry.yarnpkg.com/nestjs-dataloader-dan/-/nestjs-dataloader-dan-2.0.52-dan.tgz#24badc37cb30efae2690dad32e815787eec76556"
+  integrity sha512-e+62Wm45DwmS3eJsVlAAbZwula026wySDFanSUaVww/WZ+YW5U8wdNDVQT5lA4snljHBNmyHf2MqGK4KXwYxXQ==
   dependencies:
     dataloader "^2.0.0"
     rxjs "^6.5.4"
