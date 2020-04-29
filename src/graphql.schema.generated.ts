@@ -34,6 +34,18 @@ export class Category {
     description?: string;
 }
 
+export abstract class IQuery {
+    abstract categories(): Category[] | Promise<Category[]>;
+
+    abstract category(_id: GraphQLObjectId): Category | Promise<Category>;
+
+    abstract words(): Word[] | Promise<Word[]>;
+
+    abstract word(_id: GraphQLObjectId): Word | Promise<Word>;
+
+    abstract randomWords(categoryId?: GraphQLObjectId, limit?: number): Word[] | Promise<Word[]>;
+}
+
 export abstract class IMutation {
     abstract createCategory(data: CategoryCreateInput): Category | Promise<Category>;
 
@@ -46,18 +58,6 @@ export abstract class IMutation {
     abstract updateWord(_id: GraphQLObjectId, data: WordUpdateInput): Word | Promise<Word>;
 
     abstract deleteWord(_id: GraphQLObjectId): Word | Promise<Word>;
-}
-
-export abstract class IQuery {
-    abstract categories(): Category[] | Promise<Category[]>;
-
-    abstract category(_id: GraphQLObjectId): Category | Promise<Category>;
-
-    abstract words(): Word[] | Promise<Word[]>;
-
-    abstract word(_id: GraphQLObjectId): Word | Promise<Word>;
-
-    abstract randomWords(categoryId?: GraphQLObjectId, limit?: number): Word[] | Promise<Word[]>;
 }
 
 export class Word {

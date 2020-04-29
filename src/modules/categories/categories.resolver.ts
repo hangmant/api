@@ -4,19 +4,20 @@ import { UpdateCategoryDto } from './dto/updateCategory.dto'
 import { CreateCategoryDto } from './dto/createCategory.dto'
 import { CategoriesLoader } from './categories.loader'
 import * as DataLoader from 'dataloader'
-import { Loader } from 'nestjs-dataloader'
+import { Loader } from 'nestjs-dataloader-dan'
 import { Category } from './categories.model'
 import { from } from 'rxjs'
-@Resolver('Category')
+import { CategoryGraphQLModel } from './category.graphql-model'
+@Resolver(of => CategoryGraphQLModel)
 export class CategoriesResolver {
   constructor(private readonly categoriesService: CategoriesService) {}
 
-  @Query()
+  @Query(returns => [CategoryGraphQLModel])
   categories() {
     return this.categoriesService.findAll()
   }
 
-  @Query()
+  @Query(() => [Category])
   category(@Args('_id') _id, @Loader(CategoriesLoader.name) categoriesLoader: DataLoader<string, Category>) {
     return from(categoriesLoader.load(_id))
   }

@@ -1,6 +1,6 @@
 import * as DataLoader from 'dataloader'
 import { Injectable } from '@nestjs/common'
-import { NestDataLoader } from 'nestjs-dataloader'
+import { NestDataLoader } from 'nestjs-dataloader-dan'
 import { CategoriesService } from './categories.service'
 import { Category } from './categories.model'
 import { concatMap } from 'rxjs/operators'
