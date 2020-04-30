@@ -7,7 +7,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @HttpCode(HttpStatus.CREATED)
-  @Post('login/local')
+  @Post('login/jwt')
   login(@Body() userCredentials: LoginLocalDto) {
     return this.authService.login(userCredentials)
   }

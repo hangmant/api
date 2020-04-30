@@ -8,10 +8,13 @@ import { Loader } from 'nestjs-dataloader-dan'
 import { Category } from './categories.model'
 import { from } from 'rxjs'
 import { CategoryGraphQLModel } from './category.graphql-model'
+import { UseGuards } from '@nestjs/common'
+import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
 @Resolver(of => CategoryGraphQLModel)
 export class CategoriesResolver {
   constructor(private readonly categoriesService: CategoriesService) {}
 
+  @UseGuards(GqlAuthGuard)
   @Query(returns => [CategoryGraphQLModel])
   categories() {
     return this.categoriesService.findAll()

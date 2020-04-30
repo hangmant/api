@@ -15,10 +15,6 @@ export class AuthService {
     private readonly bcryptService: BcryptService
   ) {}
 
-  verifyData(username: string, password: string) {
-    return of({})
-  }
-
   login({ username, password }: LoginLocalDto) {
     return this.usersService.findByEmail(username).pipe(
       concatMap(user => {
@@ -43,8 +39,5 @@ export class AuthService {
         )
       })
     )
-    // return {
-    //   accessToken: this.jwtService.sign(payload)
-    // }
   }
 }

@@ -2,12 +2,11 @@ import { Module } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
 import { config } from '../../config'
+import { BcryptModule } from '../bcrypt/bcrypt.module'
+import { UserModule } from '../users/users.module'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 import { JwtStrategy } from './strategies/jwt.strategy'
-import { LocalStrategy } from './strategies/local.strategy'
-import { UserModule } from '../users/users.module'
-import { BcryptModule } from '../bcrypt/bcrypt.module'
 
 @Module({
   imports: [
@@ -24,7 +23,7 @@ import { BcryptModule } from '../bcrypt/bcrypt.module'
     UserModule
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy /* GoogleStrategy */],
+  providers: [AuthService, JwtStrategy],
   exports: [AuthService]
 })
 export class AuthModule {}
