@@ -17,8 +17,12 @@ export class UsersService {
     private readonly bcryptService: BcryptService
   ) {}
 
-  findById(id: string) {
+  findById(id: string): Observable<User> {
     return from(this.userModel.findById(id).lean())
+  }
+
+  findByEmail(email: string): Observable<User> {
+    return from(this.userModel.findOne({ email }).lean())
   }
 
   create(user: CreateUser): Observable<User> {
