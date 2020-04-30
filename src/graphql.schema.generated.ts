@@ -18,6 +18,18 @@ export class CategoryUpdateInput {
     description?: string;
 }
 
+export class UserCreateInput {
+    name: string;
+    email: string;
+    password: string;
+}
+
+export class UserUpdateInput {
+    name?: string;
+    email?: string;
+    password?: string;
+}
+
 export class WordCreateInput {
     name: string;
     categoryId: GraphQLObjectId;
@@ -39,6 +51,8 @@ export abstract class IQuery {
 
     abstract category(_id: GraphQLObjectId): Category | Promise<Category>;
 
+    abstract user(_id: GraphQLObjectId): User | Promise<User>;
+
     abstract words(): Word[] | Promise<Word[]>;
 
     abstract word(_id: GraphQLObjectId): Word | Promise<Word>;
@@ -53,11 +67,20 @@ export abstract class IMutation {
 
     abstract deleteCategory(_id: GraphQLObjectId): Category | Promise<Category>;
 
+    abstract createUser(data: UserCreateInput): User | Promise<User>;
+
     abstract createWord(data: WordCreateInput): Word | Promise<Word>;
 
     abstract updateWord(_id: GraphQLObjectId, data: WordUpdateInput): Word | Promise<Word>;
 
     abstract deleteWord(_id: GraphQLObjectId): Word | Promise<Word>;
+}
+
+export class User {
+    _id: GraphQLObjectId;
+    name: string;
+    email: string;
+    password: string;
 }
 
 export class Word {

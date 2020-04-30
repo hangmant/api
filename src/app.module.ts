@@ -6,6 +6,7 @@ import { GraphqlOptions } from './graphql.options'
 import { CommonModule } from './modules/common/common.module'
 import { WordsModule } from './modules/words/words.module'
 import { CategoriesModule } from './modules/categories/categories.module'
+import { UserModule } from './modules/users/users.module'
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CategoriesModule } from './modules/categories/categories.module'
       useClass: GraphqlOptions
     }),
     AuthModule,
+    UserModule,
     // WordsModule,
     CategoriesModule
   ]
