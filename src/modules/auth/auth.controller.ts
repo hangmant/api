@@ -1,11 +1,14 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
+import { ApiResponse, ApiQuery } from '@nestjs/swagger'
 import { AuthService } from './auth.service'
 import { LoginLocalDto } from './dtos/login-local.dto'
+import { ResLoginLocal } from './dtos/res-login-local.dto'
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiResponse({ status: HttpStatus.CREATED, type: ResLoginLocal })
   @HttpCode(HttpStatus.CREATED)
   @Post('login/jwt')
   login(@Body() userCredentials: LoginLocalDto) {
