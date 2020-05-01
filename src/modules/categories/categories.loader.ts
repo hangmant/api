@@ -13,7 +13,6 @@ export class CategoriesLoader implements NestDataLoader<string, Category> {
 
   generateDataLoader(): DataLoader<string, Category> {
     return new DataLoader<string, Category>(keys => {
-      console.log('Dante: CategoriesLoader -> constructor -> keys', keys)
       return this.categoriesService
         .findByIds(keys)
         .pipe(concatMap(items => of(dlSort(keys, items))))
