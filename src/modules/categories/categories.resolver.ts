@@ -10,11 +10,11 @@ import { CategoriesService } from './categories.service'
 import { CreateCategoryDto } from './dto/createCategory.dto'
 import { UpdateCategoryDto } from './dto/updateCategory.dto'
 
+@UseGuards(GqlAuthGuard)
 @Resolver('Category')
 export class CategoriesResolver {
   constructor(private readonly categoriesService: CategoriesService) {}
 
-  @UseGuards(GqlAuthGuard)
   @Query()
   categories() {
     return this.categoriesService.findAll()

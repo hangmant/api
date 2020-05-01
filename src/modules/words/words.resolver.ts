@@ -1,7 +1,9 @@
+import { UseGuards } from '@nestjs/common'
 import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
 import * as DataLoader from 'dataloader'
 import { Loader } from 'nestjs-dataloader-dan'
 import { from, Observable } from 'rxjs'
+import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
 import { CategoriesLoader } from '../categories/categories.loader'
 import { Category } from '../categories/categories.model'
 import { CreateWord } from './interface/createWord.interface'
@@ -9,6 +11,7 @@ import { UpdateWord } from './interface/updateWord.interface'
 import { Word } from './words.model'
 import { WordsService } from './words.service'
 
+@UseGuards(GqlAuthGuard)
 @Resolver('Word')
 export class WordsResolver {
   constructor(private readonly wordsService: WordsService) {}
