@@ -23,10 +23,6 @@ export class WordsService {
           createdAt: -1
         })
         .lean()
-    ).pipe(
-      concatMap(items => {
-        return of(items)
-      })
     )
   }
 

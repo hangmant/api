@@ -1,15 +1,15 @@
-import { Args, Mutation, Query, Resolver, Parent, ResolveField } from '@nestjs/graphql'
-import { WordsService } from './words.service'
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
+import * as DataLoader from 'dataloader'
+import { Loader } from 'nestjs-dataloader-dan'
+import { from, Observable } from 'rxjs'
+import { CategoriesLoader } from '../categories/categories.loader'
+import { Category } from '../categories/categories.model'
 import { CreateWord } from './interface/createWord.interface'
 import { UpdateWord } from './interface/updateWord.interface'
-import * as DataLoader from 'dataloader'
-import { Category } from '../categories/categories.model'
 import { Word } from './words.model'
-import { Loader } from 'nestjs-dataloader-dan'
-import { CategoriesLoader } from '../categories/categories.loader'
-import { from, Observable } from 'rxjs'
+import { WordsService } from './words.service'
 
-@Resolver()
+@Resolver('Word')
 export class WordsResolver {
   constructor(private readonly wordsService: WordsService) {}
 

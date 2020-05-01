@@ -17,7 +17,7 @@ import { UserModule } from './modules/users/users.module'
     }),
     AuthModule,
     UserModule,
-    // WordsModule,
+    WordsModule,
     CategoriesModule
   ]
 })
