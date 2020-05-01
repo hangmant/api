@@ -1,21 +1,21 @@
-import { Query, Resolver, Mutation, Args } from '@nestjs/graphql'
-import { CategoriesService } from './categories.service'
-import { UpdateCategoryDto } from './dto/updateCategory.dto'
-import { CreateCategoryDto } from './dto/createCategory.dto'
-import { CategoriesLoader } from './categories.loader'
+import { UseGuards } from '@nestjs/common'
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import * as DataLoader from 'dataloader'
 import { Loader } from 'nestjs-dataloader-dan'
-import { Category } from './categories.model'
 import { from } from 'rxjs'
-import { CategoryGraphQLModel } from './category.graphql-model'
-import { UseGuards } from '@nestjs/common'
 import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
-@Resolver(of => CategoryGraphQLModel)
+import { CategoriesLoader } from './categories.loader'
+import { Category } from './categories.model'
+import { CategoriesService } from './categories.service'
+import { CreateCategoryDto } from './dto/createCategory.dto'
+import { UpdateCategoryDto } from './dto/updateCategory.dto'
+
+@Resolver('Category')
 export class CategoriesResolver {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @UseGuards(GqlAuthGuard)
-  @Query(returns => [CategoryGraphQLModel])
+  @Query()
   categories() {
     return this.categoriesService.findAll()
   }
