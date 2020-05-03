@@ -17,8 +17,8 @@ export class UsersService {
     private readonly bcryptService: BcryptService
   ) {}
 
-  findById(id: string): Observable<User> {
-    return from(this.userModel.findById(id).lean())
+  findById(id: string, proyection?: any): Observable<User> {
+    return from(this.userModel.findById(id, proyection).lean())
   }
 
   findByEmail(email: string): Observable<User> {
