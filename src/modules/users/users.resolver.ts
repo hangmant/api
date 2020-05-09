@@ -3,6 +3,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
 import { User } from './users.model'
 import { UsersService } from './users.service'
+import { CurrentUser } from '../../decorators/currentUser.decorator'
 
 @Resolver('User')
 export class UsersResolver {
@@ -12,6 +13,12 @@ export class UsersResolver {
   @Query()
   user(@Args('_id') _id: string) {
     return this.userService.findById(_id)
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Query()
+  me(@CurrentUser() user) {
+    return this.userService.findById(user._id)
   }
 
   @Mutation()

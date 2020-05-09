@@ -2,11 +2,11 @@ type User {
   _id: ID!
   name: String!
   email: String!
-  password: String!
 }
 
 type Query {
   user(_id: ID!): User
+  me: User
 }
 
 type Mutation {

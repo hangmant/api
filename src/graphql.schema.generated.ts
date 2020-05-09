@@ -53,6 +53,8 @@ export abstract class IQuery {
 
     abstract user(_id: GraphQLObjectId): User | Promise<User>;
 
+    abstract me(): User | Promise<User>;
+
     abstract words(): Word[] | Promise<Word[]>;
 
     abstract word(_id: GraphQLObjectId): Word | Promise<Word>;
@@ -80,7 +82,6 @@ export class User {
     _id: GraphQLObjectId;
     name: string;
     email: string;
-    password: string;
 }
 
 export class Word {
