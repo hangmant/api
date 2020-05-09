@@ -6,6 +6,7 @@ import { catchError, concatMap } from 'rxjs/operators'
 import { BcryptService } from '../bcrypt/bcrypt.service'
 import { LoggerService } from '../logger/logger.service'
 import { CreateUser } from './interface/createUser.interface'
+import { UpdateUser } from './interface/updateUser.interface'
 import { User } from './users.model'
 
 @Injectable()
@@ -23,6 +24,20 @@ export class UsersService {
 
   findByEmail(email: string): Observable<User> {
     return from(this.userModel.findOne({ email }).lean())
+  }
+
+  update(id: string, data: UpdateUser): Observable<User> {
+    return from(
+      this.userModel
+        .findByIdAndUpdate(
+          id,
+          {
+            $set: data
+          },
+          { new: true }
+        )
+        .lean()
+    )
   }
 
   create(user: CreateUser): Observable<User> {

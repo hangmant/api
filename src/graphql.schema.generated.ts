@@ -71,6 +71,8 @@ export abstract class IMutation {
 
     abstract createUser(data: UserCreateInput): User | Promise<User>;
 
+    abstract updateMe(data: UserUpdateInput): User | Promise<User>;
+
     abstract createWord(data: WordCreateInput): Word | Promise<Word>;
 
     abstract updateWord(_id: GraphQLObjectId, data: WordUpdateInput): Word | Promise<Word>;
