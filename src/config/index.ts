@@ -16,5 +16,15 @@ export const config = {
   },
   mongoDBUrl: env.MONGO_DB_URL || 'mongodb://localhost/hangman-api',
   port: parseInt(env.PORT, 10) || 8087,
-  host: env.HOST
+  host: env.HOST,
+  aws: {
+    s3: {
+      hangmanBucket: {
+        name: env.AWS_S3_BUCKET_NAME,
+        expires: 60
+      },
+      accessKeyId: env.AWS_ACCESS_KEY_ID,
+      secretAcessKey: env.AWS_SECRET_ACCESS_KEY
+    }
+  }
 }
