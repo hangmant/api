@@ -13,7 +13,6 @@ export class StorageController {
   @HttpCode(HttpStatus.OK)
   @Post('token')
   token(@Body() fileInfo: ReqPresignedPostDto) {
-    console.log('Dante: StorageController -> token -> fileInfo', fileInfo)
     return this.storageService.getPresignedPostData(fileInfo)
   }
 }

@@ -1,6 +1,11 @@
 type User {
   _id: ID!
-  name: String!
+  username: String
+  firstName: String!
+  lastName: String!
+  phone: String
+  address: String
+  country: String
   email: String!
 }
 
@@ -15,7 +20,12 @@ type Mutation {
 }
 
 input UserCreateInput {
-  name: String!
+  username: String
+  firstName: String!
+  lastName: String!
+  phone: String
+  address: String
+  country: String
   email: String!
   password: String!
 }

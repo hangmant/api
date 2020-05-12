@@ -19,7 +19,12 @@ export class CategoryUpdateInput {
 }
 
 export class UserCreateInput {
-    name: string;
+    username?: string;
+    firstName: string;
+    lastName: string;
+    phone?: string;
+    address?: string;
+    country?: string;
     email: string;
     password: string;
 }
@@ -82,7 +87,12 @@ export abstract class IMutation {
 
 export class User {
     _id: GraphQLObjectId;
-    name: string;
+    username?: string;
+    firstName: string;
+    lastName: string;
+    phone?: string;
+    address?: string;
+    country?: string;
     email: string;
 }
 
