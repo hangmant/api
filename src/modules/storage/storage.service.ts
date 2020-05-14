@@ -1,20 +1,14 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common'
+import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common'
 import * as AWS from 'aws-sdk'
 import { from, Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { config } from '../../config'
+import { S3_PROVIDER } from './storage.constants'
 import { PresignedFields } from './types/presigned-fields.type'
-
-const s3 = new AWS.S3()
-
-AWS.config.update({
-  accessKeyId: config.aws.s3.accessKeyId,
-  secretAccessKey: config.aws.s3.secretAcessKey
-})
 
 @Injectable()
 export class StorageService {
-  constructor() {}
+  constructor(@Inject(S3_PROVIDER) private readonly s3: AWS.S3) {}
 
   // TODO: Solve error catching error here
   private async createPresignedPost({ key, contentType }: PresignedFields): Promise<AWS.S3.PresignedPost> {
@@ -29,7 +23,7 @@ export class StorageService {
     }
 
     return new Promise((resolve, reject) => {
-      s3.createPresignedPost(params, (err, data) => {
+      this.s3.createPresignedPost(params, (err, data) => {
         if (err) {
           reject(err)
         }
