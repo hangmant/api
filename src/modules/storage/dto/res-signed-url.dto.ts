@@ -1,0 +1,3 @@
+class ResSignedUrlDto {
+  url: string
+}

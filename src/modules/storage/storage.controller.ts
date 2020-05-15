@@ -13,6 +13,6 @@ export class StorageController {
   @HttpCode(HttpStatus.OK)
   @Post('token')
   token(@Body() fileInfo: ReqPresignedPostDto) {
-    return this.storageService.getPresignedPostData(fileInfo)
+    return this.storageService.createSignedUrl(fileInfo.key, fileInfo.contentType)
   }
 }

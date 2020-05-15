@@ -8,7 +8,9 @@ export const S3Provider: Provider = {
   useFactory() {
     return new AWS.S3({
       accessKeyId: config.aws.s3.accessKeyId,
-      secretAccessKey: config.aws.s3.secretAcessKey
+      secretAccessKey: config.aws.s3.secretAcessKey,
+      signatureVersion: 'v4',
+      region: 'us-east-1'
     })
   }
 }
