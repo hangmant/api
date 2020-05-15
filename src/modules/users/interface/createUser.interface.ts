@@ -7,4 +7,5 @@ export interface CreateUser {
   country?: string
   email: string
   password: string
+  avatar?: string
 }

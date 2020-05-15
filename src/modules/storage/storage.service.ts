@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common'
 import * as AWS from 'aws-sdk'
 import { config } from '../../config'
 import { S3_PROVIDER } from './storage.constants'
+import { ResSignedUrlDto } from './dto/res-signed-url.dto'
 
 const { hangmanBucket } = config.aws.s3
 

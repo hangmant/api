@@ -7,6 +7,7 @@ type User {
   address: String
   country: String
   email: String!
+  avatar: String
 }
 
 type Query {
@@ -28,10 +29,16 @@ input UserCreateInput {
   country: String
   email: String!
   password: String!
+  avatar: String
 }
 
 input UserUpdateInput {
-  name: String
+  username: String
+  firstName: String
+  lastName: String
+  phone: String
+  address: String
+  country: String
   email: String
-  password: String
+  avatar: String
 }

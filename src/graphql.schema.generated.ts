@@ -27,12 +27,18 @@ export class UserCreateInput {
     country?: string;
     email: string;
     password: string;
+    avatar?: string;
 }
 
 export class UserUpdateInput {
-    name?: string;
+    username?: string;
+    firstName?: string;
+    lastName?: string;
+    phone?: string;
+    address?: string;
+    country?: string;
     email?: string;
-    password?: string;
+    avatar?: string;
 }
 
 export class WordCreateInput {
@@ -94,6 +100,7 @@ export class User {
     address?: string;
     country?: string;
     email: string;
+    avatar?: string;
 }
 
 export class Word {

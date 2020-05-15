@@ -39,6 +39,11 @@ export class User extends TimeStamps {
   email: string
 
   @IsString()
+  @IsOptional()
+  @prop()
+  avatar?: string
+
+  @IsString()
   @IsNotEmpty()
   @prop({ required: true })
   password: string

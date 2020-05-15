@@ -14,7 +14,6 @@ export class UsersService {
   constructor(
     @InjectModel(User) private readonly userModel: ReturnModelType<typeof User>,
     private readonly logger: LoggerService,
-    // TODO: move encryptation function to another module
     private readonly bcryptService: BcryptService
   ) {}
 

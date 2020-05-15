@@ -1,3 +1,3 @@
-class ResSignedUrlDto {
+export class ResSignedUrlDto {
   url: string
 }
