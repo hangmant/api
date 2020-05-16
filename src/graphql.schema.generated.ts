@@ -62,6 +62,8 @@ export abstract class IQuery {
 
     abstract category(_id: GraphQLObjectId): Category | Promise<Category>;
 
+    abstract countries(): Country[] | Promise<Country[]>;
+
     abstract user(_id: GraphQLObjectId): User | Promise<User>;
 
     abstract me(): User | Promise<User>;
@@ -89,6 +91,12 @@ export abstract class IMutation {
     abstract updateWord(_id: GraphQLObjectId, data: WordUpdateInput): Word | Promise<Word>;
 
     abstract deleteWord(_id: GraphQLObjectId): Word | Promise<Word>;
+}
+
+export class Country {
+    name: string;
+    flag: string;
+    alpha2Code?: string;
 }
 
 export class User {

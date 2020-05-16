@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common'
 import { join } from 'path'
 import * as GraphQLJSON from 'graphql-type-json'
 import { GraphQLObjectId } from 'graphql-objectid-scalar'
+import { CountriesAPI } from './datasources/countries.datasource'
 
 @Injectable()
 export class GraphqlOptions implements GqlOptionsFactory {
@@ -13,6 +14,11 @@ export class GraphqlOptions implements GqlOptionsFactory {
       installSubscriptionHandlers: true,
       debug: true,
       playground: true,
+      dataSources: () => {
+        return {
+          countriesAPI: new CountriesAPI()
+        }
+      },
       resolvers: {
         JSON: GraphQLJSON,
         ID: GraphQLObjectId
