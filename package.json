@@ -50,7 +50,7 @@
     "lodash.get": "^4.4.2",
     "lodash.keyby": "^4.6.0",
     "mongoose": "5.9.10",
-    "nestjs-dataloader-dan": "2.0.52-dan",
+    "nestjs-dataloader-dan": "2.0.5",
     "nestjs-typegoose": "^7.1.16",
     "passport": "^0.4.0",
     "passport-google-oauth": "^2.0.0",

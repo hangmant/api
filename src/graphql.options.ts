@@ -7,7 +7,7 @@ import { CountriesAPI } from './datasources/countries.datasource'
 
 @Injectable()
 export class GraphqlOptions implements GqlOptionsFactory {
-  createGqlOptions(): Promise<GqlModuleOptions> | GqlModuleOptions {
+  createGqlOptions(): GqlModuleOptions {
     return {
       context: ({ req, res }) => ({ req, res }),
       typePaths: ['./**/*.graphql'],
