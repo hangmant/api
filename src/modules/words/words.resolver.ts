@@ -1,7 +1,7 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
 import * as DataLoader from 'dataloader'
-import { Loader } from 'nestjs-dataloader-dan'
+import { Loader } from 'nestjs-dataloader'
 import { from, Observable } from 'rxjs'
 import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
 import { CategoriesLoader } from '../categories/categories.loader'
