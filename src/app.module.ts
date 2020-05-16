@@ -8,6 +8,7 @@ import { LoggerModule } from './modules/logger/logger.module'
 import { StorageModule } from './modules/storage/storage.module'
 import { UserModule } from './modules/users/users.module'
 import { WordsModule } from './modules/words/words.module'
+import { CountriesModule } from './modules/countries/countries.module'
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { WordsModule } from './modules/words/words.module'
     GraphQLModule.forRootAsync({
       useClass: GraphqlOptions
     }),
+    CountriesModule,
     AuthModule,
     UserModule,
     WordsModule,

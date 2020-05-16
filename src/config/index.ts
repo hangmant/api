@@ -17,6 +17,7 @@ export const config = {
   mongoDBUrl: env.MONGO_DB_URL || 'mongodb://localhost/hangman-api',
   port: parseInt(env.PORT, 10) || 8087,
   host: env.HOST,
+  restCountriesApi: 'https://restcountries.eu/rest/v2',
   aws: {
     s3: {
       hangmanBucket: {
