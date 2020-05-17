@@ -1,7 +1,7 @@
 type Country {
   name: String!
-  flag: String!
-  alpha2Code: String
+  flag: String
+  alpha2Code: String!
 }
 
 type Query {

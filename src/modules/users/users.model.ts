@@ -1,6 +1,7 @@
 import { prop } from '@typegoose/typegoose'
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
 import { IsEmail, IsNotEmpty, IsString, IsOptional } from 'class-validator'
+import { CountryModel } from '../countries/country.model'
 
 export class User extends TimeStamps {
   @IsString()
@@ -28,10 +29,9 @@ export class User extends TimeStamps {
   @prop()
   address?: string
 
-  @IsString()
   @IsOptional()
   @prop()
-  country?: string
+  country?: CountryModel
 
   @IsEmail()
   @IsNotEmpty()

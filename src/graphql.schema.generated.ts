@@ -18,13 +18,19 @@ export class CategoryUpdateInput {
     description?: string;
 }
 
+export class CountryInput {
+    name: string;
+    flag?: string;
+    alpha2Code: string;
+}
+
 export class UserCreateInput {
     username?: string;
     firstName: string;
     lastName: string;
     phone?: string;
     address?: string;
-    country?: string;
+    country?: CountryInput;
     email: string;
     password: string;
     avatar?: string;
@@ -36,7 +42,7 @@ export class UserUpdateInput {
     lastName?: string;
     phone?: string;
     address?: string;
-    country?: string;
+    country?: CountryInput;
     email?: string;
     avatar?: string;
 }
@@ -95,8 +101,8 @@ export abstract class IMutation {
 
 export class Country {
     name: string;
-    flag: string;
-    alpha2Code?: string;
+    flag?: string;
+    alpha2Code: string;
 }
 
 export class User {
@@ -106,7 +112,7 @@ export class User {
     lastName: string;
     phone?: string;
     address?: string;
-    country?: string;
+    country?: Country;
     email: string;
     avatar?: string;
 }

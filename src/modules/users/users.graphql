@@ -5,7 +5,7 @@ type User {
   lastName: String!
   phone: String
   address: String
-  country: String
+  country: Country
   email: String!
   avatar: String
 }
@@ -20,13 +20,19 @@ type Mutation {
   updateMe(data: UserUpdateInput!): User!
 }
 
+input CountryInput {
+  name: String!
+  flag: String
+  alpha2Code: String!
+}
+
 input UserCreateInput {
   username: String
   firstName: String!
   lastName: String!
   phone: String
   address: String
-  country: String
+  country: CountryInput
   email: String!
   password: String!
   avatar: String
@@ -38,7 +44,7 @@ input UserUpdateInput {
   lastName: String
   phone: String
   address: String
-  country: String
+  country: CountryInput
   email: String
   avatar: String
 }
