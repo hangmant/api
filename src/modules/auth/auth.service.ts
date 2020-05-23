@@ -29,8 +29,7 @@ export class AuthService {
             }
 
             const payload: JwtPayload = {
-              // TODO: Solve type.
-              sub: (user as any)._id,
+              sub: user._id,
               fullName: `${user.firstName}`,
               email: user.email
             }

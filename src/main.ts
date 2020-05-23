@@ -28,11 +28,7 @@ async function bootstrap() {
   app.use(passport.session())
 
   // Swagger
-  const options = new DocumentBuilder()
-    .setTitle('Hangman API')
-    .setDescription('')
-    .setVersion('0.0.1')
-    .build()
+  const options = new DocumentBuilder().setTitle('Hangman API').setDescription('').setVersion('0.0.1').build()
   const document = SwaggerModule.createDocument(app, options)
   SwaggerModule.setup('api', app, document)
 
