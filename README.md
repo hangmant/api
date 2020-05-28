@@ -1,6 +1,6 @@
-# Hangman API
+# Hangwoman API
 
-API for Hangman Game
+API for Hangwoman game
 
 ## Install
 
