@@ -4,5 +4,6 @@
 README.md
 docker
 node_modules
+npm-debug.log
 tmp
 build
