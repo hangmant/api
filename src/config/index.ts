@@ -35,5 +35,6 @@ export const config = {
       user: process.env.MAILER__SMPT__USER,
       pass: process.env.MAILER__SMPT__PASS
     }
-  }
+  },
+  hangwomanApi: process.env.HANGWOMAN_API
 }

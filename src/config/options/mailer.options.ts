@@ -2,6 +2,7 @@ import { MailerOptions as IMailerOptions, MailerOptionsFactory } from '@nestjs-m
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter'
 import { Injectable } from '@nestjs/common'
 import { config } from '../index'
+import { join } from 'path'
 
 @Injectable()
 export class MailerOptions implements MailerOptionsFactory {
@@ -15,14 +16,14 @@ export class MailerOptions implements MailerOptionsFactory {
           user: config.mailer.smpt.user,
           pass: config.mailer.smpt.pass
         }
+      },
+      template: {
+        dir: join(__dirname, '../../templates/'),
+        adapter: new HandlebarsAdapter(),
+        options: {
+          strict: true
+        }
       }
-      // template: {
-      //   dir: __dirname + '/templates',
-      //   adapter: new HandlebarsAdapter(),
-      //   options: {
-      //     strict: true
-      //   }
-      // }
     }
   }
 }

@@ -9,6 +9,7 @@ import { CreateUser } from './interface/createUser.interface'
 import { UpdateUser } from './interface/updateUser.interface'
 import { User } from './users.model'
 import { MailerService } from '@nestjs-modules/mailer'
+import { config } from '../../config'
 
 @Injectable()
 export class UsersService {
@@ -70,15 +71,10 @@ export class UsersService {
         to: user.email,
         from: 'noreply@hangwoman.com',
         subject: 'HangWoman.com - Registration Confirmation',
-        text: `Thank you for registering on HangWoman.com
-          Please confirm your email by clicking on the link below:
-          http://localhost:8087/confirm-email?token=9129j9jd20
-
-          Many Thanks
-          Dante Calderon
-          HangWoman CEO
-          HangWoman.com
-        `
+        template: 'email-confirmation',
+        context: {
+          confirmEmailLink: config.hangwomanApi
+        }
       })
     ).subscribe(
       result => {
