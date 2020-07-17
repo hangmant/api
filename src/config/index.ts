@@ -27,5 +27,13 @@ export const config = {
       accessKeyId: env.AWS_ACCESS_KEY_ID,
       secretAcessKey: env.AWS_SECRET_ACCESS_KEY
     }
+  },
+  mailer: {
+    smpt: {
+      host: process.env.MAILER__SMPT__HOST,
+      port: process.env.MAILER__SMPT__PORT,
+      user: process.env.MAILER__SMPT__USER,
+      pass: process.env.MAILER__SMPT__PASS
+    }
   }
 }

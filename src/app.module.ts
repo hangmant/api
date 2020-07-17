@@ -9,11 +9,16 @@ import { StorageModule } from './modules/storage/storage.module'
 import { UserModule } from './modules/users/users.module'
 import { WordsModule } from './modules/words/words.module'
 import { CountriesModule } from './modules/countries/countries.module'
+import { MailerModule } from '@nestjs-modules/mailer'
+import { MailerOptions } from './config/options/mailer.options'
 
 @Module({
   imports: [
     LoggerModule,
     CommonModule,
+    MailerModule.forRootAsync({
+      useClass: MailerOptions
+    }),
     GraphQLModule.forRootAsync({
       useClass: GraphqlOptions
     }),
