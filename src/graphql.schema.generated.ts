@@ -18,6 +18,10 @@ export class CategoryUpdateInput {
     description?: string;
 }
 
+export class EmailVerifyInput {
+    token: string;
+}
+
 export class CountryInput {
     name: string;
     flag?: string;
@@ -88,6 +92,8 @@ export abstract class IMutation {
 
     abstract deleteCategory(_id: GraphQLObjectId): Category | Promise<Category>;
 
+    abstract verifyEmail(data: EmailVerifyInput): EmailVerifyResponse | Promise<EmailVerifyResponse>;
+
     abstract createUser(data: UserCreateInput): User | Promise<User>;
 
     abstract updateMe(data: UserUpdateInput): User | Promise<User>;
@@ -103,6 +109,10 @@ export class Country {
     name: string;
     flag?: string;
     alpha2Code: string;
+}
+
+export class EmailVerifyResponse {
+    message: string;
 }
 
 export class User {
