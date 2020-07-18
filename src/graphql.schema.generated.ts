@@ -114,6 +114,7 @@ export class User {
     address?: string;
     country?: Country;
     email: string;
+    isEmailVerified?: string;
     avatar?: string;
 }
 
