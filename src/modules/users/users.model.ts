@@ -40,8 +40,9 @@ export class User extends TimeStamps {
 
   @IsNotEmpty()
   @IsBoolean()
+  @IsOptional()
   @prop()
-  isEmailVerified: boolean
+  isEmailVerified?: boolean
 
   @IsString()
   @IsOptional()
