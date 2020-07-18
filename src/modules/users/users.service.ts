@@ -54,7 +54,7 @@ export class UsersService {
               })
             )
           }),
-          tap(createdUser => this.emailVerificationSenderService.createAndSendToken(createdUser)),
+          tap(createdUser => this.emailVerificationSenderService.createAndSendToken(createdUser).subscribe()),
           catchError(error => {
             this.logger.error('Error on create user', error)
             return throwError(new ConflictException(error))

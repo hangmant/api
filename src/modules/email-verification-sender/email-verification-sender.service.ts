@@ -1,5 +1,5 @@
 import { MailerService } from '@nestjs-modules/mailer'
-import { forwardRef, Inject, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { ReturnModelType } from '@typegoose/typegoose'
 import { randomBytes } from 'crypto'
 import { InjectModel } from 'nestjs-typegoose'
@@ -8,9 +8,7 @@ import { concatMap } from 'rxjs/operators'
 import { config } from '../../config'
 import { TEMPLATES } from '../../templates'
 import { EmailVerificationToken } from '../email-verification/models/email-verification-token.model'
-import { LoggerService } from '../logger/logger.service'
 import { User } from '../users/users.model'
-import { UsersService } from '../users/users.service'
 
 @Injectable()
 export class EmailVerificationSenderService {
@@ -32,8 +30,8 @@ export class EmailVerificationSenderService {
       ])
     ).pipe(
       concatMap(createdResult => {
-        const createdToken = createdResult.shift()
-        return this.sendVerificationEmail(user.email, createdToken.token)
+        const { token: createdToken } = createdResult.shift()
+        return this.sendVerificationEmail(user.email, createdToken)
       })
     )
   }
