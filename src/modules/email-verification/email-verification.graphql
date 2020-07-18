@@ -1,0 +1,11 @@
+type EmailVerifyResponse {
+  message: String!
+}
+
+type Mutation {
+  verifyEmail(data: EmailVerifyInput!): EmailVerifyResponse!
+}
+
+input EmailVerifyInput {
+  token: String!
+}

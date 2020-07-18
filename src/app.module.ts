@@ -11,6 +11,8 @@ import { WordsModule } from './modules/words/words.module'
 import { CountriesModule } from './modules/countries/countries.module'
 import { MailerModule } from '@nestjs-modules/mailer'
 import { MailerOptions } from './config/options/mailer.options'
+import { EmailVerificationModule } from './modules/email-verification/email-verification.module'
+import { EmailVerificationSenderModule } from './modules/email-verification-sender/email-verification-sender.module'
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { MailerOptions } from './config/options/mailer.options'
     }),
     CountriesModule,
     AuthModule,
+    EmailVerificationSenderModule,
+    EmailVerificationModule,
     UserModule,
     WordsModule,
     StorageModule,

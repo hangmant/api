@@ -7,6 +7,7 @@ type User {
   address: String
   country: Country
   email: String!
+  isEmailVerified: String
   avatar: String
 }
 

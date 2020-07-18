@@ -1,22 +1,20 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 import { ReturnModelType } from '@typegoose/typegoose'
 import { InjectModel } from 'nestjs-typegoose'
-import { from, Observable, throwError, of, concat } from 'rxjs'
-import { catchError, concatMap, tap } from 'rxjs/operators'
+import { from, Observable, of, throwError } from 'rxjs'
+import { catchError, concatMap, map, tap } from 'rxjs/operators'
 import { BcryptService } from '../bcrypt/bcrypt.service'
+import { EmailVerificationSenderService } from '../email-verification-sender/email-verification-sender.service'
 import { LoggerService } from '../logger/logger.service'
 import { CreateUser } from './interface/createUser.interface'
 import { UpdateUser } from './interface/updateUser.interface'
 import { User } from './users.model'
-import { MailerService } from '@nestjs-modules/mailer'
-import { config } from '../../config'
-import { TEMPLATES } from '../../templates'
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User) private readonly userModel: ReturnModelType<typeof User>,
-    private readonly mailerService: MailerService,
+    private readonly emailVerificationSenderService: EmailVerificationSenderService,
     private readonly logger: LoggerService,
     private readonly bcryptService: BcryptService
   ) {}
@@ -56,7 +54,7 @@ export class UsersService {
               })
             )
           }),
-          tap(createdUser => this.sendConfirmationEmail(createdUser)),
+          tap(createdUser => this.emailVerificationSenderService.createAndSendToken(createdUser).subscribe()),
           catchError(error => {
             this.logger.error('Error on create user', error)
             return throwError(new ConflictException(error))
@@ -66,24 +64,31 @@ export class UsersService {
     )
   }
 
-  private sendConfirmationEmail(user: User) {
-    return from(
-      this.mailerService.sendMail({
-        to: user.email,
-        from: 'noreply@hangwoman.com',
-        subject: 'HangWoman.com - Registration Confirmation',
-        template: TEMPLATES.EMAIL_CONFIRMATION,
-        context: {
-          confirmEmailLink: config.hangwomanApi
+  isEmailVerified(userId: string): Observable<boolean> {
+    return from(this.userModel.findById(userId, { isEmailVerified: 1 }).lean()).pipe(
+      map(user => {
+        if (!user) {
+          // TODO: Currently return not verified if user not exists.
+          return false
         }
+        return Boolean(user.isEmailVerified)
       })
-    ).subscribe(
-      result => {
-        this.logger.info('Confirmation email sended', result)
-      },
-      error => {
-        this.logger.error('Error on send confirmation email', error)
-      }
+    )
+  }
+
+  verifyEmail(userId: string): Observable<User> {
+    return from(
+      this.userModel
+        .findByIdAndUpdate(
+          userId,
+          {
+            $set: {
+              isEmailVerified: true
+            }
+          },
+          { new: true }
+        )
+        .lean()
     )
   }
 
