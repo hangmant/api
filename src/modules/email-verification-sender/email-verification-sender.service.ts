@@ -44,7 +44,7 @@ export class EmailVerificationSenderService {
         subject: 'HangWoman.com - Registration Confirmation',
         template: TEMPLATES.EMAIL_CONFIRMATION,
         context: {
-          confirmEmailLink: `${config.hangwomanApi}/email-verification/${token}`
+          confirmEmailLink: `${config.hangwomanFE}/verify-email/${token}`
         }
       })
     )
