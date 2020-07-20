@@ -53,7 +53,7 @@ export class UserUpdateInput {
 
 export class WordCreateInput {
     name: string;
-    categoryId: GraphQLObjectId;
+    categoryId: string;
 }
 
 export class WordUpdateInput {
@@ -61,7 +61,7 @@ export class WordUpdateInput {
 }
 
 export class Category {
-    _id: GraphQLObjectId;
+    _id: string;
     name: string;
     color?: string;
     description?: string;
@@ -70,27 +70,27 @@ export class Category {
 export abstract class IQuery {
     abstract categories(): Category[] | Promise<Category[]>;
 
-    abstract category(_id: GraphQLObjectId): Category | Promise<Category>;
+    abstract category(_id: string): Category | Promise<Category>;
 
     abstract countries(): Country[] | Promise<Country[]>;
 
-    abstract user(_id: GraphQLObjectId): User | Promise<User>;
+    abstract user(_id: string): User | Promise<User>;
 
     abstract me(): User | Promise<User>;
 
     abstract words(): Word[] | Promise<Word[]>;
 
-    abstract word(_id: GraphQLObjectId): Word | Promise<Word>;
+    abstract word(_id: string): Word | Promise<Word>;
 
-    abstract randomWords(categoryId?: GraphQLObjectId, limit?: number): Word[] | Promise<Word[]>;
+    abstract randomWords(categoryId?: string, limit?: number): Word[] | Promise<Word[]>;
 }
 
 export abstract class IMutation {
     abstract createCategory(data: CategoryCreateInput): Category | Promise<Category>;
 
-    abstract updateCategory(_id: GraphQLObjectId, data: CategoryUpdateInput): Category | Promise<Category>;
+    abstract updateCategory(_id: string, data: CategoryUpdateInput): Category | Promise<Category>;
 
-    abstract deleteCategory(_id: GraphQLObjectId): Category | Promise<Category>;
+    abstract deleteCategory(_id: string): Category | Promise<Category>;
 
     abstract verifyEmail(data: EmailVerifyInput): EmailVerifyResponse | Promise<EmailVerifyResponse>;
 
@@ -100,9 +100,9 @@ export abstract class IMutation {
 
     abstract createWord(data: WordCreateInput): Word | Promise<Word>;
 
-    abstract updateWord(_id: GraphQLObjectId, data: WordUpdateInput): Word | Promise<Word>;
+    abstract updateWord(_id: string, data: WordUpdateInput): Word | Promise<Word>;
 
-    abstract deleteWord(_id: GraphQLObjectId): Word | Promise<Word>;
+    abstract deleteWord(_id: string): Word | Promise<Word>;
 }
 
 export class Country {
@@ -116,7 +116,7 @@ export class EmailVerifyResponse {
 }
 
 export class User {
-    _id: GraphQLObjectId;
+    _id: string;
     username?: string;
     firstName: string;
     lastName: string;
@@ -129,9 +129,10 @@ export class User {
 }
 
 export class Word {
-    _id: GraphQLObjectId;
+    _id: string;
     name: string;
     category: Category;
 }
 
 export type JSON = any;
+export type GraphQLObjectId = any;
