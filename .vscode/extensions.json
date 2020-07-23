@@ -2,6 +2,8 @@
   "recommendations": [
     "esbenp.prettier-vscode",
     "vscode-icons-team.vscode-icons",
-    "ms-vscode.vscode-typescript-tslint-plugin"
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    // For develop handlerbar templates
+    "greenbyte.handlebars-preview"
   ]
 }
