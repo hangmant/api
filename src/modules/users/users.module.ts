@@ -3,7 +3,7 @@ import { BcryptModule } from '../bcrypt/bcrypt.module'
 import { EmailVerificationSenderModule } from '../email-verification-sender/email-verification-sender.module'
 import { MongoModule } from '../mongo/mongo.module'
 import { UserController } from './users.controller'
-import { User } from './users.model'
+import { User } from './models/user.model'
 import { UsersResolver } from './users.resolver'
 import { UsersService } from './users.service'
 

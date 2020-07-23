@@ -24,14 +24,14 @@ import { EmailVerificationSenderModule } from './modules/email-verification-send
     GraphQLModule.forRootAsync({
       useClass: GraphqlOptions
     }),
-    CountriesModule,
-    AuthModule,
+    // CountriesModule,
+    // AuthModule,
     EmailVerificationSenderModule,
-    EmailVerificationModule,
-    UserModule,
-    WordsModule,
-    StorageModule,
-    CategoriesModule
+    // EmailVerificationModule,
+    UserModule
+    // WordsModule,
+    // StorageModule,
+    // CategoriesModule
   ]
 })
 export class AppModule {}

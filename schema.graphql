@@ -1,0 +1,61 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Country {
+  name: String!
+  flag: String
+  alpha2Code: String!
+}
+
+type User {
+  _id: ID!
+  username: String
+  firstName: String!
+  lastName: String!
+  phone: String
+  address: String
+  country: Country!
+  email: String!
+  isEmailVerified: Boolean
+  avatar: String
+}
+
+type Query {
+  user(_id: String!): User!
+  me: User!
+}
+
+type Mutation {
+  updateMe(data: UserUpdateInput!): User!
+  createUser(data: UserCreateInput!): User!
+}
+
+input UserUpdateInput {
+  username: String
+  firstName: String
+  lastName: String
+  phone: String
+  address: String
+  country: CountryInput
+  email: String
+  avatar: String
+}
+
+input CountryInput {
+  name: String!
+  flag: String
+  alpha2Code: String!
+}
+
+input UserCreateInput {
+  username: String
+  firstName: String
+  lastName: String
+  phone: String
+  address: String
+  country: CountryInput
+  email: String
+  password: String
+  avatar: String
+}

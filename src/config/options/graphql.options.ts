@@ -10,27 +10,26 @@ export class GraphqlOptions implements GqlOptionsFactory {
   createGqlOptions(): GqlModuleOptions {
     return {
       context: ({ req, res }) => ({ req, res }),
-      typePaths: ['./**/*.graphql'],
       installSubscriptionHandlers: true,
       debug: true,
+
       playground: true,
       dataSources: () => {
         return {
           countriesAPI: new CountriesAPI()
         }
       },
-      resolvers: {
-        JSON: GraphQLJSON,
-        GraphQLObjectId
+      buildSchemaOptions: {
+        dateScalarMode: 'timestamp'
       },
+      // resolvers: {
+      //   JSON: GraphQLJSON,
+      //   GraphQLObjectId
+      // },
       resolverValidationOptions: {
         requireResolversForResolveType: false
       },
-      definitions: {
-        // will generate .ts types from gql schema files
-        path: join(process.cwd(), 'src/graphql.schema.generated.ts'),
-        outputAs: 'class'
-      },
+      autoSchemaFile: join(process.cwd(), 'schema.graphql'),
       introspection: true
     }
   }

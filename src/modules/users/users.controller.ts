@@ -2,7 +2,7 @@ import { Controller, Get, HttpCode, HttpStatus, UseGuards } from '@nestjs/common
 import { AuthGuard } from '@nestjs/passport'
 import { ApiResponse } from '@nestjs/swagger'
 import { CurrentUserRest } from '../../decorators/currentUserRest.decorator'
-import { User } from './users.model'
+import { User } from './models/user.model'
 import { UsersService } from './users.service'
 import { JwtAuthUser } from '../auth/interfaces/jwt-auth-user.interface'
 import { Observable, from } from 'rxjs'
