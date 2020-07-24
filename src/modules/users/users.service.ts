@@ -6,10 +6,9 @@ import { catchError, concatMap, map, tap } from 'rxjs/operators'
 import { BcryptService } from '../bcrypt/bcrypt.service'
 import { EmailVerificationSenderService } from '../email-verification-sender/email-verification-sender.service'
 import { LoggerService } from '../logger/logger.service'
-import { CreateUser } from './interface/createUser.interface'
-import { UpdateUser } from './interface/updateUser.interface'
-import { User } from './users.model'
-import { WithId } from '../../types/with-id.type'
+import { UserCreateInput } from './dto/user-create.input'
+import { UserUpdateInput } from './dto/user-update.input'
+import { User } from './models/user.model'
 
 @Injectable()
 export class UsersService {
@@ -24,17 +23,17 @@ export class UsersService {
     return from(this.userModel.findById(id, proyection).lean())
   }
 
-  findByEmail(email: string): Observable<WithId<User>> {
+  findByEmail(email: string): Observable<User> {
     return from(this.userModel.findOne({ email }).lean())
   }
 
-  update(id: string, data: UpdateUser): Observable<User> {
+  update(id: string, data: UserUpdateInput): Observable<User> {
     return from(
       this.userModel
         .findByIdAndUpdate(
           id,
           {
-            $set: data
+            $set: data as any
           },
           { new: true }
         )
@@ -42,7 +41,7 @@ export class UsersService {
     )
   }
 
-  create(user: CreateUser): Observable<User> {
+  create(user: UserCreateInput): Observable<User> {
     this.logger.log('Creating user', user)
     return this.throwIfEmailExists(user.email).pipe(
       concatMap(() =>

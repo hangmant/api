@@ -8,7 +8,7 @@ import { concatMap } from 'rxjs/operators'
 import { config } from '../../config'
 import { TEMPLATES } from '../../templates'
 import { EmailVerificationToken } from '../email-verification/models/email-verification-token.model'
-import { User } from '../users/users.model'
+import { User } from '../users/models/user.model'
 import { WithId } from '../../types/with-id.type'
 
 @Injectable()

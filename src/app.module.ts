@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
-import { GraphqlOptions } from './graphql.options'
+import { GraphqlOptions } from './config/options/graphql.options'
 import { AuthModule } from './modules/auth/auth.module'
 import { CategoriesModule } from './modules/categories/categories.module'
 import { CommonModule } from './modules/common/common.module'

@@ -1,0 +1,117 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Country {
+  _id: String!
+  name: String!
+  flag: String
+  alpha2Code: String!
+}
+
+type User {
+  _id: ID!
+  username: String
+  firstName: String!
+  lastName: String!
+  phone: String
+  address: String
+  country: Country!
+  email: String!
+  isEmailVerified: Boolean
+  avatar: String
+}
+
+type Category {
+  _id: String!
+  name: String!
+  color: String!
+  description: String!
+}
+
+type Word {
+  _id: String!
+  name: String!
+  category: Category!
+}
+
+type EmailVerifyResponse {
+  message: String!
+}
+
+type Query {
+  user(_id: String!): User!
+  me: User!
+  categories: [Category!]!
+  category(_id: ID!): Category!
+  words: [Word!]!
+  randomWords(limit: Int!, categoryId: String!): [Word!]!
+  word(_id: ID!): Word!
+  countries: [Country!]!
+}
+
+type Mutation {
+  updateMe(data: UserUpdateInput!): User!
+  createUser(data: UserCreateInput!): User!
+  createCategory(data: CategoryCreateInput!): Category!
+  updateCategory(data: CategoryUpdateInput!, _id: ID!): Category!
+  deleteCategory(_id: ID!): Category!
+  createWord(data: WordCreateInput!): Word!
+  updateWord(data: WordUpdateInput!, _id: ID!): Word!
+  deleteWord(_id: ID!): Word!
+  verifyEmail(data: EmailVerificationInput!): EmailVerifyResponse!
+}
+
+input UserUpdateInput {
+  username: String
+  firstName: String
+  lastName: String
+  phone: String
+  address: String
+  country: CountryInput
+  email: String
+  avatar: String
+}
+
+input CountryInput {
+  name: String!
+  flag: String
+  alpha2Code: String!
+}
+
+input UserCreateInput {
+  username: String
+  firstName: String
+  lastName: String
+  phone: String
+  address: String
+  country: CountryInput
+  email: String
+  password: String
+  avatar: String
+}
+
+input CategoryCreateInput {
+  name: String!
+  color: String!
+  description: String!
+}
+
+input CategoryUpdateInput {
+  name: String
+  color: String
+  description: String!
+}
+
+input WordCreateInput {
+  name: String!
+  categoryId: String!
+}
+
+input WordUpdateInput {
+  name: String!
+}
+
+input EmailVerificationInput {
+  token: String!
+}

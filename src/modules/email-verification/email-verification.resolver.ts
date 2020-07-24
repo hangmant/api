@@ -1,13 +1,14 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
-import { EmailVerificationReqDto } from './dto/email-verification-req.dto'
+import { EmailVerificationInput } from './dto/email-verification.input'
+import { EmailVerifyResponse } from './dto/email-verify-response.type'
 import { EmailVerificationService } from './email-verification.service'
 
-@Resolver('EmailVerification')
+@Resolver()
 export class EmailVerificationResolver {
   constructor(private readonly emailVerificationService: EmailVerificationService) {}
 
-  @Mutation()
-  verifyEmail(@Args('data') data: EmailVerificationReqDto) {
+  @Mutation(returns => EmailVerifyResponse)
+  verifyEmail(@Args('data') data: EmailVerificationInput) {
     return this.emailVerificationService.verifyByToken(data.token)
   }
 }

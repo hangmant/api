@@ -1,9 +1,0 @@
-type Country {
-  name: String!
-  flag: String
-  alpha2Code: String!
-}
-
-type Query {
-  countries: [Country]
-}

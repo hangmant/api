@@ -1,12 +1,12 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common'
-import { InjectModel } from 'nestjs-typegoose'
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common'
 import { ReturnModelType } from '@typegoose/typegoose'
-import { from, of, throwError, Observable, concat } from 'rxjs'
-import { concatMap, catchError } from 'rxjs/operators'
-import { Word } from './words.model'
+import { InjectModel } from 'nestjs-typegoose'
+import { from, Observable, throwError } from 'rxjs'
+import { catchError, concatMap } from 'rxjs/operators'
 import { CategoriesService } from '../categories/categories.service'
-import { CreateWord } from './interface/createWord.interface'
-import { UpdateWord } from './interface/updateWord.interface'
+import { WordCreateInput } from './dtos/word-create.input'
+import { WordUpdateInput } from './dtos/word-update.input'
+import { Word } from './words.model'
 
 @Injectable()
 export class WordsService {
@@ -39,7 +39,7 @@ export class WordsService {
     return from(this.wordModel.findById(wordId).lean())
   }
 
-  create(word: CreateWord): Observable<Word> {
+  create(word: WordCreateInput): Observable<Word> {
     return this.categoriesService.findById(word.categoryId).pipe(
       concatMap((category: any) => {
         if (!category) {
@@ -58,7 +58,7 @@ export class WordsService {
     )
   }
 
-  updateById(wordId: string, wordData: UpdateWord): Observable<Word | null> {
+  updateById(wordId: string, wordData: WordUpdateInput): Observable<Word | null> {
     return from(
       this.wordModel
         .findByIdAndUpdate(
