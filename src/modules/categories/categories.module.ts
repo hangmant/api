@@ -3,7 +3,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core'
 import { DataLoaderInterceptor } from 'nestjs-dataloader-dan'
 import { MongoModule } from '../mongo/mongo.module'
 import { CategoriesLoader } from './categories.loader'
-import { Category } from './categories.model'
+import { Category } from './models/categories.model'
 import { CategoriesResolver } from './categories.resolver'
 import { CategoriesService } from './categories.service'
 

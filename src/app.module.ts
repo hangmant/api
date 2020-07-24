@@ -28,10 +28,10 @@ import { EmailVerificationSenderModule } from './modules/email-verification-send
     AuthModule,
     EmailVerificationSenderModule,
     EmailVerificationModule,
-    UserModule
-    // WordsModule,
-    // StorageModule,
-    // CategoriesModule
+    UserModule,
+    WordsModule,
+    StorageModule,
+    CategoriesModule
   ]
 })
 export class AppModule {}

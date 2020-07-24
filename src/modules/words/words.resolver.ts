@@ -1,48 +1,51 @@
 import { UseGuards } from '@nestjs/common'
-import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
+import { Args, Mutation, Parent, Query, ResolveField, Resolver, Int } from '@nestjs/graphql'
 import * as DataLoader from 'dataloader'
 import { Loader } from 'nestjs-dataloader-dan'
 import { from, Observable } from 'rxjs'
 import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
 import { CategoriesLoader } from '../categories/categories.loader'
-import { Category } from '../categories/categories.model'
-import { CreateWord } from './interface/createWord.interface'
-import { UpdateWord } from './interface/updateWord.interface'
+import { Category } from '../categories/models/categories.model'
 import { Word } from './words.model'
 import { WordsService } from './words.service'
+import { WordCreateInput } from './dtos/word-create.input'
+import { WorldUpdateInput } from './dtos/word-update.input'
 
 @UseGuards(GqlAuthGuard)
-@Resolver('Word')
+@Resolver(of => Word)
 export class WordsResolver {
   constructor(private readonly wordsService: WordsService) {}
 
-  @Query()
+  @Query(returns => [Word])
   words() {
     return this.wordsService.findAll()
   }
 
-  @Query()
-  randomWords(@Args('categoryId') categoryId: string, @Args('limit') limit: number) {
+  @Query(returns => [Word])
+  randomWords(
+    @Args({ name: 'categoryId', type: () => String }) categoryId: string,
+    @Args({ name: 'limit', type: () => Int }) limit: number
+  ) {
     return this.wordsService.getRandomWords(categoryId, limit)
   }
 
-  @Query()
-  word(@Args('_id') _id) {
+  @Query(returns => Word)
+  word(@Args({ name: '_id', type: () => String }) _id) {
     return this.wordsService.findById(_id)
   }
 
-  @Mutation()
-  createWord(@Args('data') word: CreateWord) {
+  @Mutation(returns => Word)
+  createWord(@Args('data') word: WordCreateInput) {
     return this.wordsService.create(word)
   }
 
-  @Mutation()
-  updateWord(@Args('_id') _id: string, @Args('data') wordData: UpdateWord) {
+  @Mutation(returns => Word)
+  updateWord(@Args({ name: '_id', type: () => String }) _id: string, @Args('data') wordData: WorldUpdateInput) {
     return this.wordsService.updateById(_id, wordData)
   }
 
-  @Mutation()
-  deleteWord(@Args('_id') _id: string) {
+  @Mutation(returns => Word)
+  deleteWord(@Args({ name: '_id', type: () => String }) _id: string) {
     return this.wordsService.deleteById(_id)
   }
 

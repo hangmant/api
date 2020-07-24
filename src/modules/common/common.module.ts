@@ -1,8 +1,8 @@
-import { Module, Global } from '@nestjs/common'
-import { DateScalar } from './scalars/date.scalar'
+import { Global, Module } from '@nestjs/common'
+import { IDScalar } from './scalars/id.scalar'
 
 @Global()
 @Module({
-  providers: [DateScalar]
+  providers: [IDScalar]
 })
 export class CommonModule {}

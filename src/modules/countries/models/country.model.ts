@@ -4,6 +4,7 @@ import { ObjectType, Field } from '@nestjs/graphql'
 
 @ObjectType()
 export class Country {
+  @Field()
   _id: string
 
   @Field()

@@ -23,7 +23,7 @@ export class GraphqlOptions implements GqlOptionsFactory {
         dateScalarMode: 'timestamp'
       },
       // resolvers: {
-      //   JSON: GraphQLJSON,
+      //   // JSON: GraphQLJSON,
       //   GraphQLObjectId
       // },
       resolverValidationOptions: {

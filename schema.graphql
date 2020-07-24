@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 type Country {
+  _id: String!
   name: String!
   flag: String
   alpha2Code: String!
@@ -21,6 +22,19 @@ type User {
   avatar: String
 }
 
+type Category {
+  _id: String!
+  name: String!
+  color: String!
+  description: String!
+}
+
+type Word {
+  _id: String!
+  name: String!
+  category: Category!
+}
+
 type EmailVerifyResponse {
   message: String!
 }
@@ -28,12 +42,23 @@ type EmailVerifyResponse {
 type Query {
   user(_id: String!): User!
   me: User!
+  categories: [Category!]!
+  category(_id: ID!): Category!
+  words: [Word!]!
+  randomWords(limit: Int!, categoryId: String!): [Word!]!
+  word(_id: String!): Word!
   countries: [Country!]!
 }
 
 type Mutation {
   updateMe(data: UserUpdateInput!): User!
   createUser(data: UserCreateInput!): User!
+  createCategory(data: CategoryCreateInput!): Category!
+  updateCategory(data: CategoryUpdateInput!, _id: String!): Category!
+  deleteCategory(_id: String!): Category!
+  createWord(data: WordCreateInput!): Word!
+  updateWord(data: WorldUpdateInput!, _id: String!): Word!
+  deleteWord(_id: String!): Word!
   verifyEmail(data: EmailVerificationInput!): EmailVerifyResponse!
 }
 
@@ -64,6 +89,27 @@ input UserCreateInput {
   email: String
   password: String
   avatar: String
+}
+
+input CategoryCreateInput {
+  name: String!
+  color: String!
+  description: String!
+}
+
+input CategoryUpdateInput {
+  name: String
+  color: String
+  description: String!
+}
+
+input WordCreateInput {
+  name: String!
+  categoryId: String!
+}
+
+input WorldUpdateInput {
+  name: String!
 }
 
 input EmailVerificationInput {
