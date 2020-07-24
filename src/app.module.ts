@@ -25,9 +25,9 @@ import { EmailVerificationSenderModule } from './modules/email-verification-send
       useClass: GraphqlOptions
     }),
     CountriesModule,
-    // AuthModule,
+    AuthModule,
     EmailVerificationSenderModule,
-    // EmailVerificationModule,
+    EmailVerificationModule,
     UserModule
     // WordsModule,
     // StorageModule,
