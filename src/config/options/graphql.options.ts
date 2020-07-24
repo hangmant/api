@@ -10,7 +10,6 @@ export class GraphqlOptions implements GqlOptionsFactory {
       context: ({ req, res }) => ({ req, res }),
       installSubscriptionHandlers: true,
       debug: true,
-
       playground: true,
       dataSources: () => {
         return {
