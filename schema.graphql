@@ -24,6 +24,7 @@ type User {
 type Query {
   user(_id: String!): User!
   me: User!
+  countries: [Country!]!
 }
 
 type Mutation {

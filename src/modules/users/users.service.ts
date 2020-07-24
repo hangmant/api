@@ -9,7 +9,6 @@ import { LoggerService } from '../logger/logger.service'
 import { UserCreateInput } from './dto/user-create.input'
 import { UserUpdateInput } from './dto/user-update.input'
 import { User } from './models/user.model'
-import { WithId } from '../../types/with-id.type'
 
 @Injectable()
 export class UsersService {
@@ -24,7 +23,7 @@ export class UsersService {
     return from(this.userModel.findById(id, proyection).lean())
   }
 
-  findByEmail(email: string): Observable<WithId<User>> {
+  findByEmail(email: string): Observable<User> {
     return from(this.userModel.findOne({ email }).lean())
   }
 
@@ -34,7 +33,7 @@ export class UsersService {
         .findByIdAndUpdate(
           id,
           {
-            $set: data
+            $set: data as any
           },
           { new: true }
         )

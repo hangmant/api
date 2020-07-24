@@ -27,8 +27,7 @@ export class UsersResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation(returns => User)
   updateMe(@CurrentUser() authUser, @Args('data') user: UserUpdateInput) {
-    return of(null)
-    // return this.userService.update(authUser._id, user)
+    return this.userService.update(authUser._id, user)
   }
 
   @Mutation(returns => User)

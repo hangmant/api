@@ -24,7 +24,7 @@ import { EmailVerificationSenderModule } from './modules/email-verification-send
     GraphQLModule.forRootAsync({
       useClass: GraphqlOptions
     }),
-    // CountriesModule,
+    CountriesModule,
     // AuthModule,
     EmailVerificationSenderModule,
     // EmailVerificationModule,

@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql'
-import { CountryInput } from '../../countries/interfaces/country.interface'
+import { CountryInput } from '../../countries/dto/country.input'
 
 @InputType()
 export class UserUpdateInput {
