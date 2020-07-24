@@ -46,7 +46,7 @@ type Query {
   category(_id: ID!): Category!
   words: [Word!]!
   randomWords(limit: Int!, categoryId: String!): [Word!]!
-  word(_id: String!): Word!
+  word(_id: ID!): Word!
   countries: [Country!]!
 }
 
@@ -54,11 +54,11 @@ type Mutation {
   updateMe(data: UserUpdateInput!): User!
   createUser(data: UserCreateInput!): User!
   createCategory(data: CategoryCreateInput!): Category!
-  updateCategory(data: CategoryUpdateInput!, _id: String!): Category!
-  deleteCategory(_id: String!): Category!
+  updateCategory(data: CategoryUpdateInput!, _id: ID!): Category!
+  deleteCategory(_id: ID!): Category!
   createWord(data: WordCreateInput!): Word!
-  updateWord(data: WorldUpdateInput!, _id: String!): Word!
-  deleteWord(_id: String!): Word!
+  updateWord(data: WordUpdateInput!, _id: ID!): Word!
+  deleteWord(_id: ID!): Word!
   verifyEmail(data: EmailVerificationInput!): EmailVerifyResponse!
 }
 
@@ -108,7 +108,7 @@ input WordCreateInput {
   categoryId: String!
 }
 
-input WorldUpdateInput {
+input WordUpdateInput {
   name: String!
 }
 

@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common'
-import { Args, Mutation, Parent, Query, ResolveField, Resolver, Int } from '@nestjs/graphql'
+import { Args, Mutation, Parent, Query, ResolveField, Resolver, Int, ID } from '@nestjs/graphql'
 import * as DataLoader from 'dataloader'
 import { Loader } from 'nestjs-dataloader-dan'
 import { from, Observable } from 'rxjs'
@@ -9,7 +9,7 @@ import { Category } from '../categories/models/categories.model'
 import { Word } from './words.model'
 import { WordsService } from './words.service'
 import { WordCreateInput } from './dtos/word-create.input'
-import { WorldUpdateInput } from './dtos/word-update.input'
+import { WordUpdateInput } from './dtos/word-update.input'
 
 @UseGuards(GqlAuthGuard)
 @Resolver(of => Word)
@@ -30,7 +30,7 @@ export class WordsResolver {
   }
 
   @Query(returns => Word)
-  word(@Args({ name: '_id', type: () => String }) _id) {
+  word(@Args({ name: '_id', type: () => ID }) _id) {
     return this.wordsService.findById(_id)
   }
 
@@ -40,12 +40,12 @@ export class WordsResolver {
   }
 
   @Mutation(returns => Word)
-  updateWord(@Args({ name: '_id', type: () => String }) _id: string, @Args('data') wordData: WorldUpdateInput) {
+  updateWord(@Args({ name: '_id', type: () => ID }) _id: string, @Args('data') wordData: WordUpdateInput) {
     return this.wordsService.updateById(_id, wordData)
   }
 
   @Mutation(returns => Word)
-  deleteWord(@Args({ name: '_id', type: () => String }) _id: string) {
+  deleteWord(@Args({ name: '_id', type: () => ID }) _id: string) {
     return this.wordsService.deleteById(_id)
   }
 

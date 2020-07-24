@@ -5,7 +5,7 @@ import { from, Observable, throwError } from 'rxjs'
 import { catchError, concatMap } from 'rxjs/operators'
 import { CategoriesService } from '../categories/categories.service'
 import { WordCreateInput } from './dtos/word-create.input'
-import { WorldUpdateInput } from './dtos/word-update.input'
+import { WordUpdateInput } from './dtos/word-update.input'
 import { Word } from './words.model'
 
 @Injectable()
@@ -58,7 +58,7 @@ export class WordsService {
     )
   }
 
-  updateById(wordId: string, wordData: WorldUpdateInput): Observable<Word | null> {
+  updateById(wordId: string, wordData: WordUpdateInput): Observable<Word | null> {
     return from(
       this.wordModel
         .findByIdAndUpdate(

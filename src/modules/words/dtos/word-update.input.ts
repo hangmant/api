@@ -1,7 +1,7 @@
 import { InputType, Field } from '@nestjs/graphql'
 
 @InputType()
-export class WorldUpdateInput {
+export class WordUpdateInput {
   @Field()
   name: string
 }

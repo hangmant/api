@@ -45,7 +45,6 @@
     "fastify-swagger": "^2.5.1",
     "graphql": "15.0.0",
     "graphql-tools": "5.0.0",
-    "graphql-type-json": "^0.3.1",
     "helmet": "3.22.0",
     "lodash.get": "^4.4.2",
     "lodash.keyby": "^4.6.0",

@@ -50,10 +50,10 @@ export class User extends TimeStamps {
   @prop({ required: true, maxlength: 60 })
   email: string
 
-  @Field({ nullable: true })
   @IsNotEmpty()
   @IsBoolean()
   @IsOptional()
+  @Field({ nullable: true })
   @prop()
   isEmailVerified?: boolean
 
