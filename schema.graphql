@@ -16,7 +16,7 @@ type User {
   lastName: String!
   phone: String
   address: String
-  country: Country!
+  country: Country
   email: String!
   isEmailVerified: Boolean
   avatar: String

@@ -39,7 +39,7 @@ export class User extends TimeStamps {
   @prop()
   address?: string
 
-  @Field(type => Country)
+  @Field(type => Country, { nullable: true })
   @IsOptional()
   @prop()
   country?: Country
