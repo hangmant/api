@@ -2,6 +2,10 @@
 
 API for Hangwoman game
 
+## Wiki
+
+https://github.com/hangwoman/api/wiki
+
 ## Install
 
 ```sh
