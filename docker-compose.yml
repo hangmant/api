@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  mongdb:
+    image: mongo
+    ports:
+      - 27201:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dev
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    volumes:
+      - ./.mongodb:/data/db
