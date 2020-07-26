@@ -13,6 +13,7 @@ import { MailerModule } from '@nestjs-modules/mailer'
 import { MailerOptions } from './config/options/mailer.options'
 import { EmailVerificationModule } from './modules/email-verification/email-verification.module'
 import { EmailVerificationSenderModule } from './modules/email-verification-sender/email-verification-sender.module'
+import { RoomsModule } from './modules/rooms/rooms.module'
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { EmailVerificationSenderModule } from './modules/email-verification-send
     UserModule,
     WordsModule,
     StorageModule,
-    CategoriesModule
+    CategoriesModule,
+    RoomsModule
   ]
 })
 export class AppModule {}
