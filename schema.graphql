@@ -140,7 +140,6 @@ input EmailVerificationInput {
 input MessageCreateInput {
   """body of message in text plain or markdown """
   text: String!
-  fromUser: ID!
   roomId: ID!
 }
 
@@ -168,4 +167,8 @@ input WordCreateInput {
 
 input WordUpdateInput {
   name: String!
+}
+
+type Subscription {
+  messageCreated: Message!
 }
