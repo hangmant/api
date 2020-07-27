@@ -4,6 +4,7 @@ import { InjectModel } from 'nestjs-typegoose'
 import { from, Observable, of, throwError } from 'rxjs'
 import { catchError, concatMap, map, tap } from 'rxjs/operators'
 import { BcryptService } from '../bcrypt/bcrypt.service'
+import { GravatarService } from '../common/services/gravatar.service'
 import { EmailVerificationSenderService } from '../email-verification-sender/email-verification-sender.service'
 import { LoggerService } from '../logger/logger.service'
 import { UserCreateInput } from './dto/user-create.input'
@@ -16,7 +17,8 @@ export class UsersService {
     @InjectModel(User) private readonly userModel: ReturnModelType<typeof User>,
     private readonly emailVerificationSenderService: EmailVerificationSenderService,
     private readonly logger: LoggerService,
-    private readonly bcryptService: BcryptService
+    private readonly bcryptService: BcryptService,
+    private readonly gravatarService: GravatarService
   ) {}
 
   findById(id: string, proyection?: any): Observable<User> {
@@ -42,6 +44,8 @@ export class UsersService {
   }
 
   create(user: UserCreateInput): Observable<User> {
+    user.avatar = user.avatar ?? this.gravatarService.forEmail(user.email)
+
     this.logger.log('Creating user', user)
     return this.throwIfEmailExists(user.email).pipe(
       concatMap(() =>
