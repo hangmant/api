@@ -7,7 +7,18 @@ import { CountriesAPI } from '../../datasources/countries.datasource'
 export class GraphqlOptions implements GqlOptionsFactory {
   createGqlOptions(): GqlModuleOptions {
     return {
-      context: ({ req, res }) => ({ req, res }),
+      context: ({ req, connection, res }) => {
+        if (connection) {
+          return {
+            req: {
+              headers: {
+                authorization: connection?.context?.authorization
+              }
+            }
+          }
+        }
+        return { req, res }
+      },
       installSubscriptionHandlers: true,
       debug: true,
       playground: true,

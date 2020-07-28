@@ -12,6 +12,7 @@ import { Message } from './models/message.model'
 
 const pubSub = new PubSub()
 
+@UseGuards(GqlAuthGuard)
 @Resolver(of => Message)
 export class MessagesResolver {
   constructor(private readonly messagesService: MessagesService) {}
@@ -26,7 +27,6 @@ export class MessagesResolver {
     )
   }
 
-  @UseGuards(GqlAuthGuard)
   @Mutation(returns => Message)
   createMessage(@CurrentUser() user, @Args('data') message: MessageCreateInput) {
     message.fromUser = user._id
