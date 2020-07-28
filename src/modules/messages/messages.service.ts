@@ -2,14 +2,19 @@ import { Injectable } from '@nestjs/common'
 import { ReturnModelType } from '@typegoose/typegoose'
 import { InjectModel } from 'nestjs-typegoose'
 import { from, Observable } from 'rxjs'
+import { concatMap } from 'rxjs/operators'
+import { TextProcessorService } from '../text-processor/text-procesor.service'
+import { GetMessagesArgs } from './dto/get-messages.args'
 import { MessageCreateInput } from './dto/message-create.input'
 import { MessageUpdateInput } from './dto/message-update.input'
 import { Message } from './models/message.model'
-import { GetMessagesArgs } from './dto/get-messages.args'
 
 @Injectable()
 export class MessagesService {
-  constructor(@InjectModel(Message) private readonly messageModel: ReturnModelType<typeof Message>) {}
+  constructor(
+    @InjectModel(Message) private readonly messageModel: ReturnModelType<typeof Message>,
+    private readonly textProcessorService: TextProcessorService
+  ) {}
 
   async find(args: GetMessagesArgs): Promise<Message[]> {
     return this.messageModel
@@ -25,7 +30,16 @@ export class MessagesService {
   }
 
   create(message: MessageCreateInput): Observable<Message> {
-    return from(this.messageModel.create(message))
+    return from(this.textProcessorService.processText(message.text)).pipe(
+      concatMap(textProcessed => {
+        return from(
+          this.messageModel.create({
+            ...message,
+            html: textProcessed.html
+          })
+        )
+      })
+    )
   }
 
   updateById(id: string, message: MessageUpdateInput): Observable<Message | null> {

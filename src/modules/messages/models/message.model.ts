@@ -14,7 +14,7 @@ export class Message extends TimeStamps {
   text: string
 
   @Field({ description: 'field <text> parsed to html' })
-  @prop({ required: true, default: '1212' })
+  @prop({ required: true })
   html: string
 
   @Field(type => User)

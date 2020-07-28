@@ -43,6 +43,7 @@
     "dotenv": "^8.2.0",
     "faker": "^4.1.0",
     "fastify-swagger": "^2.5.1",
+    "gitter-markdown-processor": "^18.0.0",
     "graphql": "15.0.0",
     "graphql-tools": "5.0.0",
     "helmet": "3.22.0",
