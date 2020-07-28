@@ -41,7 +41,7 @@ type Message {
 
   """field <text> parsed to html"""
   html: String!
-  fromUser: ID!
+  fromUser: User!
   roomId: ID!
 }
 

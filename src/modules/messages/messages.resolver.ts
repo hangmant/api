@@ -1,15 +1,19 @@
 import { NotFoundException, UseGuards } from '@nestjs/common'
-import { Args, ID, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql'
+import { Args, ID, Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql'
 import { PubSub } from 'apollo-server-fastify'
-import { of, throwError } from 'rxjs'
+import * as DataLoader from 'dataloader'
+import { Loader } from 'nestjs-dataloader-dan'
+import { from, Observable, of, throwError } from 'rxjs'
 import { concatMap, tap } from 'rxjs/operators'
 import { CurrentUser } from '../../decorators/currentUser.decorator'
 import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
+import { User } from '../users/models/user.model'
+import { UsersLoader } from '../users/users.loader'
+import { GetMessagesArgs } from './dto/get-messages.args'
 import { MessageCreateInput } from './dto/message-create.input'
 import { MessageUpdateInput } from './dto/message-update.input'
 import { MessagesService } from './messages.service'
 import { Message } from './models/message.model'
-import { GetMessagesArgs } from './dto/get-messages.args'
 
 const pubSub = new PubSub()
 
@@ -54,5 +58,13 @@ export class MessagesResolver {
   @Mutation(returns => Message)
   updateMessage(@Args({ name: '_id', type: () => ID }) id: string, @Args('data') data: MessageUpdateInput) {
     return this.messagesService.updateById(id, data)
+  }
+
+  @ResolveField('fromUser', () => User)
+  resolveCategory(
+    @Parent() message: Message,
+    @Loader(UsersLoader.name) usersLoader: DataLoader<string, User>
+  ): Observable<User | null> {
+    return from(usersLoader.load(message.fromUser.toString()))
   }
 }

@@ -17,7 +17,7 @@ export class Message extends TimeStamps {
   @prop({ required: true, default: '1212' })
   html: string
 
-  @Field(type => ID)
+  @Field(type => User)
   @prop({ ref: 'User', required: true, index: true })
   fromUser: Ref<User>
 
