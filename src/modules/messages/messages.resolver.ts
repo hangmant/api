@@ -9,6 +9,7 @@ import { MessageCreateInput } from './dto/message-create.input'
 import { MessageUpdateInput } from './dto/message-update.input'
 import { MessagesService } from './messages.service'
 import { Message } from './models/message.model'
+import { GetMessagesArgs } from './dto/get-messages.args'
 
 const pubSub = new PubSub()
 
@@ -25,6 +26,11 @@ export class MessagesResolver {
         return of(value)
       })
     )
+  }
+
+  @Query(returns => [Message])
+  messages(@Args() args: GetMessagesArgs) {
+    return this.messagesService.find(args)
   }
 
   @Mutation(returns => Message)

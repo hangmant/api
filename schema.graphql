@@ -70,6 +70,7 @@ type Query {
   category(_id: ID!): Category!
   countries: [Country!]!
   message(_id: ID!): Message!
+  messages(roomId: ID!): [Message!]!
   room(_id: ID!): Room!
   words: [Word!]!
   randomWords(limit: Int!, categoryId: String!): [Word!]!

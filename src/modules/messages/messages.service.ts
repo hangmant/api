@@ -5,10 +5,20 @@ import { from, Observable } from 'rxjs'
 import { MessageCreateInput } from './dto/message-create.input'
 import { MessageUpdateInput } from './dto/message-update.input'
 import { Message } from './models/message.model'
+import { GetMessagesArgs } from './dto/get-messages.args'
 
 @Injectable()
 export class MessagesService {
   constructor(@InjectModel(Message) private readonly messageModel: ReturnModelType<typeof Message>) {}
+
+  async find(args: GetMessagesArgs): Promise<Message[]> {
+    return this.messageModel
+      .find(args)
+      .sort({
+        createdAt: 1
+      })
+      .lean()
+  }
 
   findById(id: string): Observable<Message | null> {
     return from(this.messageModel.findById(id).lean())
