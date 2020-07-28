@@ -50,11 +50,6 @@ export class MessagesResolver {
     )
   }
 
-  @Subscription(returns => Message)
-  messageCreated() {
-    return pubSub.asyncIterator('messageCreated')
-  }
-
   @Mutation(returns => Message)
   updateMessage(@Args({ name: '_id', type: () => ID }) id: string, @Args('data') data: MessageUpdateInput) {
     return this.messagesService.updateById(id, data)
@@ -66,5 +61,14 @@ export class MessagesResolver {
     @Loader(UsersLoader.name) usersLoader: DataLoader<string, User>
   ): Observable<User | null> {
     return from(usersLoader.load(message.fromUser.toString()))
+  }
+
+  @Subscription(returns => Message, {
+    filter: (payload, variables) => {
+      return payload.messageCreated.roomId.toString() === variables.roomId
+    }
+  })
+  messageCreated(@Args('roomId') roomId: string) {
+    return pubSub.asyncIterator('messageCreated')
   }
 }
