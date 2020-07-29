@@ -4,6 +4,8 @@ import { Injectable } from '@nestjs/common'
 import { config } from '../index'
 import { join } from 'path'
 
+console.log("Dante: join(process.cwd(), '/src/templates/')", join(process.cwd(), '/src/templates/'), __dirname)
+
 @Injectable()
 export class MailerOptions implements MailerOptionsFactory {
   createMailerOptions(): IMailerOptions {
@@ -18,7 +20,7 @@ export class MailerOptions implements MailerOptionsFactory {
         }
       },
       template: {
-        dir: join(__dirname, '../../templates/'),
+        dir: join(process.cwd(), '/src/templates/'),
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true
