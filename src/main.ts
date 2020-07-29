@@ -32,7 +32,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options)
   SwaggerModule.setup('api', app, document)
 
-  await app.listen(config.port, config.host)
+  await app.listen(config.port)
 
   if (config.env === 'dev' || true) {
     const logger = app.select(LoggerModule).get(LoggerService)
