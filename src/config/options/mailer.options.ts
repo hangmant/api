@@ -1,10 +1,8 @@
 import { MailerOptions as IMailerOptions, MailerOptionsFactory } from '@nestjs-modules/mailer'
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter'
 import { Injectable } from '@nestjs/common'
-import { config } from '../index'
 import { join } from 'path'
-
-console.log("Dante: join(process.cwd(), '/src/templates/')", join(process.cwd(), '/src/templates/'), __dirname)
+import { config } from '../index'
 
 @Injectable()
 export class MailerOptions implements MailerOptionsFactory {
