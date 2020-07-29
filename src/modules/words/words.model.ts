@@ -16,7 +16,7 @@ export class Word extends TimeStamps {
 
   @IsMongoId()
   @IsNotEmpty()
-  @Field(() => Category)
+  @Field(type => Category)
   @prop({ ref: 'Category', required: true })
   category: Ref<Category>
 }

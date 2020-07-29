@@ -29,14 +29,38 @@ type Category {
   description: String!
 }
 
+type EmailVerifyResponse {
+  message: String!
+}
+
+type Message {
+  _id: String!
+
+  """body of message in text plain or markdown """
+  text: String!
+
+  """field <text> parsed to html"""
+  html: String!
+  fromUser: User!
+  roomId: ID!
+}
+
+type Room {
+  _id: String!
+  name: String!
+  users: [String!]!
+  type: RoomType!
+}
+
+enum RoomType {
+  OneToOne
+  OrgChannel
+}
+
 type Word {
   _id: String!
   name: String!
   category: Category!
-}
-
-type EmailVerifyResponse {
-  message: String!
 }
 
 type Query {
@@ -44,10 +68,13 @@ type Query {
   me: User!
   categories: [Category!]!
   category(_id: ID!): Category!
+  countries: [Country!]!
+  message(_id: ID!): Message!
+  messages(roomId: ID!): [Message!]!
+  room(_id: ID!): Room!
   words: [Word!]!
   randomWords(limit: Int!, categoryId: String!): [Word!]!
   word(_id: ID!): Word!
-  countries: [Country!]!
 }
 
 type Mutation {
@@ -56,10 +83,14 @@ type Mutation {
   createCategory(data: CategoryCreateInput!): Category!
   updateCategory(data: CategoryUpdateInput!, _id: ID!): Category!
   deleteCategory(_id: ID!): Category!
+  verifyEmail(data: EmailVerificationInput!): EmailVerifyResponse!
+  createMessage(data: MessageCreateInput!): Message!
+  updateMessage(data: MessageUpdateInput!, _id: ID!): Message!
+  createRoom(data: RoomCreateInput!): Room!
+  updateRoom(data: RoomUpdateInput!, _id: ID!): Room!
   createWord(data: WordCreateInput!): Word!
   updateWord(data: WordUpdateInput!, _id: ID!): Word!
   deleteWord(_id: ID!): Word!
-  verifyEmail(data: EmailVerificationInput!): EmailVerifyResponse!
 }
 
 input UserUpdateInput {
@@ -103,6 +134,33 @@ input CategoryUpdateInput {
   description: String!
 }
 
+input EmailVerificationInput {
+  token: String!
+}
+
+input MessageCreateInput {
+  """body of message in text plain or markdown """
+  text: String!
+  roomId: ID!
+}
+
+input MessageUpdateInput {
+  """body of message in text plain or markdown """
+  text: String
+}
+
+input RoomCreateInput {
+  name: String!
+  users: [String!]
+  type: RoomType!
+}
+
+input RoomUpdateInput {
+  name: String
+  users: [String!]
+  type: RoomType
+}
+
 input WordCreateInput {
   name: String!
   categoryId: String!
@@ -112,6 +170,6 @@ input WordUpdateInput {
   name: String!
 }
 
-input EmailVerificationInput {
-  token: String!
+type Subscription {
+  messageCreated(roomId: String!): Message!
 }
