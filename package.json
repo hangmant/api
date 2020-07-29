@@ -5,9 +5,10 @@
   "author": "Dante Calderon<mail@dantecalderon.dev>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "prebuild": "rimraf dist",
+    "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
-    "start": "nodemon",
+    "start": "nest start",
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
     "prestart:prod": "rimraf dist && npm run build",
@@ -63,6 +64,7 @@
     "slugify": "^1.4.0"
   },
   "devDependencies": {
+    "@nestjs/cli": "^7.4.1",
     "@nestjs/testing": "7.0.9",
     "@types/faker": "^4.1.11",
     "@types/jest": "25.2.1",
@@ -103,5 +105,8 @@
     },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }

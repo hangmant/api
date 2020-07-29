@@ -4,7 +4,7 @@ import { NestDataLoader } from 'nestjs-dataloader-dan'
 import { CategoriesService } from './categories.service'
 import { Category } from './models/categories.model'
 import { concatMap } from 'rxjs/operators'
-import { dlSort } from '../../../src/utils/dlSort'
+import { dlSort } from '../../utils/dlSort'
 import { of } from 'rxjs'
 
 @Injectable()
