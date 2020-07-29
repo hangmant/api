@@ -36,8 +36,8 @@ async function bootstrap() {
 
   if (config.env === 'dev' || true) {
     const logger = app.select(LoggerModule).get(LoggerService)
-    logger.info(`Listening on port http://localhost:${config.port}/api`)
-    logger.info(`GraphQL Playground listening on port http://localhost:${config.port}/graphql`)
+    logger.info(`Listening on port http://${config.host}:${config.port}/api`)
+    logger.info(`GraphQL Playground listening on port http://${config.host}:${config.port}/graphql`)
   }
 }
 
