@@ -1,7 +1,7 @@
 import { Field, ObjectType, ID } from '@nestjs/graphql'
 import { prop, Ref } from '@typegoose/typegoose'
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
-import { Room } from '../../../modules/rooms/models/room.module'
+import { Room } from '../../rooms/models/room.model'
 import { User } from '../../../modules/users/models/user.model'
 
 @ObjectType()

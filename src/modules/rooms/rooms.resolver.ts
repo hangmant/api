@@ -4,7 +4,7 @@ import { of, throwError } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
 import { RoomCreateInput } from './dto/room-create.input'
 import { RoomUpdateInput } from './dto/room-update.input'
-import { Room } from './models/room.module'
+import { Room } from './models/room.model'
 import { RoomsService } from './rooms.service'
 
 @Resolver(of => Room)
@@ -22,8 +22,8 @@ export class RoomsResolver {
   }
 
   @Mutation(returns => Room)
-  createRoom(@Args('data') category: RoomCreateInput) {
-    return this.roomsService.create(category)
+  createRoom(@Args('data') data: RoomCreateInput) {
+    return this.roomsService.create(data)
   }
 
   @Mutation(returns => Room)

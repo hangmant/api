@@ -11,6 +11,7 @@ import { EmailVerificationSenderModule } from './modules/email-verification-send
 import { EmailVerificationModule } from './modules/email-verification/email-verification.module'
 import { LoggerModule } from './modules/logger/logger.module'
 import { MessagesModule } from './modules/messages/messages.module'
+import { RoomsUserModule } from './modules/rooms-user/rooms-user.module'
 import { RoomsModule } from './modules/rooms/rooms.module'
 import { StorageModule } from './modules/storage/storage.module'
 import { UserModule } from './modules/users/users.module'
@@ -35,6 +36,7 @@ import { WordsModule } from './modules/words/words.module'
     StorageModule,
     CategoriesModule,
     RoomsModule,
+    RoomsUserModule,
     MessagesModule
   ]
 })
