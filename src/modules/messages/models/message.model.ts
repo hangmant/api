@@ -7,7 +7,7 @@ import { User } from '../../../modules/users/models/user.model'
 @ObjectType()
 export class Message extends TimeStamps {
   @Field()
-  _id: string
+  _id?: string
 
   @Field({ description: 'body of message in text plain or markdown ' })
   @prop({ required: true })

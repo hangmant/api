@@ -8,7 +8,7 @@ import { Room } from '../../rooms/models/room.model'
 @ObjectType()
 export class RoomUser extends TimeStamps {
   @Field()
-  _id: string
+  _id?: string
 
   @Field(type => Room)
   @prop({ ref: 'Room', required: true, index: true })
