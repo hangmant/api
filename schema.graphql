@@ -78,6 +78,7 @@ type Query {
   message(_id: ID!): Message!
   messages(roomId: ID!): [Message!]!
   room(_id: ID!): Room!
+  roomUsers(roomId: ID!): [User!]!
   words: [Word!]!
   randomWords(limit: Int!, categoryId: String!): [Word!]!
   word(_id: ID!): Word!

@@ -2,9 +2,10 @@ import { NotFoundException } from '@nestjs/common'
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { of, throwError } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
+import { User } from '../users/models/user.model'
 import { RoomCreateInput } from './dto/room-create.input'
 import { RoomUser } from './models/room-user.model'
-import { RoomsUserService } from './rooms-user.service'
+import { RoomsUserService } from './services/rooms-user.service'
 
 @Resolver(of => RoomUser)
 export class RoomsUserResolver {
@@ -23,5 +24,10 @@ export class RoomsUserResolver {
   @Mutation(returns => RoomUser)
   createRoom(@Args('data') category: RoomCreateInput) {
     return this.roomsUserService.create(category)
+  }
+
+  @Query(returns => [User])
+  async roomUsers(@Args({ name: 'roomId', type: () => ID }) roomId: string) {
+    return this.roomsUserService.findRoomUsers(roomId)
   }
 }
