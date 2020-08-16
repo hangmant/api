@@ -7,7 +7,7 @@ import { ObjectType, Field } from '@nestjs/graphql'
 @ObjectType()
 export class Word extends TimeStamps {
   @Field()
-  _id: string
+  _id?: string
 
   @IsString()
   @Field()
