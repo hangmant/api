@@ -24,9 +24,6 @@ export class RoomsUserService {
 
   async findRoomUsers(roomId: string): Promise<User[]> {
     const userIds: string[] = await this.roomUserModel.distinct('userId', { roomId }).lean()
-    console.log('Dante: RoomsUserService -> userIds', userIds)
-    const res = await this.usersService.findByIds(userIds).toPromise()
-    console.log('Dante: RoomsUserService -> res', res)
-    return res
+    return this.usersService.findByIds(userIds)
   }
 }
