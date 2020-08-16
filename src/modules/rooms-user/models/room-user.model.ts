@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql'
 import { index, prop, Ref } from '@typegoose/typegoose'
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
-import { User } from 'src/modules/users/models/user.model'
+import { User } from '../../../modules/users/models/user.model'
 import { Room } from '../../rooms/models/room.model'
 
 @index({ roomId: 1, userId: 1 }, { unique: true })
