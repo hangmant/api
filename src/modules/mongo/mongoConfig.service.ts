@@ -13,9 +13,7 @@ export class MongoConfigService implements TypegooseOptionsFactory {
       uri: config.mongoDBUrl,
       useNewUrlParser: true,
       useCreateIndex: true,
-      useFindAndModify: false,
-      retryDelay: 500,
-      retryAttempts: 3,
+      useFindAndModify: true,
       useUnifiedTopology: true
     }
   }

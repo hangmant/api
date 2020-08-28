@@ -9,7 +9,6 @@ import { config } from '../../config'
 import { TEMPLATES } from '../../templates'
 import { EmailVerificationToken } from '../email-verification/models/email-verification-token.model'
 import { User } from '../users/models/user.model'
-import { WithId } from '../../types/with-id.type'
 
 @Injectable()
 export class EmailVerificationSenderService {
@@ -19,7 +18,7 @@ export class EmailVerificationSenderService {
     private readonly mailerService: MailerService
   ) {}
 
-  createAndSendToken(user: WithId<User>) {
+  createAndSendToken(user: User) {
     const token = randomBytes(20).toString('hex')
 
     return from(

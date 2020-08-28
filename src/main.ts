@@ -1,31 +1,19 @@
-import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import * as BluebirdPromise from 'bluebird'
-import * as helmet from 'helmet'
-import * as mongoose from 'mongoose'
-import * as passport from 'passport'
 import { AppModule } from './app.module'
 import { config } from './config'
 import { LoggerModule } from './modules/logger/logger.module'
 import { loggerServiceInstance } from './modules/logger/logger.providers'
 import { LoggerService } from './modules/logger/logger.service'
-;(mongoose as any).Promise = BluebirdPromise
+import { applyMiddleware } from './utils/setup/apply-middleware'
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), {
     logger: loggerServiceInstance
   })
 
-  app.useGlobalPipes(new ValidationPipe())
-  app.enableCors()
-  app.setGlobalPrefix('/api')
-  app.use(helmet())
-
-  // Passport
-  app.use(passport.initialize())
-  app.use(passport.session())
+  applyMiddleware(app)
 
   // Swagger
   const options = new DocumentBuilder().setTitle('Hangman API').setDescription('').setVersion('0.0.1').build()
