@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppController (e2e) REST / (GET) 1`] = `
+Object {
+  "error": "Not Found",
+  "message": "Not Found",
+  "statusCode": 404,
+}
+`;

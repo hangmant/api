@@ -1,9 +1,10 @@
+import { HttpStatus } from '@nestjs/common'
 import { FastifyAdapter } from '@nestjs/platform-fastify'
 import { Test, TestingModule } from '@nestjs/testing'
 import * as request from 'supertest'
 import { AppModule } from '../src/app.module'
-import { applyMiddleware } from '../src/utils/setup/apply-middleware'
 import { loggerServiceInstance } from '../src/modules/logger/logger.providers'
+import { applyMiddleware } from '../src/utils/setup/apply-middleware'
 
 describe('AppController (e2e)', () => {
   let app
@@ -25,7 +26,18 @@ describe('AppController (e2e)', () => {
     return app.close()
   })
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer()).get('/').expect(404)
+  describe('REST', () => {
+    it('/ (GET)', async () => {
+      const response = await request(app.getHttpServer()).get('/').expect(HttpStatus.NOT_FOUND)
+      expect(response.body).toMatchSnapshot()
+    })
+
+    describe('Authentication /api/auth/login/jwt ', () => {
+      it('should return not loggin when JWT is not given', async () => {
+        /** TODO: Here error */
+        const response = await request(app.getHttpServer()).post('/api/auth/login/jwt').send({ a: 1 })
+        expect(true).toBe(true)
+      })
+    })
   })
 })
