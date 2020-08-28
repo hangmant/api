@@ -7,7 +7,7 @@ import { ObjectType, Field, ID } from '@nestjs/graphql'
 @ObjectType()
 export class User extends TimeStamps {
   @Field(type => ID)
-  _id?: string
+  _id: string
 
   @Field({ nullable: true })
   @IsString()

@@ -6,7 +6,7 @@ import { ObjectType, Field } from '@nestjs/graphql'
 @ObjectType()
 export class Room extends TimeStamps {
   @Field()
-  _id?: string
+  _id: string
 
   @Field()
   @prop({ required: true })
