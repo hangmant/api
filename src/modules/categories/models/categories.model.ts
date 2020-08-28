@@ -6,7 +6,7 @@ import { ObjectType, Field } from '@nestjs/graphql'
 @ObjectType()
 export class Category extends TimeStamps {
   @Field()
-  _id?: string
+  _id: string
 
   @IsString()
   @Field()
@@ -19,12 +19,12 @@ export class Category extends TimeStamps {
   @prop({
     default: '#000000' // black color
   })
-  color?: string
+  color: string
 
   @IsString()
   @Field()
   @prop({
     default: ''
   })
-  description?: string
+  description: string
 }
