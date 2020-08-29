@@ -1,21 +1,23 @@
 import { Injectable } from '@nestjs/common'
-import { TypegooseOptionsFactory, TypegooseModuleOptions } from 'nestjs-typegoose'
-import { config } from '../../config'
+import { ConfigService } from '@nestjs/config'
+import { TypegooseModuleOptions, TypegooseOptionsFactory } from 'nestjs-typegoose'
 import { LoggerService } from '../logger/logger.service'
 
 @Injectable()
 export class MongoConfigService implements TypegooseOptionsFactory {
-  constructor(private readonly logger: LoggerService) {}
+  constructor(private readonly configService: ConfigService, private readonly logger: LoggerService) {}
+
+  get mongoURI() {
+    return this.configService.get('mongoDBUrl')
+  }
 
   createTypegooseOptions(): TypegooseModuleOptions {
-    this.logger.info(`Connecting to ${config.mongoDBUrl}`)
+    this.logger.info(`Connecting to ${this.mongoURI}`)
     return {
-      uri: config.mongoDBUrl,
+      uri: this.mongoURI,
       useNewUrlParser: true,
       useCreateIndex: true,
-      useFindAndModify: false,
-      retryDelay: 500,
-      retryAttempts: 3,
+      useFindAndModify: true,
       useUnifiedTopology: true
     }
   }

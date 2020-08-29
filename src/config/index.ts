@@ -1,10 +1,6 @@
-import * as dotenv from 'dotenv'
-
-dotenv.config()
-
 const env = process.env
 
-export const config = {
+export const config = () => ({
   env: env.NODE_ENV || 'dev',
   jwt: {
     secret: env.JWT_SECRET || 'secret',
@@ -38,4 +34,4 @@ export const config = {
   },
   hangwomanApi: process.env.HANGWOMAN_API,
   hangwomanFE: process.env.HANGWOMAN_FE
-}
+})

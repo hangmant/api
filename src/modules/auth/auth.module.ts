@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
-import { config } from '../../config'
+import { JWTOptions } from '../../config/options/jwt.options'
 import { BcryptModule } from '../bcrypt/bcrypt.module'
 import { UserModule } from '../users/users.module'
 import { AuthController } from './auth.controller'
@@ -14,11 +14,8 @@ import { JwtStrategy } from './strategies/jwt.strategy'
     PassportModule.register({
       defaultStrategy: 'jwt'
     }),
-    JwtModule.register({
-      secret: config.jwt.secret,
-      signOptions: {
-        expiresIn: config.jwt.expiresIn
-      }
+    JwtModule.registerAsync({
+      useClass: JWTOptions
     }),
     UserModule
   ],
