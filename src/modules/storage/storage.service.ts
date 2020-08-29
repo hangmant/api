@@ -1,21 +1,22 @@
 import { Inject, Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import * as AWS from 'aws-sdk'
-import { config } from '../../config'
-import { S3_PROVIDER } from './storage.constants'
-import { ResSignedUrlDto } from './dto/res-signed-url.dto'
 import { ObjectList } from 'aws-sdk/clients/s3'
-
-const { hangmanBucket } = config.aws.s3
+import { ResSignedUrlDto } from './dto/res-signed-url.dto'
+import { S3_PROVIDER } from './storage.constants'
 
 @Injectable()
 export class StorageService {
-  constructor(@Inject(S3_PROVIDER) private readonly s3: AWS.S3) {}
+  private readonly hangmanBucket
+  constructor(readonly configService: ConfigService, @Inject(S3_PROVIDER) private readonly s3: AWS.S3) {
+    this.hangmanBucket = configService.get('aws.s3.hangmanBucket')
+  }
 
   async createSignedUrl(key: string, type: string): Promise<ResSignedUrlDto> {
     const params = {
-      Bucket: hangmanBucket.name,
+      Bucket: this.hangmanBucket.name,
       Key: key,
-      Expires: hangmanBucket.expires,
+      Expires: this.hangmanBucket.expires,
       ContentType: type,
       ACL: 'public-read'
     }
@@ -34,7 +35,7 @@ export class StorageService {
     do {
       res = await this.s3
         .listObjectsV2({
-          Bucket: hangmanBucket.name,
+          Bucket: this.hangmanBucket.name,
           MaxKeys: 1,
           ...(res && res.NextContinuationToken ? { ContinuationToken: res.NextContinuationToken } : {})
         })
@@ -48,7 +49,7 @@ export class StorageService {
 
   async deleteObjectsByKey(keys: string[]) {
     return await this.s3.deleteObjects({
-      Bucket: hangmanBucket.name,
+      Bucket: this.hangmanBucket.name,
       Delete: {
         Objects: keys.map(key => ({ Key: key }))
       }

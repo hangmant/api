@@ -1,10 +1,9 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
-import { config } from '../config'
 
 export class CountriesAPI extends RESTDataSource {
-  constructor() {
+  constructor(baseURL: string) {
     super()
-    this.baseURL = config.restCountriesApi
+    this.baseURL = baseURL
   }
 
   async getAll() {

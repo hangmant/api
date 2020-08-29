@@ -1,8 +1,8 @@
+import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
-import { config } from './config'
 import { LoggerModule } from './modules/logger/logger.module'
 import { loggerServiceInstance } from './modules/logger/logger.providers'
 import { LoggerService } from './modules/logger/logger.service'
@@ -20,12 +20,16 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options)
   SwaggerModule.setup('api', app, document)
 
-  await app.listen(config.port, config.host)
+  const configService = app.get(ConfigService)
 
-  if (config.env === 'dev' || true) {
+  await app.listen(configService.get('port'), configService.get('host'))
+
+  if (configService.get('env') === 'dev' || true) {
     const logger = app.select(LoggerModule).get(LoggerService)
-    logger.info(`Listening on port http://${config.host}:${config.port}/api`)
-    logger.info(`GraphQL Playground listening on port http://${config.host}:${config.port}/graphql`)
+    logger.info(`Listening on port http://${configService.get('host')}:${configService.get('port')}/api`)
+    logger.info(
+      `GraphQL Playground listening on port http://${configService.get('host')}:${configService.get('port')}/graphql`
+    )
   }
 }
 

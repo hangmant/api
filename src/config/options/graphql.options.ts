@@ -2,9 +2,12 @@ import { Injectable } from '@nestjs/common'
 import { GqlModuleOptions, GqlOptionsFactory } from '@nestjs/graphql'
 import { join } from 'path'
 import { CountriesAPI } from '../../datasources/countries.datasource'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class GraphqlOptions implements GqlOptionsFactory {
+  constructor(private readonly configService: ConfigService) {}
+
   createGqlOptions(): GqlModuleOptions {
     return {
       context: ({ req, connection, res }) => {
@@ -24,7 +27,7 @@ export class GraphqlOptions implements GqlOptionsFactory {
       playground: true,
       dataSources: () => {
         return {
-          countriesAPI: new CountriesAPI()
+          countriesAPI: new CountriesAPI(this.configService.get('restCountriesApi'))
         }
       },
       buildSchemaOptions: {

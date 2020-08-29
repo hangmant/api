@@ -1,16 +1,15 @@
 import { Injectable } from '@nestjs/common'
-import { OAuth2Strategy } from 'passport-google-oauth'
-
 import * as passport from 'passport'
-import { config } from '../../../config'
+import { OAuth2Strategy } from 'passport-google-oauth'
 
 @Injectable()
 export class GoogleStrategy extends OAuth2Strategy {
   constructor() {
     super(
       {
-        clientID: config.googleAuth.clientID,
-        clientSecret: config.googleAuth.clientSecret,
+        // TODO: Replace with configSerivce
+        clientID: 'config.googleAuth.clientID',
+        clientSecret: 'config.googleAuth.clientSecret',
         callbackURL: '/auth/google/callback',
         passReqToCallback: true
       },

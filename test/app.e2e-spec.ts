@@ -3,13 +3,18 @@ import { FastifyAdapter } from '@nestjs/platform-fastify'
 import { Test, TestingModule } from '@nestjs/testing'
 import * as request from 'supertest'
 import { AppModule } from '../src/app.module'
+import { MongoMemoryServer } from 'mongodb-memory-server'
 import { loggerServiceInstance } from '../src/modules/logger/logger.providers'
 import { applyMiddleware } from '../src/utils/setup/apply-middleware'
 
 describe('AppController (e2e)', () => {
   let app
+  let mongodb
 
   beforeAll(async () => {
+    mongodb = new MongoMemoryServer({ autoStart: false })
+    await mongodb.ensureInstance()
+
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule]
     }).compile()
@@ -22,8 +27,9 @@ describe('AppController (e2e)', () => {
     await app.init()
   })
 
-  afterAll(() => {
-    return app.close()
+  afterAll(async () => {
+    await app.close()
+    await mongodb.stop()
   })
 
   describe('REST', () => {
