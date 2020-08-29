@@ -71,6 +71,7 @@ type Word {
 
 type Query {
   user(_id: String!): User!
+  users: [User!]!
   me: User!
   categories: [Category!]!
   category(_id: ID!): Category!
