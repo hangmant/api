@@ -32,6 +32,9 @@ export const config = () => ({
       pass: process.env.MAILER__SMPT__PASS
     }
   },
+  sentry: {
+    dsn: process.env.HW_API_SENTRY_DNS
+  },
   hangwomanApi: process.env.HANGWOMAN_API,
   hangwomanFE: process.env.HANGWOMAN_FE
 })

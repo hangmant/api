@@ -18,12 +18,17 @@ import { UserModule } from './modules/users/users.module'
 import { WordsModule } from './modules/words/words.module'
 import { ConfigModule } from '@nestjs/config'
 import { config } from './config'
+import { SentryModule } from '@ntegral/nestjs-sentry'
+import { SentryOptions } from './config/options/sentry.options'
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [config]
+    }),
+    SentryModule.forRootAsync({
+      useClass: SentryOptions
     }),
     LoggerModule,
     CommonModule,
