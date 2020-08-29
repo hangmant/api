@@ -6,14 +6,17 @@ import { AppModule } from '../src/app.module'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import { loggerServiceInstance } from '../src/modules/logger/logger.providers'
 import { applyMiddleware } from '../src/utils/setup/apply-middleware'
+import { MongoConfigService } from '../src/modules/mongo/mongoConfig.service'
 
 describe('AppController (e2e)', () => {
   let app
-  let mongodb
+  let mongodb: MongoMemoryServer
 
   beforeAll(async () => {
     mongodb = new MongoMemoryServer({ autoStart: false })
     await mongodb.ensureInstance()
+
+    jest.spyOn(MongoConfigService.prototype, 'mongoURI', 'get').mockReturnValue(await mongodb.getConnectionString())
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule]
@@ -42,6 +45,7 @@ describe('AppController (e2e)', () => {
       it('should return not loggin when JWT is not given', async () => {
         /** TODO: Here error */
         const response = await request(app.getHttpServer()).post('/api/auth/login/jwt').send({ a: 1 })
+        console.log('Dante: response', response)
         expect(true).toBe(true)
       })
     })

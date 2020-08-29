@@ -7,11 +7,14 @@ import { LoggerService } from '../logger/logger.service'
 export class MongoConfigService implements TypegooseOptionsFactory {
   constructor(private readonly configService: ConfigService, private readonly logger: LoggerService) {}
 
+  get mongoURI() {
+    return this.configService.get('mongoDBUrl')
+  }
+
   createTypegooseOptions(): TypegooseModuleOptions {
-    const mongoDBUrl = this.configService.get('mongoDBUrl')
-    this.logger.info(`Connecting to ${mongoDBUrl}`)
+    this.logger.info(`Connecting to ${this.mongoURI}`)
     return {
-      uri: mongoDBUrl,
+      uri: this.mongoURI,
       useNewUrlParser: true,
       useCreateIndex: true,
       useFindAndModify: true,
