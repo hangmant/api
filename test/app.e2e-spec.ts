@@ -45,7 +45,6 @@ describe('AppController (e2e)', () => {
       it('should return not loggin when JWT is not given', async () => {
         /** TODO: Here error */
         const response = await request(app.getHttpServer()).post('/api/auth/login/jwt').send({ a: 1 })
-        console.log('Dante: response', response)
         expect(true).toBe(true)
       })
     })
