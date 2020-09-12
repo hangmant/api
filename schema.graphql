@@ -82,7 +82,7 @@ type Query {
   rooms: [Room!]!
   userRoom(_id: ID!): RoomUser!
   roomUsers(roomId: ID!): [User!]!
-  userRooms(userId: ID!): [Room!]!
+  userRooms: [Room!]!
   words: [Word!]!
   randomWords(limit: Int!, categoryId: String!): [Word!]!
   word(_id: ID!): Word!
@@ -175,7 +175,7 @@ input RoomUpdateInput {
 
 input RoomUserCreateInput {
   roomId: ID!
-  userId: ID!
+  userId: ID
 }
 
 input WordCreateInput {

@@ -5,6 +5,6 @@ export class RoomUserCreateInput {
   @Field(type => ID)
   roomId: string
 
-  @Field(type => ID)
-  userId: string
+  @Field(type => ID, { nullable: true })
+  userId?: string
 }
