@@ -10,6 +10,10 @@ import { Room } from './models/room.model'
 export class RoomsService {
   constructor(@InjectModel(Room) private readonly roomModel: ReturnModelType<typeof Room>) {}
 
+  async findByIds(ids: string[]): Promise<Room[]> {
+    return this.roomModel.find({ _id: { $in: ids } }).lean()
+  }
+
   findById(id: string): Observable<Room | null> {
     return from(this.roomModel.findById(id).lean())
   }

@@ -1,10 +1,10 @@
 import { Field, ID, InputType } from '@nestjs/graphql'
 
 @InputType()
-export class RoomCreateInput {
+export class RoomUserCreateInput {
   @Field(type => ID)
   roomId: string
 
-  @Field(type => ID)
-  userId: string
+  @Field(type => ID, { nullable: true })
+  userId?: string
 }

@@ -1,17 +1,22 @@
-import { NotFoundException } from '@nestjs/common'
+import { NotFoundException, UseGuards } from '@nestjs/common'
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { of, throwError } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
-import { RoomCreateInput } from './dto/room-create.input'
+import { CurrentUser } from '../../decorators/currentUser.decorator'
+import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
+import { Room } from '../rooms/models/room.model'
+import { User } from '../users/models/user.model'
+import { RoomUserCreateInput } from './dto/room-user-create.input'
 import { RoomUser } from './models/room-user.model'
-import { RoomsUserService } from './rooms-user.service'
+import { RoomsUserService } from './services/rooms-user.service'
 
 @Resolver(of => RoomUser)
 export class RoomsUserResolver {
   constructor(private readonly roomsUserService: RoomsUserService) {}
 
+  @UseGuards(GqlAuthGuard)
   @Query(returns => RoomUser)
-  room(@Args({ name: '_id', type: () => ID }) id: string) {
+  userRoom(@Args({ name: '_id', type: () => ID }) id: string) {
     return this.roomsUserService.findById(id).pipe(
       concatMap(value => {
         if (!value) return throwError(new NotFoundException('Room not found'))
@@ -20,8 +25,24 @@ export class RoomsUserResolver {
     )
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => RoomUser)
-  createRoom(@Args('data') category: RoomCreateInput) {
-    return this.roomsUserService.create(category)
+  createRoomUser(@CurrentUser() user, @Args('data') data: RoomUserCreateInput) {
+    if (!data.userId) {
+      data.userId = user._id
+    }
+    return this.roomsUserService.create(data)
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Query(returns => [User])
+  async roomUsers(@Args({ name: 'roomId', type: () => ID }) roomId: string) {
+    return this.roomsUserService.findRoomUsers(roomId)
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Query(returns => [Room])
+  async userRooms(@CurrentUser() user) {
+    return this.roomsUserService.findRoomsForUser(user._id)
   }
 }

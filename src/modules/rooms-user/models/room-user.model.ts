@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql'
+import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { index, prop, Ref } from '@typegoose/typegoose'
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
 import { User } from '../../../modules/users/models/user.model'
@@ -10,11 +10,11 @@ export class RoomUser extends TimeStamps {
   @Field()
   _id: string
 
-  @Field(type => Room)
+  @Field(type => ID)
   @prop({ ref: 'Room', required: true, index: true })
   roomId: Ref<Room>
 
-  @Field(type => User)
+  @Field(type => ID)
   @prop({ ref: 'User', required: true, index: true })
   userId: Ref<User>
 }

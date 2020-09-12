@@ -25,8 +25,12 @@ export class UsersService {
     return from(this.userModel.findById(id, proyection).lean())
   }
 
-  findByIds(ids: readonly string[]): Observable<User[]> {
-    return from(this.userModel.find({ _id: { $in: ids } }).lean())
+  async findAll() {
+    return this.userModel.find({}).lean()
+  }
+
+  async findByIds(ids: readonly string[]): Promise<User[]> {
+    return this.userModel.find({ _id: { $in: ids } }).lean()
   }
 
   findByEmail(email: string): Observable<User> {

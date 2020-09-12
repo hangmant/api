@@ -59,8 +59,8 @@ enum RoomType {
 
 type RoomUser {
   _id: String!
-  roomId: Room!
-  userId: User!
+  roomId: ID!
+  userId: ID!
 }
 
 type Word {
@@ -71,6 +71,7 @@ type Word {
 
 type Query {
   user(_id: String!): User!
+  users: [User!]!
   me: User!
   categories: [Category!]!
   category(_id: ID!): Category!
@@ -78,6 +79,10 @@ type Query {
   message(_id: ID!): Message!
   messages(roomId: ID!): [Message!]!
   room(_id: ID!): Room!
+  rooms: [Room!]!
+  userRoom(_id: ID!): RoomUser!
+  roomUsers(roomId: ID!): [User!]!
+  userRooms: [Room!]!
   words: [Word!]!
   randomWords(limit: Int!, categoryId: String!): [Word!]!
   word(_id: ID!): Word!
@@ -94,6 +99,7 @@ type Mutation {
   updateMessage(data: MessageUpdateInput!, _id: ID!): Message!
   createRoom(data: RoomCreateInput!): Room!
   updateRoom(data: RoomUpdateInput!, _id: ID!): Room!
+  createRoomUser(data: RoomUserCreateInput!): RoomUser!
   createWord(data: WordCreateInput!): Word!
   updateWord(data: WordUpdateInput!, _id: ID!): Word!
   deleteWord(_id: ID!): Word!
@@ -165,6 +171,11 @@ input RoomUpdateInput {
   name: String
   users: [String!]
   type: RoomType
+}
+
+input RoomUserCreateInput {
+  roomId: ID!
+  userId: ID
 }
 
 input WordCreateInput {
