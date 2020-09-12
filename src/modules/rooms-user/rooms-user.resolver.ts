@@ -3,9 +3,10 @@ import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { of, throwError } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
 import { User } from '../users/models/user.model'
-import { RoomCreateInput } from './dto/room-create.input'
+import { RoomUserCreateInput } from './dto/room-user-create.input'
 import { RoomUser } from './models/room-user.model'
 import { RoomsUserService } from './services/rooms-user.service'
+import { Room } from '../rooms/models/room.model'
 
 @Resolver(of => RoomUser)
 export class RoomsUserResolver {
@@ -22,12 +23,17 @@ export class RoomsUserResolver {
   }
 
   @Mutation(returns => RoomUser)
-  createRoom(@Args('data') category: RoomCreateInput) {
+  createRoomUser(@Args('data') category: RoomUserCreateInput) {
     return this.roomsUserService.create(category)
   }
 
   @Query(returns => [User])
   async roomUsers(@Args({ name: 'roomId', type: () => ID }) roomId: string) {
     return this.roomsUserService.findRoomUsers(roomId)
+  }
+
+  @Query(returns => [Room])
+  async userRooms(@Args({ name: 'userId', type: () => ID }) userId: string) {
+    return this.roomsUserService.findRoomsForUser(userId)
   }
 }

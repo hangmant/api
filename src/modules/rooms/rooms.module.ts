@@ -6,6 +6,7 @@ import { RoomsService } from './rooms.service'
 
 @Module({
   imports: [MongoModule.forFeature([Room])],
-  providers: [RoomsResolver, RoomsService]
+  providers: [RoomsResolver, RoomsService],
+  exports: [RoomsService]
 })
 export class RoomsModule {}

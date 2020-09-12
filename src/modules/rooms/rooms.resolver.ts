@@ -21,6 +21,11 @@ export class RoomsResolver {
     )
   }
 
+  @Query(returns => [Room])
+  rooms() {
+    return this.roomsService
+  }
+
   @Mutation(returns => Room)
   createRoom(@Args('data') data: RoomCreateInput) {
     return this.roomsService.create(data)
