@@ -13,7 +13,7 @@ export class RoomsUserResolver {
   constructor(private readonly roomsUserService: RoomsUserService) {}
 
   @Query(returns => RoomUser)
-  room(@Args({ name: '_id', type: () => ID }) id: string) {
+  userRoom(@Args({ name: '_id', type: () => ID }) id: string) {
     return this.roomsUserService.findById(id).pipe(
       concatMap(value => {
         if (!value) return throwError(new NotFoundException('Room not found'))
