@@ -2,9 +2,9 @@ codecov:
   require_ci_to_pass: no
 
 coverage:
-  precision: 2
+  precision: 1
   round: down
-  range: '29...80'
+  range: '0...100'
 
 parsers:
   gcov:
