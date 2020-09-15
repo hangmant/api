@@ -33,18 +33,6 @@ type EmailVerifyResponse {
   message: String!
 }
 
-type Message {
-  _id: String!
-
-  """body of message in text plain or markdown """
-  text: String!
-
-  """field <text> parsed to html"""
-  html: String!
-  fromUser: User!
-  roomId: ID!
-}
-
 type Room {
   _id: String!
   name: String!
@@ -55,6 +43,18 @@ type Room {
 enum RoomType {
   OneToOne
   OrgChannel
+}
+
+type Message {
+  _id: String!
+
+  """body of message in text plain or markdown """
+  text: String!
+
+  """field <text> parsed to html"""
+  html: String!
+  fromUser: User!
+  roomId: ID!
 }
 
 type RoomUser {

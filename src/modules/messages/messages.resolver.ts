@@ -38,16 +38,13 @@ export class MessagesResolver {
   }
 
   @Mutation(returns => Message)
-  createMessage(@CurrentUser() user, @Args('data') message: MessageCreateInput) {
+  async createMessage(@CurrentUser() user, @Args('data') message: MessageCreateInput) {
     message.fromUser = user._id
 
-    return this.messagesService.create(message).pipe(
-      tap(messageCreated => {
-        pubSub.publish('messageCreated', {
-          messageCreated
-        })
-      })
-    )
+    const messageCreated = await this.messagesService.create(message)
+    pubSub.publish('messageCreated', { messageCreated })
+
+    return messageCreated
   }
 
   @Mutation(returns => Message)

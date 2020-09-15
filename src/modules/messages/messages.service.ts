@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { ReturnModelType } from '@typegoose/typegoose'
 import { InjectModel } from 'nestjs-typegoose'
 import { from, Observable } from 'rxjs'
-import { concatMap } from 'rxjs/operators'
+import { RoomsService } from '../rooms/rooms.service'
 import { TextProcessorService } from '../text-processor/text-procesor.service'
 import { GetMessagesArgs } from './dto/get-messages.args'
 import { MessageCreateInput } from './dto/message-create.input'
@@ -13,6 +13,7 @@ import { Message } from './models/message.model'
 export class MessagesService {
   constructor(
     @InjectModel(Message) private readonly messageModel: ReturnModelType<typeof Message>,
+    private readonly roomService: RoomsService,
     private readonly textProcessorService: TextProcessorService
   ) {}
 
@@ -29,17 +30,19 @@ export class MessagesService {
     return from(this.messageModel.findById(id).lean())
   }
 
-  create(message: MessageCreateInput): Observable<Message> {
-    return from(this.textProcessorService.processText(message.text)).pipe(
-      concatMap(textProcessed => {
-        return from(
-          this.messageModel.create({
-            ...message,
-            html: textProcessed.html
-          })
-        )
-      })
-    )
+  async create(message: MessageCreateInput): Promise<Message> {
+    const existsRoom = await this.roomService.findById(message.roomId).toPromise()
+    console.log('Dante: MessagesService -> existsRoom', existsRoom)
+    if (!existsRoom) {
+      throw new NotFoundException(`Room doesn'nt exists`)
+    }
+
+    const textProcessed = await this.textProcessorService.processText(message.text)
+
+    return this.messageModel.create({
+      ...message,
+      html: textProcessed.html
+    })
   }
 
   updateById(id: string, message: MessageUpdateInput): Observable<Message | null> {
