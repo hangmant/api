@@ -32,32 +32,40 @@ export class MessagesService {
 
   async create(message: MessageCreateInput): Promise<Message> {
     const existsRoom = await this.roomService.findById(message.roomId).toPromise()
-    console.log('Dante: MessagesService -> existsRoom', existsRoom)
     if (!existsRoom) {
       throw new NotFoundException(`Room doesn'nt exists`)
     }
 
-    const textProcessed = await this.textProcessorService.processText(message.text)
+    const { html } = await this.textProcessorService.processText(message.text)
 
     return this.messageModel.create({
       ...message,
-      html: textProcessed.html
+      html
     })
   }
 
-  updateById(id: string, message: MessageUpdateInput): Observable<Message | null> {
-    return from(
-      this.messageModel
-        .findByIdAndUpdate(
-          id,
-          {
-            $set: message
-          },
-          {
-            new: true
+  async updateById(id: string, message: MessageUpdateInput): Promise<Message> {
+    const { html } = await this.textProcessorService.processText(message.text)
+
+    const updatedMessage = await this.messageModel
+      .findByIdAndUpdate(
+        id,
+        {
+          $set: {
+            ...message,
+            html
           }
-        )
-        .lean()
-    )
+        },
+        {
+          new: true
+        }
+      )
+      .lean()
+
+    if (!updatedMessage) {
+      throw new NotFoundException('Messsage not found')
+    }
+
+    return updatedMessage
   }
 }

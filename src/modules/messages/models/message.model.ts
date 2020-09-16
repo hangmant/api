@@ -24,4 +24,10 @@ export class Message extends TimeStamps {
   @Field(type => ID)
   @prop({ ref: 'Room', required: true, index: true })
   roomId: Ref<Room>
+
+  @Field(type => Date)
+  createdAt: Date
+
+  @Field(type => Date)
+  updatedAt: Date
 }

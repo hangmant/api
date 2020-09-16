@@ -48,7 +48,7 @@ export class MessagesResolver {
   }
 
   @Mutation(returns => Message)
-  updateMessage(@Args({ name: '_id', type: () => ID }) id: string, @Args('data') data: MessageUpdateInput) {
+  updateMessage(@Args({ name: 'id', type: () => ID }) id: string, @Args('data') data: MessageUpdateInput) {
     return this.messagesService.updateById(id, data)
   }
 

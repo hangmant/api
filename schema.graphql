@@ -55,7 +55,14 @@ type Message {
   html: String!
   fromUser: User!
   roomId: ID!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
 }
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
 
 type RoomUser {
   _id: String!
@@ -96,7 +103,7 @@ type Mutation {
   deleteCategory(_id: ID!): Category!
   verifyEmail(data: EmailVerificationInput!): EmailVerifyResponse!
   createMessage(data: MessageCreateInput!): Message!
-  updateMessage(data: MessageUpdateInput!, _id: ID!): Message!
+  updateMessage(data: MessageUpdateInput!, id: ID!): Message!
   createRoom(data: RoomCreateInput!): Room!
   updateRoom(data: RoomUpdateInput!, _id: ID!): Room!
   createRoomUser(data: RoomUserCreateInput!): RoomUser!
