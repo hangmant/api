@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { ReturnModelType } from '@typegoose/typegoose'
 import { InjectModel } from 'nestjs-typegoose'
-import { from, Observable } from 'rxjs'
 import { RoomsService } from '../rooms/rooms.service'
 import { TextProcessorService } from '../text-processor/text-procesor.service'
 import { GetMessagesArgs } from './dto/get-messages.args'
@@ -17,24 +16,25 @@ export class MessagesService {
     private readonly textProcessorService: TextProcessorService
   ) {}
 
-  async find(args: GetMessagesArgs): Promise<Message[]> {
+  async find(data: GetMessagesArgs): Promise<Message[]> {
     return this.messageModel
-      .find(args)
+      .find(data)
       .sort({
         createdAt: 1
       })
       .lean()
   }
 
-  findById(id: string): Observable<Message | null> {
-    return from(this.messageModel.findById(id).lean())
+  async findById(id: string): Promise<Message> {
+    const message = await this.messageModel.findById(id).lean()
+    if (!message) {
+      throw new NotFoundException('Message not found')
+    }
+    return message
   }
 
   async create(message: MessageCreateInput): Promise<Message> {
-    const existsRoom = await this.roomService.findById(message.roomId).toPromise()
-    if (!existsRoom) {
-      throw new NotFoundException(`Room doesn'nt exists`)
-    }
+    await this.roomService.findById(message.roomId)
 
     const { html } = await this.textProcessorService.processText(message.text)
 

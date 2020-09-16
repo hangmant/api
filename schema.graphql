@@ -27,7 +27,14 @@ type Category {
   name: String!
   color: String!
   description: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
 }
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
 
 type EmailVerifyResponse {
   message: String!
@@ -38,6 +45,8 @@ type Room {
   name: String!
   users: [String!]!
   type: RoomType!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
 }
 
 enum RoomType {
@@ -59,11 +68,6 @@ type Message {
   updatedAt: Timestamp!
 }
 
-"""
-`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
-"""
-scalar Timestamp
-
 type RoomUser {
   _id: String!
   roomId: ID!
@@ -74,6 +78,8 @@ type Word {
   _id: String!
   name: String!
   category: Category!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
 }
 
 type Query {
@@ -83,7 +89,7 @@ type Query {
   categories: [Category!]!
   category(_id: ID!): Category!
   countries: [Country!]!
-  message(_id: ID!): Message!
+  message(id: ID!): Message!
   messages(roomId: ID!): [Message!]!
   room(_id: ID!): Room!
   rooms: [Room!]!
@@ -195,5 +201,5 @@ input WordUpdateInput {
 }
 
 type Subscription {
-  messageCreated(roomId: String!): Message!
+  messageCreated: Message!
 }

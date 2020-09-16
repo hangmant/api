@@ -27,4 +27,10 @@ export class Category extends TimeStamps {
     default: ''
   })
   description: string
+
+  @Field(type => Date)
+  createdAt: Date
+
+  @Field(type => Date)
+  updatedAt: Date
 }

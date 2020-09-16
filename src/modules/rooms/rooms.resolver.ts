@@ -1,12 +1,10 @@
-import { NotFoundException, UseGuards } from '@nestjs/common'
+import { UseGuards } from '@nestjs/common'
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { of, throwError } from 'rxjs'
-import { concatMap } from 'rxjs/operators'
+import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
 import { RoomCreateInput } from './dto/room-create.input'
 import { RoomUpdateInput } from './dto/room-update.input'
 import { Room } from './models/room.model'
 import { RoomsService } from './rooms.service'
-import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
 
 @Resolver(of => Room)
 export class RoomsResolver {
@@ -15,18 +13,13 @@ export class RoomsResolver {
   @UseGuards(GqlAuthGuard)
   @Query(returns => Room)
   room(@Args({ name: '_id', type: () => ID }) id: string) {
-    return this.roomsService.findById(id).pipe(
-      concatMap(value => {
-        if (!value) return throwError(new NotFoundException('Room not found'))
-        return of(value)
-      })
-    )
+    return this.roomsService.findById(id)
   }
 
   @UseGuards(GqlAuthGuard)
   @Query(returns => [Room])
   rooms() {
-    return this.roomsService
+    return []
   }
 
   @UseGuards(GqlAuthGuard)
