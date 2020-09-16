@@ -2,8 +2,7 @@ import { NotFoundException, UseGuards } from '@nestjs/common'
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
 import * as DataLoader from 'dataloader'
 import { Loader } from 'nestjs-dataloader-dan'
-import { from, of, throwError } from 'rxjs'
-import { concatMap } from 'rxjs/operators'
+import { throwError } from 'rxjs'
 import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
 import { CategoriesLoader } from './categories.loader'
 import { CategoriesService } from './categories.service'
@@ -22,16 +21,13 @@ export class CategoriesResolver {
   }
 
   @Query(returns => Category)
-  category(
+  async category(
     @Args({ name: '_id', type: () => ID }) id: string,
     @Loader(CategoriesLoader.name) categoriesLoader: DataLoader<string, Category>
   ) {
-    return from(categoriesLoader.load(id)).pipe(
-      concatMap(value => {
-        if (!value) return throwError(new NotFoundException('Category not found'))
-        return of(value)
-      })
-    )
+    const category = await categoriesLoader.load(id)
+    if (!category) return throwError(new NotFoundException('Category not found'))
+    return category
   }
 
   @Mutation(returns => Category)

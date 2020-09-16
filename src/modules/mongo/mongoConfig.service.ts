@@ -12,7 +12,7 @@ export class MongoConfigService implements TypegooseOptionsFactory {
   }
 
   createTypegooseOptions(): TypegooseModuleOptions {
-    this.logger.info(`Connecting to ${this.mongoURI}`)
+    this.logger.debug(`Connecting to ${this.mongoURI}`)
     return {
       uri: this.mongoURI,
       useNewUrlParser: true,

@@ -19,4 +19,10 @@ export class Room extends TimeStamps {
   @Field(type => RoomType)
   @prop({ enum: RoomType, required: true })
   type: RoomType
+
+  @Field(type => Date)
+  createdAt: Date
+
+  @Field(type => Date)
+  updatedAt: Date
 }

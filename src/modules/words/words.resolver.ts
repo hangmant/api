@@ -1,15 +1,14 @@
 import { UseGuards } from '@nestjs/common'
-import { Args, Mutation, Parent, Query, ResolveField, Resolver, Int, ID } from '@nestjs/graphql'
+import { Args, ID, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
 import * as DataLoader from 'dataloader'
 import { Loader } from 'nestjs-dataloader-dan'
-import { from, Observable } from 'rxjs'
 import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
 import { CategoriesLoader } from '../categories/categories.loader'
 import { Category } from '../categories/models/categories.model'
-import { Word } from './words.model'
-import { WordsService } from './words.service'
 import { WordCreateInput } from './dtos/word-create.input'
 import { WordUpdateInput } from './dtos/word-update.input'
+import { Word } from './models/words.model'
+import { WordsService } from './words.service'
 
 @UseGuards(GqlAuthGuard)
 @Resolver(of => Word)
@@ -53,7 +52,7 @@ export class WordsResolver {
   resolveCategory(
     @Parent() word: Word,
     @Loader(CategoriesLoader.name) categoriesLoader: DataLoader<string, Category>
-  ): Observable<Category | null> {
-    return from(categoriesLoader.load(word.category.toString()))
+  ): Promise<Category> {
+    return categoriesLoader.load(word.category.toString())
   }
 }

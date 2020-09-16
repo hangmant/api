@@ -15,9 +15,4 @@ export class StorageController {
   token(@Body() fileInfo: ReqPresignedPostDto) {
     return this.storageService.createSignedUrl(fileInfo.key, fileInfo.contentType)
   }
-
-  @Get('all-keys')
-  getAllKeys() {
-    return this.storageService.getAllKeys()
-  }
 }

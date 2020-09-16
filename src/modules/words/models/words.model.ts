@@ -1,6 +1,6 @@
 import { prop, Ref } from '@typegoose/typegoose'
 import { IsString, IsNotEmpty, IsMongoId, MaxLength, MinLength } from 'class-validator'
-import { Category } from '../categories/models/categories.model'
+import { Category } from '../../categories/models/categories.model'
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
 import { ObjectType, Field } from '@nestjs/graphql'
 
@@ -19,4 +19,10 @@ export class Word extends TimeStamps {
   @Field(type => Category)
   @prop({ ref: 'Category', required: true })
   category: Ref<Category>
+
+  @Field(type => Date)
+  createdAt: Date
+
+  @Field(type => Date)
+  updatedAt: Date
 }

@@ -1,10 +1,9 @@
-import { NotFoundException, UseGuards } from '@nestjs/common'
+import { UseGuards } from '@nestjs/common'
 import { Args, ID, Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql'
 import { PubSub } from 'apollo-server-fastify'
 import * as DataLoader from 'dataloader'
 import { Loader } from 'nestjs-dataloader-dan'
-import { from, Observable, of, throwError } from 'rxjs'
-import { concatMap, tap } from 'rxjs/operators'
+import { from, Observable } from 'rxjs'
 import { CurrentUser } from '../../decorators/currentUser.decorator'
 import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
 import { User } from '../users/models/user.model'
@@ -23,13 +22,8 @@ export class MessagesResolver {
   constructor(private readonly messagesService: MessagesService) {}
 
   @Query(returns => Message)
-  message(@Args({ name: '_id', type: () => ID }) id: string) {
-    return this.messagesService.findById(id).pipe(
-      concatMap(value => {
-        if (!value) return throwError(new NotFoundException('Room not found'))
-        return of(value)
-      })
-    )
+  message(@Args({ name: 'id', type: () => ID }) id: string) {
+    return this.messagesService.findById(id)
   }
 
   @Query(returns => [Message])
@@ -38,29 +32,26 @@ export class MessagesResolver {
   }
 
   @Mutation(returns => Message)
-  createMessage(@CurrentUser() user, @Args('data') message: MessageCreateInput) {
+  async createMessage(@CurrentUser() user, @Args('data') message: MessageCreateInput) {
     message.fromUser = user._id
 
-    return this.messagesService.create(message).pipe(
-      tap(messageCreated => {
-        pubSub.publish('messageCreated', {
-          messageCreated
-        })
-      })
-    )
+    const messageCreated = await this.messagesService.create(message)
+    pubSub.publish('messageCreated', { messageCreated })
+
+    return messageCreated
   }
 
   @Mutation(returns => Message)
-  updateMessage(@Args({ name: '_id', type: () => ID }) id: string, @Args('data') data: MessageUpdateInput) {
+  updateMessage(@Args({ name: 'id', type: () => ID }) id: string, @Args('data') data: MessageUpdateInput) {
     return this.messagesService.updateById(id, data)
   }
 
   @ResolveField('fromUser', () => User)
-  resolveCategory(
+  resolveUser(
     @Parent() message: Message,
     @Loader(UsersLoader.name) usersLoader: DataLoader<string, User>
-  ): Observable<User | null> {
-    return from(usersLoader.load(message.fromUser.toString()))
+  ): Promise<User> {
+    return usersLoader.load(message.fromUser.toString())
   }
 
   @Subscription(returns => Message, {
@@ -68,7 +59,7 @@ export class MessagesResolver {
       return payload.messageCreated.roomId.toString() === variables.roomId
     }
   })
-  messageCreated(@Args('roomId') roomId: string) {
+  messageCreated() {
     return pubSub.asyncIterator('messageCreated')
   }
 }

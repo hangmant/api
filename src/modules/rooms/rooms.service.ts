@@ -1,7 +1,6 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { ReturnModelType } from '@typegoose/typegoose'
 import { InjectModel } from 'nestjs-typegoose'
-import { from, Observable } from 'rxjs'
 import { RoomCreateInput } from './dto/room-create.input'
 import { RoomUpdateInput } from './dto/room-update.input'
 import { Room } from './models/room.model'
@@ -14,27 +13,31 @@ export class RoomsService {
     return this.roomModel.find({ _id: { $in: ids } }).lean()
   }
 
-  findById(id: string): Observable<Room | null> {
-    return from(this.roomModel.findById(id).lean())
+  async findById(id: string): Promise<Room> {
+    const room = await this.roomModel.findById(id).lean()
+    if (!room) {
+      throw new NotFoundException('Room not found')
+    }
+    return room
   }
 
-  create(data: RoomCreateInput): Observable<Room> {
-    return from(this.roomModel.create(data))
+  async create(data: RoomCreateInput): Promise<Room> {
+    return this.roomModel.create(data)
   }
 
-  updateById(id: string, data: RoomUpdateInput): Observable<Room | null> {
-    return from(
-      this.roomModel
-        .findByIdAndUpdate(
-          id,
-          {
-            $set: data
-          },
-          {
-            new: true
-          }
-        )
-        .lean()
-    )
+  async updateById(id: string, data: RoomUpdateInput): Promise<Room> {
+    await this.findById(id)
+
+    return this.roomModel
+      .findByIdAndUpdate(
+        id,
+        {
+          $set: data
+        },
+        {
+          new: true
+        }
+      )
+      .lean()
   }
 }

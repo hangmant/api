@@ -27,10 +27,31 @@ type Category {
   name: String!
   color: String!
   description: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
 }
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
 
 type EmailVerifyResponse {
   message: String!
+}
+
+type Room {
+  _id: String!
+  name: String!
+  users: [String!]!
+  type: RoomType!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+}
+
+enum RoomType {
+  OneToOne
+  OrgChannel
 }
 
 type Message {
@@ -43,18 +64,8 @@ type Message {
   html: String!
   fromUser: User!
   roomId: ID!
-}
-
-type Room {
-  _id: String!
-  name: String!
-  users: [String!]!
-  type: RoomType!
-}
-
-enum RoomType {
-  OneToOne
-  OrgChannel
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
 }
 
 type RoomUser {
@@ -67,6 +78,8 @@ type Word {
   _id: String!
   name: String!
   category: Category!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
 }
 
 type Query {
@@ -76,7 +89,7 @@ type Query {
   categories: [Category!]!
   category(_id: ID!): Category!
   countries: [Country!]!
-  message(_id: ID!): Message!
+  message(id: ID!): Message!
   messages(roomId: ID!): [Message!]!
   room(_id: ID!): Room!
   rooms: [Room!]!
@@ -96,7 +109,7 @@ type Mutation {
   deleteCategory(_id: ID!): Category!
   verifyEmail(data: EmailVerificationInput!): EmailVerifyResponse!
   createMessage(data: MessageCreateInput!): Message!
-  updateMessage(data: MessageUpdateInput!, _id: ID!): Message!
+  updateMessage(data: MessageUpdateInput!, id: ID!): Message!
   createRoom(data: RoomCreateInput!): Room!
   updateRoom(data: RoomUpdateInput!, _id: ID!): Room!
   createRoomUser(data: RoomUserCreateInput!): RoomUser!
@@ -188,5 +201,5 @@ input WordUpdateInput {
 }
 
 type Subscription {
-  messageCreated(roomId: String!): Message!
+  messageCreated: Message!
 }

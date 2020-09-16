@@ -42,4 +42,8 @@ export class LoggerService implements NestLoggerService {
   warn(message: string, ...params: Array<any>) {
     this._logger.warn(message, params)
   }
+
+  debug(message: string, ...params: any[]) {
+    this._logger.info(message, params)
+  }
 }

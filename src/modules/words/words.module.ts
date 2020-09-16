@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { MongoModule } from '../mongo/mongo.module'
-import { Word } from './words.model'
+import { Word } from './models/words.model'
 import { WordsService } from './words.service'
 import { WordsResolver } from './words.resolver'
 import { CategoriesModule } from '../categories/categories.module'
