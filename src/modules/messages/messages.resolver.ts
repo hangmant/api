@@ -3,7 +3,6 @@ import { Args, ID, Mutation, Parent, Query, ResolveField, Resolver, Subscription
 import { PubSub } from 'apollo-server-fastify'
 import * as DataLoader from 'dataloader'
 import { Loader } from 'nestjs-dataloader-dan'
-import { from, Observable } from 'rxjs'
 import { CurrentUser } from '../../decorators/currentUser.decorator'
 import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
 import { User } from '../users/models/user.model'
@@ -56,10 +55,12 @@ export class MessagesResolver {
 
   @Subscription(returns => Message, {
     filter: (payload, variables) => {
+      console.log('Dante: payload', payload)
+      return true
       return payload.messageCreated.roomId.toString() === variables.roomId
     }
   })
-  messageCreated() {
+  messageCreated(@Args('roomId') _: string) {
     return pubSub.asyncIterator('messageCreated')
   }
 }
