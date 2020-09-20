@@ -55,8 +55,6 @@ export class MessagesResolver {
 
   @Subscription(returns => Message, {
     filter: (payload, variables) => {
-      console.log('Dante: payload', payload)
-      return true
       return payload.messageCreated.roomId.toString() === variables.roomId
     }
   })
