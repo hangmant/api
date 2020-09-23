@@ -12,5 +12,5 @@ export class CategoryCreateInput {
   color?: string
 
   @Field()
-  description?: string
+  description: string
 }

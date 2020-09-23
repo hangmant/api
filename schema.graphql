@@ -156,7 +156,7 @@ input CategoryCreateInput {
 input CategoryUpdateInput {
   name: String
   color: String
-  description: String!
+  description: String
 }
 
 input EmailVerificationInput {
