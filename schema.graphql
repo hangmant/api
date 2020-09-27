@@ -68,6 +68,16 @@ type Message {
   updatedAt: Timestamp!
 }
 
+type UserTypingIndicatorChanged {
+  _id: String!
+  name: String!
+}
+
+type TypingIndicatorChanged {
+  user: UserTypingIndicatorChanged!
+  isTyping: Boolean!
+}
+
 type RoomUser {
   _id: String!
   roomId: ID!
@@ -110,6 +120,7 @@ type Mutation {
   verifyEmail(data: EmailVerificationInput!): EmailVerifyResponse!
   createMessage(data: MessageCreateInput!): Message!
   updateMessage(data: MessageUpdateInput!, id: ID!): Message!
+  changeTypingIndicator(isTyping: Boolean!, roomId: ID!): Boolean!
   createRoom(data: RoomCreateInput!): Room!
   updateRoom(data: RoomUpdateInput!, _id: ID!): Room!
   createRoomUser(data: RoomUserCreateInput!): RoomUser!
@@ -202,4 +213,5 @@ input WordUpdateInput {
 
 type Subscription {
   messageCreated(roomId: String!): Message!
+  typingIndicatorChanged(roomId: ID!): TypingIndicatorChanged!
 }

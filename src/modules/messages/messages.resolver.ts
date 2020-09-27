@@ -12,6 +12,7 @@ import { MessageCreateInput } from './dto/message-create.input'
 import { MessageUpdateInput } from './dto/message-update.input'
 import { MessagesService } from './messages.service'
 import { Message } from './models/message.model'
+import { TypingIndicatorChanged } from './dto/typing-indicator-changed'
 
 const pubSub = new PubSub()
 
@@ -60,5 +61,35 @@ export class MessagesResolver {
   })
   messageCreated(@Args('roomId') _: string) {
     return pubSub.asyncIterator('messageCreated')
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation(returns => Boolean)
+  async changeTypingIndicator(
+    @CurrentUser() user: any,
+    @Args({ name: 'roomId', type: () => ID }) roomId: string,
+    @Args({ name: 'isTyping', type: () => Boolean }) isTyping: boolean
+  ) {
+    await pubSub.publish('typingIndicatorChanged', {
+      roomId,
+      typingIndicatorChanged: {
+        user: {
+          _id: user._id,
+          name: user.fullName
+        },
+        isTyping
+      } as TypingIndicatorChanged
+    })
+
+    return true
+  }
+
+  @Subscription(returns => TypingIndicatorChanged, {
+    filter: (payload, variables) => {
+      return payload.roomId?.toString() === variables.roomId?.toString()
+    }
+  })
+  typingIndicatorChanged(@Args({ name: 'roomId', type: () => ID }) _: string) {
+    return pubSub.asyncIterator('typingIndicatorChanged')
   }
 }
