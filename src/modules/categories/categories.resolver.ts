@@ -1,7 +1,7 @@
 import { NotFoundException, UseGuards } from '@nestjs/common'
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
 import * as DataLoader from 'dataloader'
-import { Loader } from 'nestjs-dataloader-dan'
+import { Loader } from '@dantehemerson/nestjs-dataloader'
 import { throwError } from 'rxjs'
 import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
 import { CategoriesLoader } from './categories.loader'

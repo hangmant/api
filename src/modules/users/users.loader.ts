@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import * as DataLoader from 'dataloader'
-import { NestDataLoader } from 'nestjs-dataloader-dan'
+import { NestDataLoader } from '@dantehemerson/nestjs-dataloader'
 import { dlSort } from '../../utils/dlSort'
 import { User } from './models/user.model'
 import { UsersService } from './users.service'

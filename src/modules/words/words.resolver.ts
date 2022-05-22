@@ -1,7 +1,7 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, ID, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
 import * as DataLoader from 'dataloader'
-import { Loader } from 'nestjs-dataloader-dan'
+import { Loader } from '@dantehemerson/nestjs-dataloader'
 import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
 import { CategoriesLoader } from '../categories/categories.loader'
 import { Category } from '../categories/models/categories.model'

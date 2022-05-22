@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { APP_INTERCEPTOR } from '@nestjs/core'
-import { DataLoaderInterceptor } from 'nestjs-dataloader-dan'
+import { DataLoaderInterceptor } from '@dantehemerson/nestjs-dataloader'
 import { MongoModule } from '../mongo/mongo.module'
 import { CategoriesLoader } from './categories.loader'
 import { Category } from './models/categories.model'

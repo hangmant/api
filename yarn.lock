@@ -399,6 +399,14 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@dantehemerson/nestjs-dataloader@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@dantehemerson/nestjs-dataloader/-/nestjs-dataloader-1.0.1.tgz#0271c6ddd19f7e03a70c3bf2dd0ba3966ba7bcef"
+  integrity sha512-LJ8LuC+KG4EZo9fwjtehtP0ockfycFgzwkQjTVYoUNKOXG+6yK42n1BZxONdRCf8Re9XzRUTqFmI37uzR1ICiA==
+  dependencies:
+    dataloader "^2.0.0"
+    rxjs "^6.5.4"
+
 "@dsherret/to-absolute-glob@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@dsherret/to-absolute-glob/-/to-absolute-glob-2.0.2.tgz#1f6475dc8bd974cea07a2daf3864b317b1dd332c"
@@ -7525,14 +7533,6 @@ neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
-
-nestjs-dataloader-dan@2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/nestjs-dataloader-dan/-/nestjs-dataloader-dan-2.0.5.tgz#eb2f4fe6cfd1fdaf5d01e5d9efce7cbf255504b0"
-  integrity sha512-k7IRoV0WN06F+/VTkFFOqGR+Ph/pa+VnGIpJmE7oHBIvA2w19559bG/uF/7E7byYMstmJldsVjkzdJ+tKdPNfA==
-  dependencies:
-    dataloader "^2.0.0"
-    rxjs "^6.5.4"
 
 nestjs-typegoose@^7.1.16:
   version "7.1.16"
