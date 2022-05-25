@@ -93,40 +93,40 @@ type Word {
 }
 
 type Query {
+  countries: [Country!]!
   user(_id: String!): User!
   users: [User!]!
   me: User!
+  words: [Word!]!
+  randomWords(categoryId: String!, limit: Int!): [Word!]!
+  word(_id: ID!): Word!
   categories: [Category!]!
   category(_id: ID!): Category!
-  countries: [Country!]!
-  message(id: ID!): Message!
-  messages(roomId: ID!): [Message!]!
   room(_id: ID!): Room!
   rooms: [Room!]!
   userRoom(_id: ID!): RoomUser!
   roomUsers(roomId: ID!): [User!]!
   userRooms: [Room!]!
-  words: [Word!]!
-  randomWords(limit: Int!, categoryId: String!): [Word!]!
-  word(_id: ID!): Word!
+  message(id: ID!): Message!
+  messages(roomId: ID!): [Message!]!
 }
 
 type Mutation {
   updateMe(data: UserUpdateInput!): User!
   createUser(data: UserCreateInput!): User!
-  createCategory(data: CategoryCreateInput!): Category!
-  updateCategory(data: CategoryUpdateInput!, _id: ID!): Category!
-  deleteCategory(_id: ID!): Category!
   verifyEmail(data: EmailVerificationInput!): EmailVerifyResponse!
-  createMessage(data: MessageCreateInput!): Message!
-  updateMessage(data: MessageUpdateInput!, id: ID!): Message!
-  changeTypingIndicator(isTyping: Boolean!, roomId: ID!): Boolean!
-  createRoom(data: RoomCreateInput!): Room!
-  updateRoom(data: RoomUpdateInput!, _id: ID!): Room!
-  createRoomUser(data: RoomUserCreateInput!): RoomUser!
   createWord(data: WordCreateInput!): Word!
-  updateWord(data: WordUpdateInput!, _id: ID!): Word!
+  updateWord(_id: ID!, data: WordUpdateInput!): Word!
   deleteWord(_id: ID!): Word!
+  createCategory(data: CategoryCreateInput!): Category!
+  updateCategory(_id: ID!, data: CategoryUpdateInput!): Category!
+  deleteCategory(_id: ID!): Category!
+  createRoom(data: RoomCreateInput!): Room!
+  updateRoom(_id: ID!, data: RoomUpdateInput!): Room!
+  createRoomUser(data: RoomUserCreateInput!): RoomUser!
+  createMessage(data: MessageCreateInput!): Message!
+  updateMessage(id: ID!, data: MessageUpdateInput!): Message!
+  changeTypingIndicator(roomId: ID!, isTyping: Boolean!): Boolean!
 }
 
 input UserUpdateInput {
@@ -158,6 +158,19 @@ input UserCreateInput {
   avatar: String
 }
 
+input EmailVerificationInput {
+  token: String!
+}
+
+input WordCreateInput {
+  name: String!
+  categoryId: String!
+}
+
+input WordUpdateInput {
+  name: String!
+}
+
 input CategoryCreateInput {
   name: String!
   color: String!
@@ -168,21 +181,6 @@ input CategoryUpdateInput {
   name: String
   color: String
   description: String
-}
-
-input EmailVerificationInput {
-  token: String!
-}
-
-input MessageCreateInput {
-  """body of message in text plain or markdown """
-  text: String!
-  roomId: ID!
-}
-
-input MessageUpdateInput {
-  """body of message in text plain or markdown """
-  text: String
 }
 
 input RoomCreateInput {
@@ -202,13 +200,15 @@ input RoomUserCreateInput {
   userId: ID
 }
 
-input WordCreateInput {
-  name: String!
-  categoryId: String!
+input MessageCreateInput {
+  """body of message in text plain or markdown """
+  text: String!
+  roomId: ID!
 }
 
-input WordUpdateInput {
-  name: String!
+input MessageUpdateInput {
+  """body of message in text plain or markdown """
+  text: String
 }
 
 type Subscription {

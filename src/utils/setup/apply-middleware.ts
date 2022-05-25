@@ -9,7 +9,7 @@ require('mongoose').Promise = BluebirdPromise
 
 export function applyMiddleware(app: NestFastifyApplication) {
   app.useGlobalPipes(new ValidationPipe())
-  app.enableCors()
+  // app.enableCors()
   app.setGlobalPrefix('/api')
   app.use(helmet())
 

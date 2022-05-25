@@ -20,6 +20,7 @@ import { ConfigModule } from '@nestjs/config'
 import { config } from './config'
 import { SentryModule } from '@ntegral/nestjs-sentry'
 import { SentryOptions } from './config/options/sentry.options'
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 
 @Module({
   imports: [
@@ -35,7 +36,8 @@ import { SentryOptions } from './config/options/sentry.options'
     MailerModule.forRootAsync({
       useClass: MailerOptions
     }),
-    GraphQLModule.forRootAsync({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+      driver: ApolloDriver,
       useClass: GraphqlOptions
     }),
     CountriesModule,

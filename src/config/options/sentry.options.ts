@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { SentryModuleOptions, SentryOptionsFactory } from '@ntegral/nestjs-sentry'
-import { LogLevel } from '@sentry/types'
 
 @Injectable()
 export class SentryOptions implements SentryOptionsFactory {
@@ -14,7 +13,7 @@ export class SentryOptions implements SentryOptionsFactory {
       debug: true,
       environment: 'dev',
       release: 'some_release',
-      logLevel: LogLevel.Debug
+      
     }
   }
 }

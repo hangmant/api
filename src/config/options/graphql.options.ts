@@ -1,14 +1,15 @@
+import { ApolloDriverConfig } from '@nestjs/apollo'
 import { Injectable } from '@nestjs/common'
-import { GqlModuleOptions, GqlOptionsFactory } from '@nestjs/graphql'
+import { ConfigService } from '@nestjs/config'
+import { GqlOptionsFactory } from '@nestjs/graphql'
 import { join } from 'path'
 import { CountriesAPI } from '../../datasources/countries.datasource'
-import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class GraphqlOptions implements GqlOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
 
-  createGqlOptions(): GqlModuleOptions {
+  createGqlOptions(): ApolloDriverConfig {
     return {
       context: ({ req, connection, res }) => {
         if (connection) {
@@ -32,9 +33,6 @@ export class GraphqlOptions implements GqlOptionsFactory {
       },
       buildSchemaOptions: {
         dateScalarMode: 'timestamp'
-      },
-      resolverValidationOptions: {
-        requireResolversForResolveType: false
       },
       autoSchemaFile: join(process.cwd(), 'schema.graphql'),
       introspection: true

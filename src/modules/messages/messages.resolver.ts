@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, ID, Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql'
-import { PubSub } from 'apollo-server-fastify'
+import { PubSub } from 'graphql-subscriptions'
 import * as DataLoader from 'dataloader'
 import { Loader } from '@dantehemerson/nestjs-dataloader'
 import { CurrentUser } from '../../decorators/currentUser.decorator'
