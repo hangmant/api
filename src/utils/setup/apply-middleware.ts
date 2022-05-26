@@ -11,7 +11,7 @@ export async function applyMiddleware(app: NestFastifyApplication) {
   // await app.register(require('@fastify/express'))
  
   app.useGlobalPipes(new ValidationPipe())
-  app.enableCors()
+  app.register(require('@fastify/cors'))
   app.setGlobalPrefix('/api')
   app.use(helmet())
 
