@@ -23,6 +23,7 @@ export class GraphqlOptions implements GqlOptionsFactory {
         }
         return { req, res }
       },
+      cors: false,
       installSubscriptionHandlers: true,
       debug: true,
       playground: true,
