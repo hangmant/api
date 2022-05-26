@@ -13,7 +13,6 @@ export async function applyMiddleware(app: NestFastifyApplication) {
   app.useGlobalPipes(new ValidationPipe())
   app.enableCors({
     origin: '*',
-    credentials: true,
   })
   app.setGlobalPrefix('/api')
   app.use(helmet())
