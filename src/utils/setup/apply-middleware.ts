@@ -1,7 +1,7 @@
 import { ValidationPipe } from '@nestjs/common'
 import { NestFastifyApplication } from '@nestjs/platform-fastify'
 import * as BluebirdPromise from 'bluebird'
-import * as helmet from 'helmet'
+import helmet from 'helmet'
 import * as passport from 'passport'
 
 /** set custom promise to mongoose */
