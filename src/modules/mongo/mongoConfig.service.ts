@@ -15,10 +15,6 @@ export class MongoConfigService implements TypegooseOptionsFactory {
     this.logger.debug(`Connecting to ${this.mongoURI}`)
     return {
       uri: this.mongoURI,
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: true,
-      useUnifiedTopology: true
     }
   }
 }

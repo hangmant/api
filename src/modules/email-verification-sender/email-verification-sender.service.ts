@@ -30,7 +30,7 @@ export class EmailVerificationSenderService {
         }
       ])
     ).pipe(
-      concatMap(createdResult => {
+      concatMap((createdResult: any) => {
         const { token: createdToken } = createdResult.shift()
         return this.sendVerificationEmail(user.email, createdToken)
       })

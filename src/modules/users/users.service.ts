@@ -66,7 +66,7 @@ export class UsersService {
               })
             )
           }),
-          tap(createdUser => this.emailVerificationSenderService.createAndSendToken(createdUser).subscribe()),
+          tap((createdUser: User) => this.emailVerificationSenderService.createAndSendToken(createdUser).subscribe()),
           catchError(error => {
             this.logger.error('Error on create user', error)
             return throwError(new ConflictException(error))
@@ -78,7 +78,7 @@ export class UsersService {
 
   isEmailVerified(userId: string): Observable<boolean> {
     return from(this.userModel.findById(userId, { isEmailVerified: 1 }).lean()).pipe(
-      map(user => {
+      map((user: User) => {
         if (!user) {
           // TODO: Currently return not verified if user not exists.
           return false
