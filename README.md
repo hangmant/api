@@ -17,16 +17,37 @@ https://hangwoman-cms.herokuapp.com
 
 https://github.com/hangwoman/api/wiki
 
+
+
+## Prerequisites
+
+```
+node ^16
+```
+
+**pm2**
+
+Install [pm2](https://pm2.keymetrics.io/)
+
+```
+npm install pm2 -g
+```
+
+
+The follow scripts describe how to run develompent mode:
+
 ## Install
 
 ```sh
-yarn
+npm ci
 ```
 
 ## Run 
 
+Run all services:
+
 ```sh
-yarn start
+pm2 start
 ```
 
 ## Deploying to Heroku git
