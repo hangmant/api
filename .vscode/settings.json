@@ -1,14 +1,19 @@
 {
   "files.exclude": {
-    // "**/dist": true,
-    // "**/node_modules": true,
+    "**/dist": true,
+    "**/node_modules": true,
     "**/yarn.lock": true,
     "**/.cache": true,
     "**/public": true
   },
+  "files.associations": {
+    "**/.ebextensions/*": "yaml",
+    "**/*.env*": "dotenv"
+  },
   "editor.formatOnSave": true,
   "workbench.iconTheme": "vscode-icons",
   "vsicons.presets.nestjs": true,
+  "typescript.preferences.importModuleSpecifier": "relative",
   "search.exclude": {
     "dist/**": true,
     "public/**": true,
