@@ -1,6 +1,6 @@
 {
   "files.exclude": {
-    "**/dist": true,
+    // "**/dist": true,
     "**/node_modules": true,
     "**/yarn.lock": true,
     "**/.cache": true,
@@ -13,6 +13,33 @@
   "editor.formatOnSave": true,
   "workbench.iconTheme": "vscode-icons",
   "vsicons.presets.nestjs": true,
+  "vsicons.associations.files": [
+    {
+      "icon": "tsconfig",
+      "extensions": ["tsconfig.build.json"],
+      "filename": true,
+      "format": "svg"
+    },
+    {
+      "icon": "typescriptdef",
+      "extensions": ["interface.ts"],
+    },
+    {
+      "icon": "nest_guard_ts",
+      "extensions": ["strategy.ts"],
+    },
+    {
+      "icon": "mongo",
+      "extensions": ["model.ts"],
+    }
+  ],
+  "vsicons.associations.folders": [
+    { 
+      "icon": "app", 
+      "extensions": ["apps"], 
+      "format": "svg"
+    }
+  ],
   "typescript.preferences.importModuleSpecifier": "relative",
   "search.exclude": {
     "dist/**": true,

@@ -39,6 +39,7 @@
     "@nestjs/core": "^9.0.3",
     "@nestjs/graphql": "^10.0.18",
     "@nestjs/jwt": "^9.0.0",
+    "@nestjs/microservices": "^9.0.3",
     "@nestjs/mongoose": "^9.2.0",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-fastify": "^9.0.3",
@@ -122,7 +123,11 @@
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "roots": [
-      "<rootDir>/apps/"
-    ]
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "^@hangster/setup(|/.*)$": "<rootDir>/libs/setup/src/$1"
+    }
   }
 }

@@ -16,7 +16,7 @@ export class RoomsService {
   async findById(id: string): Promise<Room> {
     const room = await this.roomModel.findById(id).lean()
     if (!room) {
-      throw new NotFoundException('Room not found')
+      throw new NotFoundException('Room not found jajaee')
     }
     return room
   }

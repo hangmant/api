@@ -17,6 +17,13 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "paths": {
+      "@hangster/setup": [
+        "libs/setup/src"
+      ],
+      "@hangster/setup/*": [
+        "libs/setup/src/*"
+      ]
+    }
   }
 }

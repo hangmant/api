@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'api',
       script: 'nest',
-      args: 'start hangman-api',
+      args: 'start hangman-api -w',
       automation: false,
       instances: 1,
       env: {
@@ -18,7 +18,7 @@ module.exports = {
     {
       name: 'mailing',
       script: 'nest',
-      args: 'start mailing',
+      args: 'start mailing -w',
       instances: 1,
       automation: false,
       env: {
