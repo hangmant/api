@@ -10,6 +10,7 @@ export class MailerOptions implements MailerOptionsFactory {
 
   createMailerOptions(): IMailerOptions {
     const mailerOptions = this.configService.get('mailer')
+    console.log('🤫 Dante ➤ MailerOptions ➤ createMailerOptions ➤ ', join(process.cwd(), 'apps/hangman-api/src/templates/'))
     return {
       transport: {
         host: mailerOptions.smpt.host,

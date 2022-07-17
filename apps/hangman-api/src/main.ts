@@ -4,13 +4,12 @@ import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
 import { LoggerModule } from './modules/logger/logger.module'
-import { loggerServiceInstance } from './modules/logger/logger.providers'
 import { LoggerService } from './modules/logger/logger.service'
 import { applyMiddleware } from './utils/setup/apply-middleware'
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), {
-    logger: loggerServiceInstance
+    // logger: loggerServiceInstance
   })
 
   applyMiddleware(app)

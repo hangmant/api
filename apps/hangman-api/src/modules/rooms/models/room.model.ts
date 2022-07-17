@@ -20,7 +20,7 @@ export class Room {
   users?: string[]
 
   @Field(type => RoomType)
-  @Prop({ enum: RoomType, required: true })
+  @Prop({type: String, enum: Object.keys(RoomType), required: true })
   type: RoomType
 
   @Field(type => Date)

@@ -1,5 +1,22 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "apps/hangman-api/src",
+  "monorepo": true,
+  "root": "apps/hangman-api",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/hangman-api/tsconfig.app.json"
+  },
+  "projects": {
+    "hangman-api": {
+      "type": "application",
+      "root": "apps/hangman-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/hangman-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/hangman-api/tsconfig.app.json"
+      }
+    }
+  }
 }

@@ -1,13 +1,12 @@
 import { LoggerService as NestLoggerService } from '@nestjs/common'
 import * as bunyan from 'bunyan'
-import { join } from 'path'
 import PrettyStream = require('bunyan-prettystream')
 
 export class LoggerService implements NestLoggerService {
   private readonly _logger: bunyan
 
   constructor() {
-    const packageJson = require(join(process.cwd(), 'package.json'))
+    const packageJson = require('package.json')
     const prettyStream = new PrettyStream()
 
     prettyStream.pipe(process.stdout)

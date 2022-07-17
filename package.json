@@ -11,7 +11,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "prestart": "docker-compose up -d",
     "start": "nest start",
     "prestart:dev": "docker-compose up -d",
@@ -25,7 +25,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --config ./test/jest-coverage.json --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/hangman-api/test/jest-e2e.json"
   },
   "dependencies": {
     "@dantehemerson/nestjs-dataloader": "1.0.3",
@@ -98,6 +98,7 @@
     "prettier": "^2.0.5",
     "supertest": "^4.0.2",
     "ts-jest": "28.0.7",
+    "ts-loader": "^9.3.1",
     "ts-node": "10.8.0",
     "tsconfig-paths": "4.0.0",
     "tslint": "6.1.2",
@@ -113,12 +114,15 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/apps/"
+    ]
   }
 }
