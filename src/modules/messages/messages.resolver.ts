@@ -16,21 +16,23 @@ import { TypingIndicatorChanged } from './dto/typing-indicator-changed'
 
 const pubSub = new PubSub()
 
-@UseGuards(GqlAuthGuard)
 @Resolver(of => Message)
 export class MessagesResolver {
   constructor(private readonly messagesService: MessagesService) {}
 
+  @UseGuards(GqlAuthGuard)
   @Query(returns => Message)
   message(@Args({ name: 'id', type: () => ID }) id: string) {
     return this.messagesService.findById(id)
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(returns => [Message])
   messages(@Args() args: GetMessagesArgs) {
     return this.messagesService.find(args)
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => Message)
   async createMessage(@CurrentUser() user, @Args('data') message: MessageCreateInput) {
     message.fromUser = user._id
@@ -41,11 +43,13 @@ export class MessagesResolver {
     return messageCreated
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => Message)
   updateMessage(@Args({ name: 'id', type: () => ID }) id: string, @Args('data') data: MessageUpdateInput) {
     return this.messagesService.updateById(id, data)
   }
 
+  @UseGuards(GqlAuthGuard)
   @ResolveField('fromUser', () => User)
   resolveUser(
     @Parent() message: Message,

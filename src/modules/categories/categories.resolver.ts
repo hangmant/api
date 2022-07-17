@@ -25,7 +25,6 @@ export class CategoriesResolver {
     @Args({ name: '_id', type: () => ID }) id: string,
     @Loader(CategoriesLoader) categoriesLoader: DataLoader<string, Category>
     ) {
-    console.log('🤫 Dante ➤ CategoriesResolver ➤ categoriesLoader', categoriesLoader)
     const category = await categoriesLoader.load(id)
     if (!category) return throwError(new NotFoundException('Category not found'))
     return category

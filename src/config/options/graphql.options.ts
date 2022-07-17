@@ -12,17 +12,38 @@ export class GraphqlOptions implements GqlOptionsFactory {
 
   createGqlOptions(): ApolloDriverConfig {
     return {
-      context: ({ req, connection, res }) => {
-        if (connection) {
+      context: (context) => {
+        const { connectionParams, extra } = context;
+
+
+        // console.log('🤫 Dante ➤ GraphqlOptions ➤ createGqlOptions ➤ extra?.request', extra?.request)
+        if (extra?.request || context?.reply?.request) {
+          const request = extra?.request || context?.reply?.request
+
+          let bearerToken;
+
+          if(connectionParams)  {
+            bearerToken = `Bearer ${
+              connectionParams?.Authorization || connectionParams?.authorization
+            }`;
+
+          } else if(request) {
+            bearerToken = request.headers.authorization;
+          }
+
           return {
             req: {
+              ...request,
               headers: {
-                authorization: connection?.context?.authorization
-              }
-            }
-          }
+                ...request?.headers,
+                Authorization: bearerToken,
+                authorization: bearerToken,
+              },
+            },
+
+          };
         }
-        return { req, res }
+        return context;
       },
       cors: false,
       cache: 'bounded',
@@ -35,11 +56,20 @@ export class GraphqlOptions implements GqlOptionsFactory {
           countriesAPI: new CountriesAPI(this.configService.get('restCountriesApi'))
         }
       },
+      subscriptions: {
+        'subscriptions-transport-ws': {
+          onConnect: (context) => {
+            /** Do auth here */
+            
+            return true;
+
+          }
+        }
+      },
       buildSchemaOptions: {
         dateScalarMode: 'timestamp'
       },
       autoSchemaFile: join(process.cwd(), 'schema.graphql'),
-      introspection: true
     }
   }
 }
