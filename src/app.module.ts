@@ -18,8 +18,6 @@ import { UserModule } from './modules/users/users.module'
 import { WordsModule } from './modules/words/words.module'
 import { ConfigModule } from '@nestjs/config'
 import { config } from './config'
-import { SentryModule } from '@ntegral/nestjs-sentry'
-import { SentryOptions } from './config/options/sentry.options'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { MongooseModule } from '@nestjs/mongoose'
 import { MongooseConfigService } from './modules/mongo/mongoConfig.service'
@@ -32,9 +30,6 @@ import { MongooseConfigService } from './modules/mongo/mongoConfig.service'
     }),
     MongooseModule.forRootAsync({
       useClass: MongooseConfigService,
-    }),
-    SentryModule.forRootAsync({
-      useClass: SentryOptions
     }),
     LoggerModule,
     CommonModule,
