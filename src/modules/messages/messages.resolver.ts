@@ -49,7 +49,7 @@ export class MessagesResolver {
   @ResolveField('fromUser', () => User)
   resolveUser(
     @Parent() message: Message,
-    @Loader(UsersLoader.name) usersLoader: DataLoader<string, User>
+    @Loader(UsersLoader) usersLoader: DataLoader<string, User>
   ): Promise<User> {
     return usersLoader.load(message.fromUser.toString())
   }

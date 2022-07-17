@@ -51,7 +51,7 @@ export class WordsResolver {
   @ResolveField('category', () => Category)
   resolveCategory(
     @Parent() word: Word,
-    @Loader(CategoriesLoader.name) categoriesLoader: DataLoader<string, Category>
+    @Loader(CategoriesLoader) categoriesLoader: DataLoader<string, Category>
   ): Promise<Category> {
     return categoriesLoader.load(word.category.toString())
   }

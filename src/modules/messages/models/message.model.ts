@@ -1,29 +1,38 @@
-import { Field, ObjectType, ID } from '@nestjs/graphql'
-import { prop, Ref } from '@typegoose/typegoose'
-import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
-import { Room } from '../../rooms/models/room.model'
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import mongoose, { Document } from 'mongoose'
 import { User } from '../../../modules/users/models/user.model'
+import { Room } from '../../rooms/models/room.model'
 
+
+export type MessageDocument = Message & Document;
+
+@Schema({
+  timestamps: true
+})
 @ObjectType()
-export class Message extends TimeStamps {
+export class Message {
   @Field()
   _id: string
 
   @Field({ description: 'body of message in text plain or markdown ' })
-  @prop({ required: true })
+  @Prop({ required: true })
   text: string
 
   @Field({ description: 'field <text> parsed to html' })
-  @prop({ required: true })
+  @Prop({ required: true })
   html: string
 
   @Field(type => User)
-  @prop({ ref: 'User', required: true, index: true })
-  fromUser: Ref<User>
+  @Prop({   type: mongoose.Schema.Types.ObjectId,
+    ref: User.name,
+     index: true })
+  fromUser: User
 
   @Field(type => ID)
-  @prop({ ref: 'Room', required: true, index: true })
-  roomId: Ref<Room>
+  @Prop({ type: mongoose.Schema.Types.ObjectId,
+    ref: Room.name, required: true, index: true })
+  roomId: Room
 
   @Field(type => Date)
   createdAt: Date
@@ -31,3 +40,6 @@ export class Message extends TimeStamps {
   @Field(type => Date)
   updatedAt: Date
 }
+
+
+export const MessageSchema = SchemaFactory.createForClass(Message);

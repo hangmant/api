@@ -1,36 +1,44 @@
-import { prop } from '@typegoose/typegoose'
-import { IsString, IsHexColor } from 'class-validator'
-import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
-import { ObjectType, Field } from '@nestjs/graphql'
+import { Field, ObjectType } from '@nestjs/graphql'
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { IsHexColor, IsString } from 'class-validator'
+import { Document } from 'mongoose'
 
+
+export type CategoryDocument = Category & Document;
+
+@Schema({
+  timestamps: true
+})
 @ObjectType()
-export class Category extends TimeStamps {
+export class Category {
   @Field()
   _id: string
 
   @IsString()
   @Field()
-  @prop({ required: true })
+  @Prop({ required: true })
   name: string
 
   @IsHexColor()
   @IsString()
   @Field()
-  @prop({
+  @Prop({
     default: '#000000' // black color
   })
   color: string
 
   @IsString()
   @Field()
-  @prop({
+  @Prop({
     default: ''
   })
   description: string
 
   @Field(type => Date)
-  createdAt: Date
+  readonly createdAt: Date
 
   @Field(type => Date)
-  updatedAt: Date
+  readonly updatedAt: Date
 }
+
+export const CategorySchema = SchemaFactory.createForClass(Category);

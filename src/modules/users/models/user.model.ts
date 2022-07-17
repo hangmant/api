@@ -1,70 +1,83 @@
-import { prop } from '@typegoose/typegoose'
-import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
 import { IsEmail, IsNotEmpty, IsString, IsOptional, IsBoolean } from 'class-validator'
 import { Country } from '../../countries/models/country.model'
 import { ObjectType, Field, ID } from '@nestjs/graphql'
+import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose'
+import { Document } from 'mongoose'
 
+export type MessageDocument = User & Document;
+
+@Schema({
+  timestamps: true
+})
 @ObjectType()
-export class User extends TimeStamps {
+export class User {
   @Field(type => ID)
   _id: string
 
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
-  @prop({ maxlength: 20 })
+  @Prop({ maxlength: 20 })
   username?: string
 
   @Field()
   @IsString()
   @IsNotEmpty()
-  @prop({ required: true, maxlength: 30 })
+  @Prop({ required: true, maxlength: 30 })
   firstName: string
 
   @Field()
   @IsString()
   @IsNotEmpty()
-  @prop({ required: true, maxlength: 50 })
+  @Prop({ required: true, maxlength: 50 })
   lastName: string
 
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
-  @prop({ maxlength: 24 })
+  @Prop({ maxlength: 24 })
   phone?: string
 
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
-  @prop()
+  @Prop()
   address?: string
 
   @Field(type => Country, { nullable: true })
   @IsOptional()
-  @prop()
+  @Prop()
   country?: Country
 
   @Field()
   @IsEmail()
   @IsNotEmpty()
-  @prop({ required: true, maxlength: 60 })
+  @Prop({ required: true, maxlength: 60 })
   email: string
 
   @IsNotEmpty()
   @IsBoolean()
   @IsOptional()
   @Field({ nullable: true })
-  @prop()
+  @Prop()
   isEmailVerified?: boolean
 
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
-  @prop()
+  @Prop()
   avatar?: string
 
   @IsString()
   @IsNotEmpty()
-  @prop({ required: true })
+  @Prop({ required: true })
   password: string
+
+  @Field(type => Date)
+  createdAt: Date
+
+  @Field(type => Date)
+  updatedAt: Date
 }
+
+export const UserSchema = SchemaFactory.createForClass(User);
