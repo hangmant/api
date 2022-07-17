@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { ReturnModelType } from '@typegoose/typegoose'
-import { InjectModel } from 'nestjs-typegoose'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model } from 'mongoose'
 import { CategoryCreateInput } from './dto/category-create.input'
 import { CategoryUpdateInput } from './dto/category-update.input'
-import { Category } from './models/categories.model'
+import { Category, CategoryDocument } from './models/categories.model'
 
 @Injectable()
 export class CategoriesService {
-  constructor(@InjectModel(Category) private readonly categoryModel: ReturnModelType<typeof Category>) {}
+  constructor(@InjectModel(Category.name) private readonly categoryModel: Model<CategoryDocument>) {}
 
   findAll() {
     return this.categoryModel.find({}).sort({ createdAt: -1 }).lean()

@@ -1,17 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { ReturnModelType } from '@typegoose/typegoose'
-import { InjectModel } from 'nestjs-typegoose'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model } from 'mongoose'
 import { RoomsService } from '../rooms/rooms.service'
 import { TextProcessorService } from '../text-processor/text-procesor.service'
 import { GetMessagesArgs } from './dto/get-messages.args'
 import { MessageCreateInput } from './dto/message-create.input'
 import { MessageUpdateInput } from './dto/message-update.input'
-import { Message } from './models/message.model'
+import { Message, MessageDocument } from './models/message.model'
 
 @Injectable()
 export class MessagesService {
   constructor(
-    @InjectModel(Message) private readonly messageModel: ReturnModelType<typeof Message>,
+    @InjectModel(Message.name) private readonly messageModel: Model<MessageDocument>,
     private readonly roomService: RoomsService,
     private readonly textProcessorService: TextProcessorService
   ) {}

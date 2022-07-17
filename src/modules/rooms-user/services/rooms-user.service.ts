@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common'
-import { ReturnModelType } from '@typegoose/typegoose'
-import { InjectModel } from 'nestjs-typegoose'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model } from 'mongoose'
 import { from, Observable } from 'rxjs'
 import { Room } from '../../../modules/rooms/models/room.model'
 import { RoomsService } from '../../../modules/rooms/rooms.service'
 import { User } from '../../../modules/users/models/user.model'
 import { UsersService } from '../../../modules/users/users.service'
 import { RoomUserCreateInput } from '../dto/room-user-create.input'
-import { RoomUser } from '../models/room-user.model'
+import { RoomUser, RoomUserDocument } from '../models/room-user.model'
 
 @Injectable()
 export class RoomsUserService {
   constructor(
-    @InjectModel(RoomUser) private readonly roomUserModel: ReturnModelType<typeof RoomUser>,
+    @InjectModel(RoomUser.name) private readonly roomUserModel: Model<RoomUserDocument>,
     private readonly usersService: UsersService,
     private readonly roomsService: RoomsService
   ) {}

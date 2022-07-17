@@ -1,17 +1,17 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common'
-import { ReturnModelType } from '@typegoose/typegoose'
-import { InjectModel } from 'nestjs-typegoose'
 import { from, throwError } from 'rxjs'
 import { concatMap, map } from 'rxjs/operators'
 import { UsersService } from '../users/users.service'
-import { EmailVerificationToken } from './models/email-verification-token.model'
+import { EmailVerificationToken, EmailVerificationTokenDocument } from './models/email-verification-token.model'
 import { LoggerService } from '../logger/logger.service'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model } from 'mongoose'
 
 @Injectable()
 export class EmailVerificationService {
   constructor(
-    @InjectModel(EmailVerificationToken)
-    private readonly emailVerificationTokenModel: ReturnModelType<typeof EmailVerificationToken>,
+    @InjectModel(EmailVerificationToken.name)
+    private readonly emailVerificationTokenModel: Model<EmailVerificationTokenDocument>,
     private readonly usersService: UsersService,
     private readonly loggerService: LoggerService
   ) {}

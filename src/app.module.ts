@@ -21,12 +21,17 @@ import { config } from './config'
 import { SentryModule } from '@ntegral/nestjs-sentry'
 import { SentryOptions } from './config/options/sentry.options'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
+import { MongooseModule } from '@nestjs/mongoose'
+import { MongooseConfigService } from './modules/mongo/mongoConfig.service'
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [config]
+    }),
+    MongooseModule.forRootAsync({
+      useClass: MongooseConfigService,
     }),
     SentryModule.forRootAsync({
       useClass: SentryOptions

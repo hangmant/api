@@ -4,7 +4,7 @@ import { ObjectType, Field, ID } from '@nestjs/graphql'
 import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
 
-export type MessageDocument = User & Document;
+export type UserDocument = User & Document;
 
 @Schema({
   timestamps: true

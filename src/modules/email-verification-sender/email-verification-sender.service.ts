@@ -1,21 +1,21 @@
 import { MailerService } from '@nestjs-modules/mailer'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { ReturnModelType } from '@typegoose/typegoose'
+import { InjectModel } from '@nestjs/mongoose'
 import { randomBytes } from 'crypto'
-import { InjectModel } from 'nestjs-typegoose'
+import { Model } from 'mongoose'
 import { from } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
 import { TEMPLATES } from '../../templates'
-import { EmailVerificationToken } from '../email-verification/models/email-verification-token.model'
+import { EmailVerificationToken, EmailVerificationTokenDocument } from '../email-verification/models/email-verification-token.model'
 import { User } from '../users/models/user.model'
 
 @Injectable()
 export class EmailVerificationSenderService {
   constructor(
     private readonly configService: ConfigService,
-    @InjectModel(EmailVerificationToken)
-    private readonly emailVerificationTokenModel: ReturnModelType<typeof EmailVerificationToken>,
+    @InjectModel(EmailVerificationToken.name)
+    private readonly emailVerificationTokenModel: Model<EmailVerificationTokenDocument>,
     private readonly mailerService: MailerService
   ) {}
 

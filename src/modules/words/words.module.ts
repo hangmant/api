@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common'
-import { MongoModule } from '../mongo/mongo.module'
-import { Word } from './models/words.model'
-import { WordsService } from './words.service'
-import { WordsResolver } from './words.resolver'
-import { CategoriesModule } from '../categories/categories.module'
+import { MongooseModule } from '@nestjs/mongoose'
 import { CategoriesLoader } from '../categories/categories.loader'
+import { CategoriesModule } from '../categories/categories.module'
+import { Word, WordSchema } from './models/words.model'
+import { WordsResolver } from './words.resolver'
+import { WordsService } from './words.service'
 
 @Module({
-  imports: [MongoModule.forFeature([Word]), CategoriesModule],
+  imports: [    MongooseModule.forFeature([{ name: Word.name, schema:WordSchema }])
+  , CategoriesModule],
   providers: [WordsResolver, WordsService, CategoriesLoader],
   exports: [WordsService]
 })
