@@ -1,14 +1,14 @@
+import { DataLoaderInterceptor } from '@dantehemerson/nestjs-dataloader'
 import { Module } from '@nestjs/common'
 import { APP_INTERCEPTOR } from '@nestjs/core'
-import { DataLoaderInterceptor } from '@dantehemerson/nestjs-dataloader'
-import { MongoModule } from '../mongo/mongo.module'
+import { MongooseModule } from '@nestjs/mongoose'
 import { CategoriesLoader } from './categories.loader'
-import { Category } from './models/categories.model'
 import { CategoriesResolver } from './categories.resolver'
 import { CategoriesService } from './categories.service'
+import { Category, CategorySchema } from './models/categories.model'
 
 @Module({
-  imports: [MongoModule.forFeature([Category])],
+  imports: [MongooseModule.forFeature([{ name: Category.name, schema: CategorySchema }]),],
   providers: [
     CategoriesResolver,
     CategoriesService,

@@ -1,7 +1,16 @@
-import { prop } from '@typegoose/typegoose'
 import { IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator'
 import { ObjectType, Field } from '@nestjs/graphql'
 
+import { Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+
+
+export type CountryDocument = Country & Document;
+
+
+@Schema({
+  timestamps: true
+})
 @ObjectType()
 export class Country {
   @Field()
@@ -10,19 +19,27 @@ export class Country {
   @Field()
   @IsString()
   @IsNotEmpty()
-  @prop()
+  @Prop()
   name: string
 
   @Field({ nullable: true })
   @IsOptional()
   @IsString()
   @IsUrl()
-  @prop()
+  @Prop()
   flag?: string
 
   @Field()
   @IsString()
   @IsNotEmpty()
-  @prop()
+  @Prop()
   alpha2Code: string
+
+  @Field((type) => Date)
+  readonly createdAt: Date;
+
+  @Field((type) => Date)
+  readonly updatedAt: Date;
 }
+
+export const CountrySchema = SchemaFactory.createForClass(Country);

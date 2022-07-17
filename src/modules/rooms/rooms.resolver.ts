@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
+import { GqlAuthGuard } from '../../guards/gql-auth.guard'
 import { RoomCreateInput } from './dto/room-create.input'
 import { RoomUpdateInput } from './dto/room-update.input'
 import { Room } from './models/room.model'

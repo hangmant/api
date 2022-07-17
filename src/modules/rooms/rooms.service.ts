@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { ReturnModelType } from '@typegoose/typegoose'
-import { InjectModel } from 'nestjs-typegoose'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model } from 'mongoose'
 import { RoomCreateInput } from './dto/room-create.input'
 import { RoomUpdateInput } from './dto/room-update.input'
-import { Room } from './models/room.model'
+import { Room, RoomDocument } from './models/room.model'
 
 @Injectable()
 export class RoomsService {
-  constructor(@InjectModel(Room) private readonly roomModel: ReturnModelType<typeof Room>) {}
+  constructor(@InjectModel(Room.name) private readonly roomModel: Model<RoomDocument>) {}
 
   async findByIds(ids: string[]): Promise<Room[]> {
     return this.roomModel.find({ _id: { $in: ids } }).lean()

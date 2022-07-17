@@ -1,23 +1,26 @@
-import { prop } from '@typegoose/typegoose'
-import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
+import { Field, ObjectType } from '@nestjs/graphql'
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import { RoomType } from '../constants'
-import { ObjectType, Field } from '@nestjs/graphql'
 
+export type RoomDocument = Room & Document;
+@Schema({
+  timestamps: true
+})
 @ObjectType()
-export class Room extends TimeStamps {
+export class Room {
   @Field()
   _id: string
 
   @Field()
-  @prop({ required: true })
+  @Prop({ required: true })
   name: string
 
   @Field(type => [String])
-  @prop()
+  @Prop()
   users?: string[]
 
   @Field(type => RoomType)
-  @prop({ enum: RoomType, required: true })
+  @Prop({ enum: RoomType, required: true })
   type: RoomType
 
   @Field(type => Date)
@@ -26,3 +29,5 @@ export class Room extends TimeStamps {
   @Field(type => Date)
   updatedAt: Date
 }
+
+export const RoomSchema = SchemaFactory.createForClass(Room);

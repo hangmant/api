@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common'
 import { Args, ID, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
 import * as DataLoader from 'dataloader'
 import { Loader } from '@dantehemerson/nestjs-dataloader'
-import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
+import { GqlAuthGuard } from '../../guards/gql-auth.guard'
 import { CategoriesLoader } from '../categories/categories.loader'
 import { Category } from '../categories/models/categories.model'
 import { WordCreateInput } from './dtos/word-create.input'
@@ -51,7 +51,7 @@ export class WordsResolver {
   @ResolveField('category', () => Category)
   resolveCategory(
     @Parent() word: Word,
-    @Loader(CategoriesLoader.name) categoriesLoader: DataLoader<string, Category>
+    @Loader(CategoriesLoader) categoriesLoader: DataLoader<string, Category>
   ): Promise<Category> {
     return categoriesLoader.load(word.category.toString())
   }

@@ -1,6 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common'
-import { ReturnModelType } from '@typegoose/typegoose'
-import { InjectModel } from 'nestjs-typegoose'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model } from 'mongoose'
 import { from, Observable, of, throwError } from 'rxjs'
 import { catchError, concatMap, map, tap } from 'rxjs/operators'
 import { BcryptService } from '../bcrypt/bcrypt.service'
@@ -9,12 +9,12 @@ import { EmailVerificationSenderService } from '../email-verification-sender/ema
 import { LoggerService } from '../logger/logger.service'
 import { UserCreateInput } from './dto/user-create.input'
 import { UserUpdateInput } from './dto/user-update.input'
-import { User } from './models/user.model'
+import { User, UserDocument } from './models/user.model'
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(User) private readonly userModel: ReturnModelType<typeof User>,
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     private readonly emailVerificationSenderService: EmailVerificationSenderService,
     private readonly logger: LoggerService,
     private readonly bcryptService: BcryptService,
@@ -66,7 +66,7 @@ export class UsersService {
               })
             )
           }),
-          tap(createdUser => this.emailVerificationSenderService.createAndSendToken(createdUser).subscribe()),
+          tap((createdUser: User) => this.emailVerificationSenderService.createAndSendToken(createdUser).subscribe()),
           catchError(error => {
             this.logger.error('Error on create user', error)
             return throwError(new ConflictException(error))
@@ -78,7 +78,7 @@ export class UsersService {
 
   isEmailVerified(userId: string): Observable<boolean> {
     return from(this.userModel.findById(userId, { isEmailVerified: 1 }).lean()).pipe(
-      map(user => {
+      map((user: User) => {
         if (!user) {
           // TODO: Currently return not verified if user not exists.
           return false

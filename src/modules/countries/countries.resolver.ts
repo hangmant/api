@@ -1,7 +1,7 @@
 import { UseGuards } from '@nestjs/common'
 import { Context, Query, Resolver } from '@nestjs/graphql'
 import { CountriesAPI } from '../../datasources/countries.datasource'
-import { GqlAuthGuard } from '../../guards/gqlAuth.guard'
+import { GqlAuthGuard } from '../../guards/gql-auth.guard'
 import { Country } from './models/country.model'
 
 @UseGuards(GqlAuthGuard)

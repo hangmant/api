@@ -1,10 +1,23 @@
-import { prop } from '@typegoose/typegoose'
-import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
+import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose';
+import { Document } from 'mongoose'
 
-export class EmailVerificationToken extends TimeStamps {
-  @prop({ required: true })
+export type EmailVerificationTokenDocument = EmailVerificationToken & Document;
+
+@Schema({
+  timestamps: true
+})
+export class EmailVerificationToken {
+  @Prop({ required: true })
   userId: string
 
-  @prop({ required: true, index: true, unique: true })
+  @Prop({ required: true, index: true, unique: true })
   token: string
+
+  readonly createdAt: Date;
+
+  readonly updatedAt: Date;
 }
+
+export const EmailVerificationTokenSchema = SchemaFactory.createForClass(EmailVerificationToken);
+
+

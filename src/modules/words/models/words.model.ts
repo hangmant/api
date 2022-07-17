@@ -1,24 +1,30 @@
-import { prop, Ref } from '@typegoose/typegoose'
-import { IsString, IsNotEmpty, IsMongoId, MaxLength, MinLength } from 'class-validator'
+import { Field, ObjectType } from '@nestjs/graphql'
+import { Schema,Prop, SchemaFactory } from '@nestjs/mongoose'
+import { IsMongoId, IsNotEmpty, IsString } from 'class-validator'
 import { Category } from '../../categories/models/categories.model'
-import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
-import { ObjectType, Field } from '@nestjs/graphql'
+import mongoose, { Document } from 'mongoose'
 
+export type WordDocument = Word & Document;
+
+@Schema({
+  timestamps: true
+})
 @ObjectType()
-export class Word extends TimeStamps {
+export class Word {
   @Field()
   _id: string
 
   @IsString()
   @Field()
-  @prop({ required: true, maxlength: 20 })
+  @Prop({ required: true, maxlength: 20 })
   name: string
 
   @IsMongoId()
   @IsNotEmpty()
   @Field(type => Category)
-  @prop({ ref: 'Category', required: true })
-  category: Ref<Category>
+  @Prop({ type: mongoose.Schema.Types.ObjectId,
+    ref: Category.name, required: true })
+  category: Category
 
   @Field(type => Date)
   createdAt: Date
@@ -26,3 +32,5 @@ export class Word extends TimeStamps {
   @Field(type => Date)
   updatedAt: Date
 }
+
+export const WordSchema = SchemaFactory.createForClass(Word);
