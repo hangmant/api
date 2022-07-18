@@ -11,7 +11,10 @@ import { applyMiddleware } from './apply-middleware.helper';
 
 export async function createService(
   appModule: any,
-  preListenHook?: <T>(app: T) => void | Promise<void>,
+  preListenHook?: (
+    app: NestFastifyApplication,
+    configService: ConfigService,
+  ) => void | Promise<void>,
 ) {
   const app = await NestFactory.create<NestFastifyApplication>(
     SetupModule.register(appModule),
@@ -23,7 +26,7 @@ export async function createService(
 
   const configService = app.get<ConfigService>(ConfigService);
 
-  if (preListenHook) await preListenHook(app);
+  if (preListenHook) await preListenHook(app, configService);
 
   console.log('Starting service...');
 
