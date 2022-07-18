@@ -29,6 +29,12 @@
       ],
       "@hangster/config/*": [
         "libs/config/src/*"
+      ],
+      "@hangster/mailer-client": [
+        "libs/mailer-client/src"
+      ],
+      "@hangster/mailer-client/*": [
+        "libs/mailer-client/src/*"
       ]
     }
   }

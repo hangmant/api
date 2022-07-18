@@ -1,3 +1,4 @@
+import { MailerClientModule } from '@hangster/mailer-client';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
@@ -14,6 +15,7 @@ import { EmailVerificationSenderService } from './email-verification-sender.serv
         schema: EmailVerificationTokenSchema,
       },
     ]),
+    MailerClientModule,
   ],
   providers: [EmailVerificationSenderService],
   exports: [EmailVerificationSenderService],

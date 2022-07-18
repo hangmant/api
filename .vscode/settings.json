@@ -2,7 +2,7 @@
   "editor.formatOnSave": true,
   "workbench.iconTheme": "vscode-icons",
   "vsicons.presets.nestjs": true,
-  "typescript.preferences.importModuleSpecifier": "relative",
+  // "typescript.preferences.importModuleSpecifier": "relative",
   "search.exclude": {
     "dist/**": true,
     "public/**": true,

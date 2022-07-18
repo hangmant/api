@@ -128,7 +128,8 @@
     ],
     "moduleNameMapper": {
       "^@hangster/setup(|/.*)$": "<rootDir>/libs/setup/src/$1",
-      "^@hangster/config(|/.*)$": "<rootDir>/libs/config/src/$1"
+      "^@hangster/config(|/.*)$": "<rootDir>/libs/config/src/$1",
+      "^@hangster/mailer-client(|/.*)$": "<rootDir>/libs/mailer-client/src/$1"
     }
   }
 }

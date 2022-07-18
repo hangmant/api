@@ -1,4 +1,4 @@
-import { MailerService } from '@nestjs-modules/mailer';
+import { MailerClientService, MailTemplates } from '@hangster/mailer-client';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
@@ -6,7 +6,6 @@ import { randomBytes } from 'crypto';
 import { Model } from 'mongoose';
 import { from } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
-import { TEMPLATES } from '../../templates';
 import {
   EmailVerificationToken,
   EmailVerificationTokenDocument,
@@ -19,7 +18,7 @@ export class EmailVerificationSenderService {
     private readonly configService: ConfigService,
     @InjectModel(EmailVerificationToken.name)
     private readonly emailVerificationTokenModel: Model<EmailVerificationTokenDocument>,
-    private readonly mailerService: MailerService,
+    private readonly mailerClientService: MailerClientService,
   ) {}
 
   createAndSendToken(user: User) {
@@ -42,11 +41,11 @@ export class EmailVerificationSenderService {
 
   private sendVerificationEmail(userEmail: string, token: string) {
     return from(
-      this.mailerService.sendMail({
+      this.mailerClientService.sendMail({
         to: userEmail,
         from: 'noreply@hangwoman.com',
         subject: 'HangWoman.com - Registration Confirmation',
-        template: TEMPLATES.EMAIL_CONFIRMATION,
+        template: MailTemplates.EmailConfirmation,
         context: {
           confirmEmailLink: `${this.configService.get(
             'hangwomanFE',
