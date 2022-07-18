@@ -43,7 +43,6 @@
     "@nestjs/mongoose": "^9.2.0",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-fastify": "^9.0.3",
-    "@nestjs/swagger": "^6.0.4",
     "@types/bcrypt": "^3.0.0",
     "apollo-datasource-rest": "^3.6.0",
     "apollo-server-core": "^3.10.0",
@@ -80,6 +79,7 @@
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
+    "@nestjs/swagger": "^6.0.4",
     "@nestjs/testing": "^9.0.3",
     "@sentry/types": "^6.19.7",
     "@types/faker": "^6.6.9",

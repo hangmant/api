@@ -1,6 +1,5 @@
-import { DynamicModule, Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@hangster/config';
-console.log('🤫 Dante ➤ ConfigModule', ConfigModule);
+import { DynamicModule, Module } from '@nestjs/common';
 
 @Module({
   imports: [ConfigModule],
