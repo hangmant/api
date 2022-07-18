@@ -7,13 +7,14 @@ import {
   TcpOptions,
   Transport,
 } from '@nestjs/microservices';
+import { SetupModule } from '../setup.module';
 
 export async function createMicroservice(
   appModule: any,
   preListenHook?: (app: INestMicroservice) => void | Promise<void>,
 ) {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    appModule,
+    SetupModule.register(appModule),
     {
       transport: Transport.TCP,
       options: {

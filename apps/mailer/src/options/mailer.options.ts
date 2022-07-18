@@ -12,16 +12,16 @@ export class MailerOptions implements MailerOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
 
   createMailerOptions(): IMailerOptions {
-    const mailerOptions = this.configService.get('mailer');
+    const smtpOptions = this.configService.get('smtp');
 
     return {
       transport: {
-        host: mailerOptions.smpt.host,
-        port: +mailerOptions.smpt.port,
+        host: smtpOptions.host,
+        port: +smtpOptions.port,
         secure: false,
         auth: {
-          user: mailerOptions.smpt.user,
-          pass: mailerOptions.smpt.pass,
+          user: smtpOptions.user,
+          pass: smtpOptions.pass,
         },
       },
       template: {

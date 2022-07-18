@@ -23,6 +23,12 @@
       ],
       "@hangster/setup/*": [
         "libs/setup/src/*"
+      ],
+      "@hangster/config": [
+        "libs/config/src"
+      ],
+      "@hangster/config/*": [
+        "libs/config/src/*"
       ]
     }
   }
