@@ -1,19 +1,19 @@
-import { IsHexColor, IsString, IsOptional } from 'class-validator'
-import { InputType, Field } from '@nestjs/graphql'
+import { IsHexColor, IsString, IsOptional } from 'class-validator';
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CategoryUpdateInput {
   @IsOptional()
   @Field({ nullable: true })
-  name?: string
+  name?: string;
 
   @IsOptional()
   @IsHexColor()
   @IsString()
   @Field({ nullable: true })
-  color?: string
+  color?: string;
 
   @IsOptional()
   @Field({ nullable: true })
-  description?: string
+  description?: string;
 }

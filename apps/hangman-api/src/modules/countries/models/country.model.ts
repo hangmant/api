@@ -1,39 +1,37 @@
-import { IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator'
-import { ObjectType, Field } from '@nestjs/graphql'
+import { IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
+import { ObjectType, Field } from '@nestjs/graphql';
 
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-
 export type CountryDocument = Country & Document;
 
-
 @Schema({
-  timestamps: true
+  timestamps: true,
 })
 @ObjectType()
 export class Country {
   @Field()
-  _id: string
+  _id: string;
 
   @Field()
   @IsString()
   @IsNotEmpty()
   @Prop()
-  name: string
+  name: string;
 
   @Field({ nullable: true })
   @IsOptional()
   @IsString()
   @IsUrl()
   @Prop()
-  flag?: string
+  flag?: string;
 
   @Field()
   @IsString()
   @IsNotEmpty()
   @Prop()
-  alpha2Code: string
+  alpha2Code: string;
 
   @Field((type) => Date)
   readonly createdAt: Date;

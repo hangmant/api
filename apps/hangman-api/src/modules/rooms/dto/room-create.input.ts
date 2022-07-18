@@ -1,14 +1,14 @@
-import { Field, InputType } from '@nestjs/graphql'
-import { RoomType } from '../constants'
+import { Field, InputType } from '@nestjs/graphql';
+import { RoomType } from '../constants';
 
 @InputType()
 export class RoomCreateInput {
   @Field()
-  name: string
+  name: string;
 
-  @Field(type => [String], { nullable: true })
-  users?: string[]
+  @Field((type) => [String], { nullable: true })
+  users?: string[];
 
-  @Field(type => RoomType)
-  type: RoomType
+  @Field((type) => RoomType)
+  type: RoomType;
 }

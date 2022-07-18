@@ -1,13 +1,13 @@
-import { InputType, Field } from '@nestjs/graphql'
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CountryInput {
   @Field()
-  name: string
+  name: string;
 
   @Field({ nullable: true })
-  flag?: string
+  flag?: string;
 
   @Field()
-  alpha2Code: string
+  alpha2Code: string;
 }

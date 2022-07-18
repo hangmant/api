@@ -1,6 +1,6 @@
-import { GravatarDefault } from '../enums/gravatar-default.enum'
+import { GravatarDefault } from '../enums/gravatar-default.enum';
 
 export interface GravatarOptions {
-  size?: number
-  default?: GravatarDefault
+  size?: number;
+  default?: GravatarDefault;
 }

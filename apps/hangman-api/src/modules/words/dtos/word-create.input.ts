@@ -1,10 +1,10 @@
-import { InputType, Field } from '@nestjs/graphql'
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class WordCreateInput {
   @Field()
-  name: string
+  name: string;
 
   @Field()
-  categoryId: string
+  categoryId: string;
 }

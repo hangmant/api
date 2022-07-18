@@ -1,13 +1,13 @@
-import { Field, InputType, ID } from '@nestjs/graphql'
+import { Field, InputType, ID } from '@nestjs/graphql';
 
 @InputType()
 export class MessageCreateInput {
   @Field({ description: 'body of message in text plain or markdown ' })
-  text: string
+  text: string;
 
   /** This is setted getting id of the authenticated user */
-  fromUser: string
+  fromUser: string;
 
-  @Field(type => ID)
-  roomId: string
+  @Field((type) => ID)
+  roomId: string;
 }

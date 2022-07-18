@@ -18,5 +18,5 @@ export enum GravatarDefault {
   RoboHash = 'robohash',
 
   /** a transparent PNG image */
-  Blank = 'blank'
+  Blank = 'blank',
 }

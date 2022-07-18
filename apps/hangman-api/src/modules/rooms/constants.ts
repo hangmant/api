@@ -1,10 +1,10 @@
-import { registerEnumType } from '@nestjs/graphql'
+import { registerEnumType } from '@nestjs/graphql';
 
 export enum RoomType {
   OneToOne = 'OneToOne',
-  OrgChannel = 'OrgChannel'
+  OrgChannel = 'OrgChannel',
 }
 
 registerEnumType(RoomType, {
-  name: 'RoomType'
-})
+  name: 'RoomType',
+});

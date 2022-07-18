@@ -1,15 +1,15 @@
-import { LoggerService as NestLoggerService } from '@nestjs/common'
-import * as bunyan from 'bunyan'
-import PrettyStream = require('bunyan-prettystream')
+import { LoggerService as NestLoggerService } from '@nestjs/common';
+import * as bunyan from 'bunyan';
+import PrettyStream = require('bunyan-prettystream');
 
 export class LoggerService implements NestLoggerService {
-  private readonly _logger: bunyan
+  private readonly _logger: bunyan;
 
   constructor() {
-    const packageJson = require('package.json')
-    const prettyStream = new PrettyStream()
+    const packageJson = require('package.json');
+    const prettyStream = new PrettyStream();
 
-    prettyStream.pipe(process.stdout)
+    prettyStream.pipe(process.stdout);
 
     this._logger = bunyan.createLogger({
       name: packageJson.name.toUpperCase(),
@@ -17,32 +17,32 @@ export class LoggerService implements NestLoggerService {
         {
           level: 'debug',
           type: 'raw',
-          stream: prettyStream
-        }
-      ]
-    })
+          stream: prettyStream,
+        },
+      ],
+    });
   }
 
   log(message: any, ...params: Array<any>) {
-    this._logger.info(message, params)
+    this._logger.info(message, params);
   }
 
   info(message: any, ...params: Array<any>) {
-    this._logger.info(message, params)
+    this._logger.info(message, params);
   }
 
   error(message: string, trace?: string) {
     if (trace) {
-      this._logger.error(message, trace)
+      this._logger.error(message, trace);
     }
-    this._logger.error(message)
+    this._logger.error(message);
   }
 
   warn(message: string, ...params: Array<any>) {
-    this._logger.warn(message, params)
+    this._logger.warn(message, params);
   }
 
   debug(message: string, ...params: any[]) {
-    this._logger.info(message, params)
+    this._logger.info(message, params);
   }
 }

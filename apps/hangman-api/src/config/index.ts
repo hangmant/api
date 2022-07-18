@@ -1,14 +1,14 @@
-const env = process.env
+const env = process.env;
 
 export const config = () => ({
   env: env.NODE_ENV || 'dev',
   jwt: {
     secret: env.JWT_SECRET || 'secret',
-    expiresIn: '1d'
+    expiresIn: '1d',
   },
   googleAuth: {
     clientID: env.GOOGLE_CLIENT_ID || 'clientId',
-    clientSecret: env.GOOGLE_CLIENT_SECRET || 'secregoogle'
+    clientSecret: env.GOOGLE_CLIENT_SECRET || 'secregoogle',
   },
   mongoDBUrl: env.MONGO_DB_URL || 'mongodb://localhost/hangman-api',
   port: parseInt(env.PORT, 10) || 8087,
@@ -18,23 +18,23 @@ export const config = () => ({
     s3: {
       hangmanBucket: {
         name: env.AWS_S3_BUCKET_NAME,
-        expires: 60
+        expires: 60,
       },
       accessKeyId: env.AWS_ACCESS_KEY_ID,
-      secretAcessKey: env.AWS_SECRET_ACCESS_KEY
-    }
+      secretAcessKey: env.AWS_SECRET_ACCESS_KEY,
+    },
   },
   mailer: {
     smpt: {
       host: process.env.MAILER__SMPT__HOST,
       port: process.env.MAILER__SMPT__PORT,
       user: process.env.MAILER__SMPT__USER,
-      pass: process.env.MAILER__SMPT__PASS
-    }
+      pass: process.env.MAILER__SMPT__PASS,
+    },
   },
   sentry: {
-    dsn: process.env.HW_API_SENTRY_DNS
+    dsn: process.env.HW_API_SENTRY_DNS,
   },
   hangwomanApi: process.env.HANGWOMAN_API,
-  hangwomanFE: process.env.HANGWOMAN_FE
-})
+  hangwomanFE: process.env.HANGWOMAN_FE,
+});

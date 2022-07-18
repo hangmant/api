@@ -1,15 +1,15 @@
-import { ConflictException, Injectable } from '@nestjs/common'
-import { InjectModel } from '@nestjs/mongoose'
-import { Model } from 'mongoose'
-import { from, Observable, of, throwError } from 'rxjs'
-import { catchError, concatMap, map, tap } from 'rxjs/operators'
-import { BcryptService } from '../bcrypt/bcrypt.service'
-import { GravatarService } from '../common/services/gravatar.service'
-import { EmailVerificationSenderService } from '../email-verification-sender/email-verification-sender.service'
-import { LoggerService } from '../logger/logger.service'
-import { UserCreateInput } from './dto/user-create.input'
-import { UserUpdateInput } from './dto/user-update.input'
-import { User, UserDocument } from './models/user.model'
+import { ConflictException, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { from, Observable, of, throwError } from 'rxjs';
+import { catchError, concatMap, map, tap } from 'rxjs/operators';
+import { BcryptService } from '../bcrypt/bcrypt.service';
+import { GravatarService } from '../common/services/gravatar.service';
+import { EmailVerificationSenderService } from '../email-verification-sender/email-verification-sender.service';
+import { LoggerService } from '../logger/logger.service';
+import { UserCreateInput } from './dto/user-create.input';
+import { UserUpdateInput } from './dto/user-update.input';
+import { User, UserDocument } from './models/user.model';
 
 @Injectable()
 export class UsersService {
@@ -18,23 +18,23 @@ export class UsersService {
     private readonly emailVerificationSenderService: EmailVerificationSenderService,
     private readonly logger: LoggerService,
     private readonly bcryptService: BcryptService,
-    private readonly gravatarService: GravatarService
+    private readonly gravatarService: GravatarService,
   ) {}
 
   findById(id: string, proyection?: any): Observable<User> {
-    return from(this.userModel.findById(id, proyection).lean())
+    return from(this.userModel.findById(id, proyection).lean());
   }
 
   async findAll() {
-    return this.userModel.find({}).lean()
+    return this.userModel.find({}).lean();
   }
 
   async findByIds(ids: readonly string[]): Promise<User[]> {
-    return this.userModel.find({ _id: { $in: ids } }).lean()
+    return this.userModel.find({ _id: { $in: ids } }).lean();
   }
 
   findByEmail(email: string): Observable<User> {
-    return from(this.userModel.findOne({ email }).lean())
+    return from(this.userModel.findOne({ email }).lean());
   }
 
   update(id: string, data: UserUpdateInput): Observable<User> {
@@ -43,18 +43,18 @@ export class UsersService {
         .findByIdAndUpdate(
           id,
           {
-            $set: data as any
+            $set: data as any,
           },
-          { new: true }
+          { new: true },
         )
-        .lean()
-    )
+        .lean(),
+    );
   }
 
   create(user: UserCreateInput): Observable<User> {
-    user.avatar = user.avatar ?? this.gravatarService.forEmail(user.email)
+    user.avatar = user.avatar ?? this.gravatarService.forEmail(user.email);
 
-    this.logger.log('Creating user', user)
+    this.logger.log('Creating user', user);
     return this.throwIfEmailExists(user.email).pipe(
       concatMap(() =>
         this.bcryptService.encryptPassword(user.password).pipe(
@@ -62,30 +62,36 @@ export class UsersService {
             return from(
               this.userModel.create({
                 ...user,
-                password: encryptedPassword
-              })
-            )
+                password: encryptedPassword,
+              }),
+            );
           }),
-          tap((createdUser: User) => this.emailVerificationSenderService.createAndSendToken(createdUser).subscribe()),
-          catchError(error => {
-            this.logger.error('Error on create user', error)
-            return throwError(new ConflictException(error))
-          })
-        )
-      )
-    )
+          tap((createdUser: User) =>
+            this.emailVerificationSenderService
+              .createAndSendToken(createdUser)
+              .subscribe(),
+          ),
+          catchError((error) => {
+            this.logger.error('Error on create user', error);
+            return throwError(new ConflictException(error));
+          }),
+        ),
+      ),
+    );
   }
 
   isEmailVerified(userId: string): Observable<boolean> {
-    return from(this.userModel.findById(userId, { isEmailVerified: 1 }).lean()).pipe(
+    return from(
+      this.userModel.findById(userId, { isEmailVerified: 1 }).lean(),
+    ).pipe(
       map((user: User) => {
         if (!user) {
           // TODO: Currently return not verified if user not exists.
-          return false
+          return false;
         }
-        return Boolean(user.isEmailVerified)
-      })
-    )
+        return Boolean(user.isEmailVerified);
+      }),
+    );
   }
 
   verifyEmail(userId: string): Observable<User> {
@@ -95,24 +101,24 @@ export class UsersService {
           userId,
           {
             $set: {
-              isEmailVerified: true
-            }
+              isEmailVerified: true,
+            },
           },
-          { new: true }
+          { new: true },
         )
-        .lean()
-    )
+        .lean(),
+    );
   }
 
   private throwIfEmailExists(email: string): Observable<User> {
     return from(this.userModel.findOne({ email }).lean()).pipe(
-      concatMap(user => {
+      concatMap((user) => {
         if (user) {
-          this.logger.error('Email user already exists')
-          return throwError(new ConflictException(`Email user already exists`))
+          this.logger.error('Email user already exists');
+          return throwError(new ConflictException(`Email user already exists`));
         }
-        return of(user)
-      })
-    )
+        return of(user);
+      }),
+    );
   }
 }

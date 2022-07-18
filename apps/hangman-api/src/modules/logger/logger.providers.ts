@@ -1,9 +1,9 @@
-import { Provider } from '@nestjs/common'
-import { LoggerService } from './logger.service'
+import { Provider } from '@nestjs/common';
+import { LoggerService } from './logger.service';
 
 export const loggerProviders: Array<Provider> = [
   {
     provide: LoggerService,
-    useValue: new LoggerService()
-  }
-]
+    useValue: new LoggerService(),
+  },
+];

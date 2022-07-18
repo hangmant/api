@@ -1,33 +1,33 @@
-import { Field, ObjectType } from '@nestjs/graphql'
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { RoomType } from '../constants'
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { RoomType } from '../constants';
 
 export type RoomDocument = Room & Document;
 @Schema({
-  timestamps: true
+  timestamps: true,
 })
 @ObjectType()
 export class Room {
   @Field()
-  _id: string
+  _id: string;
 
   @Field()
   @Prop({ required: true })
-  name: string
+  name: string;
 
-  @Field(type => [String])
+  @Field((type) => [String])
   @Prop()
-  users?: string[]
+  users?: string[];
 
-  @Field(type => RoomType)
-  @Prop({type: String, enum: Object.keys(RoomType), required: true })
-  type: RoomType
+  @Field((type) => RoomType)
+  @Prop({ type: String, enum: Object.keys(RoomType), required: true })
+  type: RoomType;
 
-  @Field(type => Date)
-  createdAt: Date
+  @Field((type) => Date)
+  createdAt: Date;
 
-  @Field(type => Date)
-  updatedAt: Date
+  @Field((type) => Date)
+  updatedAt: Date;
 }
 
 export const RoomSchema = SchemaFactory.createForClass(Room);

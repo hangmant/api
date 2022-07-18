@@ -1,12 +1,14 @@
-import { RESTDataSource } from 'apollo-datasource-rest'
+import { RESTDataSource } from 'apollo-datasource-rest';
 
 export class CountriesAPI extends RESTDataSource {
   constructor(baseURL: string) {
-    super()
-    this.baseURL = baseURL
+    super();
+    this.baseURL = baseURL;
   }
 
   async getAll() {
-    return this.get('/all?fields=name;capital;currencies;nativeName;flag;timezones;alpha2Code')
+    return this.get(
+      '/all?fields=name;capital;currencies;nativeName;flag;timezones;alpha2Code',
+    );
   }
 }

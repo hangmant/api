@@ -1,4 +1,4 @@
 export type PresignedFields = {
-  contentType: string
-  key: string
-}
+  contentType: string;
+  key: string;
+};

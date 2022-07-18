@@ -1,83 +1,89 @@
-import { IsEmail, IsNotEmpty, IsString, IsOptional, IsBoolean } from 'class-validator'
-import { Country } from '../../countries/models/country.model'
-import { ObjectType, Field, ID } from '@nestjs/graphql'
-import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose'
-import { Document } from 'mongoose'
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  IsOptional,
+  IsBoolean,
+} from 'class-validator';
+import { Country } from '../../countries/models/country.model';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
 export type UserDocument = User & Document;
 
 @Schema({
-  timestamps: true
+  timestamps: true,
 })
 @ObjectType()
 export class User {
-  @Field(type => ID)
-  _id: string
+  @Field((type) => ID)
+  _id: string;
 
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
   @Prop({ maxlength: 20 })
-  username?: string
+  username?: string;
 
   @Field()
   @IsString()
   @IsNotEmpty()
   @Prop({ required: true, maxlength: 30 })
-  firstName: string
+  firstName: string;
 
   @Field()
   @IsString()
   @IsNotEmpty()
   @Prop({ required: true, maxlength: 50 })
-  lastName: string
+  lastName: string;
 
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
   @Prop({ maxlength: 24 })
-  phone?: string
+  phone?: string;
 
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
   @Prop()
-  address?: string
+  address?: string;
 
-  @Field(type => Country, { nullable: true })
+  @Field((type) => Country, { nullable: true })
   @IsOptional()
   @Prop()
-  country?: Country
+  country?: Country;
 
   @Field()
   @IsEmail()
   @IsNotEmpty()
   @Prop({ required: true, maxlength: 60 })
-  email: string
+  email: string;
 
   @IsNotEmpty()
   @IsBoolean()
   @IsOptional()
   @Field({ nullable: true })
   @Prop()
-  isEmailVerified?: boolean
+  isEmailVerified?: boolean;
 
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
   @Prop()
-  avatar?: string
+  avatar?: string;
 
   @IsString()
   @IsNotEmpty()
   @Prop({ required: true })
-  password: string
+  password: string;
 
-  @Field(type => Date)
-  createdAt: Date
+  @Field((type) => Date)
+  createdAt: Date;
 
-  @Field(type => Date)
-  updatedAt: Date
+  @Field((type) => Date)
+  updatedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

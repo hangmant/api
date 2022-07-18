@@ -1,8 +1,16 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards, Get } from '@nestjs/common'
-import { AuthGuard } from '@nestjs/passport'
-import { ApiResponse } from '@nestjs/swagger'
-import { ReqPresignedPostDto } from './dto/req-presigned-post.dto'
-import { StorageService } from './storage.service'
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseGuards,
+  Get,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiResponse } from '@nestjs/swagger';
+import { ReqPresignedPostDto } from './dto/req-presigned-post.dto';
+import { StorageService } from './storage.service';
 
 @Controller('storage')
 export class StorageController {
@@ -13,6 +21,9 @@ export class StorageController {
   @HttpCode(HttpStatus.OK)
   @Post('token')
   token(@Body() fileInfo: ReqPresignedPostDto) {
-    return this.storageService.createSignedUrl(fileInfo.key, fileInfo.contentType)
+    return this.storageService.createSignedUrl(
+      fileInfo.key,
+      fileInfo.contentType,
+    );
   }
 }

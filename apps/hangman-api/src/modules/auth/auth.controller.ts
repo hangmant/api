@@ -1,8 +1,8 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
-import { ApiResponse, ApiQuery } from '@nestjs/swagger'
-import { AuthService } from './auth.service'
-import { LoginLocalDto } from './dtos/login-local.dto'
-import { ResLoginLocal } from './dtos/res-login-local.dto'
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { ApiResponse, ApiQuery } from '@nestjs/swagger';
+import { AuthService } from './auth.service';
+import { LoginLocalDto } from './dtos/login-local.dto';
+import { ResLoginLocal } from './dtos/res-login-local.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -12,7 +12,7 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   @Post('login/jwt')
   login(@Body() userCredentials: LoginLocalDto) {
-    return this.authService.login(userCredentials)
+    return this.authService.login(userCredentials);
   }
 
   // @UseGuards(AuthGuard())

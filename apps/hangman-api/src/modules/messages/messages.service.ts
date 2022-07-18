@@ -1,51 +1,52 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
-import { InjectModel } from '@nestjs/mongoose'
-import { Model } from 'mongoose'
-import { RoomsService } from '../rooms/rooms.service'
-import { TextProcessorService } from '../text-processor/text-procesor.service'
-import { GetMessagesArgs } from './dto/get-messages.args'
-import { MessageCreateInput } from './dto/message-create.input'
-import { MessageUpdateInput } from './dto/message-update.input'
-import { Message, MessageDocument } from './models/message.model'
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { RoomsService } from '../rooms/rooms.service';
+import { TextProcessorService } from '../text-processor/text-procesor.service';
+import { GetMessagesArgs } from './dto/get-messages.args';
+import { MessageCreateInput } from './dto/message-create.input';
+import { MessageUpdateInput } from './dto/message-update.input';
+import { Message, MessageDocument } from './models/message.model';
 
 @Injectable()
 export class MessagesService {
   constructor(
-    @InjectModel(Message.name) private readonly messageModel: Model<MessageDocument>,
+    @InjectModel(Message.name)
+    private readonly messageModel: Model<MessageDocument>,
     private readonly roomService: RoomsService,
-    private readonly textProcessorService: TextProcessorService
+    private readonly textProcessorService: TextProcessorService,
   ) {}
 
   async find(data: GetMessagesArgs): Promise<Message[]> {
     return this.messageModel
       .find(data)
       .sort({
-        createdAt: 1
+        createdAt: 1,
       })
-      .lean()
+      .lean();
   }
 
   async findById(id: string): Promise<Message> {
-    const message = await this.messageModel.findById(id).lean()
+    const message = await this.messageModel.findById(id).lean();
     if (!message) {
-      throw new NotFoundException('Message not found')
+      throw new NotFoundException('Message not found');
     }
-    return message
+    return message;
   }
 
   async create(message: MessageCreateInput): Promise<Message> {
-    await this.roomService.findById(message.roomId)
+    await this.roomService.findById(message.roomId);
 
-    const { html } = await this.textProcessorService.processText(message.text)
+    const { html } = await this.textProcessorService.processText(message.text);
 
     return this.messageModel.create({
       ...message,
-      html
-    })
+      html,
+    });
   }
 
   async updateById(id: string, message: MessageUpdateInput): Promise<Message> {
-    const { html } = await this.textProcessorService.processText(message.text)
+    const { html } = await this.textProcessorService.processText(message.text);
 
     const updatedMessage = await this.messageModel
       .findByIdAndUpdate(
@@ -53,19 +54,19 @@ export class MessagesService {
         {
           $set: {
             ...message,
-            html
-          }
+            html,
+          },
         },
         {
-          new: true
-        }
+          new: true,
+        },
       )
-      .lean()
+      .lean();
 
     if (!updatedMessage) {
-      throw new NotFoundException('Messsage not found')
+      throw new NotFoundException('Messsage not found');
     }
 
-    return updatedMessage
+    return updatedMessage;
   }
 }
