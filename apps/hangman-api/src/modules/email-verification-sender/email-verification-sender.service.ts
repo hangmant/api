@@ -54,4 +54,20 @@ export class EmailVerificationSenderService {
       }),
     );
   }
+
+  async sendVerificationToken(email: string) {
+    const token = randomBytes(20).toString('hex');
+
+    return this.mailerClientService.sendMail({
+      to: email,
+      from: 'noreply@hangwoman.com',
+      subject: 'HangWoman.com - Registration Confirmation',
+      template: MailTemplates.EmailConfirmation,
+      context: {
+        confirmEmailLink: `${this.configService.get(
+          'hangwomanFE',
+        )}/verify-email/${token}`,
+      },
+    });
+  }
 }

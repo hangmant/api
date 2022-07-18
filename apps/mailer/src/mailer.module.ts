@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MailerController } from './mailer.tcp.controller';
+import { MailerTcpController } from './mailer.tcp.controller';
 import { MailerService } from './mailer.service';
 import { MailerModule as ExternalMailerModule } from '@nestjs-modules/mailer';
 import { MailerOptions } from './options/mailer.options';
@@ -10,7 +10,7 @@ import { MailerOptions } from './options/mailer.options';
       useClass: MailerOptions,
     }),
   ],
-  controllers: [MailerController],
+  controllers: [MailerTcpController],
   providers: [MailerService],
 })
 export class MailerModule {}

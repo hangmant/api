@@ -7,10 +7,15 @@ import { UsersService } from './users.service';
 import { User } from './models/user.model';
 import { of } from 'rxjs';
 import { UserCreateInput } from './dto/user-create.input';
+import { EmailVerifyResponse } from '../email-verification/dto/email-verify-response.type';
+import { EmailVerificationSenderService } from '../email-verification-sender/email-verification-sender.service';
 
 @Resolver((of) => User)
 export class UsersResolver {
-  constructor(private readonly userService: UsersService) {}
+  constructor(
+    private readonly userService: UsersService,
+    private readonly emailVerificationSenderService: EmailVerificationSenderService,
+  ) {}
 
   @UseGuards(GqlAuthGuard)
   @Query((returns) => User)
@@ -39,5 +44,25 @@ export class UsersResolver {
   @Mutation((returns) => User)
   createUser(@Args('data') user: UserCreateInput) {
     return this.userService.create(user);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation((returns) => EmailVerifyResponse)
+  async sendVerificationMail(@CurrentUser() user) {
+    console.log(
+      '🤫 Dante ➤ EmailVerificationResolver ➤ sendVerificationMail ➤ user',
+      user,
+    );
+    const result =
+      await this.emailVerificationSenderService.sendVerificationToken(
+        user.email,
+      );
+    console.log(
+      '🤫 Dante ➤ UsersResolver ➤ sendVerificationMail ➤ result',
+      result,
+    );
+    return {
+      message: 'Verification email sent',
+    };
   }
 }

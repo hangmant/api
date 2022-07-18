@@ -6,10 +6,10 @@ import {
 
 @Injectable()
 export class MailerService {
-  constructor(private readonly externalEmailService: ExternalEmailService) {}
+  constructor(private readonly mailService: ExternalEmailService) {}
 
-  sendMail(options: ISendMailOptions): string {
+  sendMail(options: ISendMailOptions) {
     console.log('🤫 Dante ➤ MailerService ➤ sendMail ➤ options', options);
-    return 'Hello World!';
+    return this.mailService.sendMail(options);
   }
 }

@@ -25,7 +25,7 @@ export class MailerOptions implements MailerOptionsFactory {
         },
       },
       template: {
-        dir: join(process.cwd(), '/src/templates/'),
+        dir: join(process.cwd(), 'apps/mailer/src/templates/'),
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true,

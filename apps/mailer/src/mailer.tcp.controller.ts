@@ -4,11 +4,12 @@ import { MessagePattern } from '@nestjs/microservices';
 import { MailerService } from './mailer.service';
 
 @Controller()
-export class MailerController {
+export class MailerTcpController {
   constructor(private readonly mailerService: MailerService) {}
 
-  @MessagePattern({ cmd: 'send-mail' })
-  sendMail(options: ISendMailOptions): string {
+  @MessagePattern({ cmd: 'sendMail' })
+  sendMail(options: ISendMailOptions) {
+    console.log('JJAJAJAJAJJAJ');
     return this.mailerService.sendMail(options);
   }
 }

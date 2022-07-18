@@ -31,6 +31,10 @@ type User {
   updatedAt: Timestamp!
 }
 
+type EmailVerifyResponse {
+  message: String!
+}
+
 type Category {
   _id: String!
   name: String!
@@ -38,10 +42,6 @@ type Category {
   description: String!
   createdAt: Timestamp!
   updatedAt: Timestamp!
-}
-
-type EmailVerifyResponse {
-  message: String!
 }
 
 type Room {
@@ -120,6 +120,7 @@ type Query {
 type Mutation {
   updateMe(data: UserUpdateInput!): User!
   createUser(data: UserCreateInput!): User!
+  sendVerificationMail: EmailVerifyResponse!
   verifyEmail(data: EmailVerificationInput!): EmailVerifyResponse!
   createWord(data: WordCreateInput!): Word!
   updateWord(_id: ID!, data: WordUpdateInput!): Word!
