@@ -78,7 +78,7 @@
     "slugify": "^1.4.0"
   },
   "devDependencies": {
-    "@nestjs/cli": "^9.0.0",
+    "@nestjs/cli": "^9.1.8",
     "@nestjs/swagger": "^6.0.4",
     "@nestjs/testing": "^9.0.3",
     "@sentry/types": "^6.19.7",
